@@ -15,6 +15,7 @@ class TPBaseViewController: UIViewController, UIScrollViewDelegate {
 
     //HomeScene
     var homeSceneBottomView: TPHomeSceneBottomView!
+    var homeSceneLogoView: UIImageView!
     
     //Shop
     var shopTopView: TPShopTopView!

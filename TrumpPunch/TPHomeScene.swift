@@ -39,6 +39,10 @@ extension TPBaseViewController {
         homeSceneBottomView.frame = CGRect(x: MidX, y: MidY, width: 286, height: 300)
         homeSceneBottomView.center = CGPoint(x: MidX,y: MidY + 75)
         
+        homeSceneLogoView = UIImageView(image: UIImage(named: "HomeSceneLogo"))
+        homeSceneLogoView.frame = CGRect(x: MidX, y: MidY, width: 150, height: 130)
+        homeSceneLogoView.center = CGPoint(x: MidX,y: MidY - 125)
+        
         let playButtonTapGesture = UILongPressGestureRecognizer(target: self, action: #selector(playButtonPressed(gesture:)))
         playButtonTapGesture.minimumPressDuration = 0
         
@@ -83,6 +87,7 @@ extension TPBaseViewController {
     func presentHomeSceneBottomView() {
         
         view.addSubview(homeSceneBottomView)
+        view.addSubview(homeSceneLogoView)
     }
     
     func removeHomeSceneButtonView() {
