@@ -1,0 +1,6 @@
+framework module Pods_TrumpPunchTests {
+  umbrella header "Pods-TrumpPunchTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
