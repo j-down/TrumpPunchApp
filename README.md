@@ -1,2 +1,0 @@
-# TrumpPunchApp
-Punch Trump!
