@@ -8,6 +8,7 @@
 
 import UIKit
 import XModeAPI
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
         // Start the XModeAPI:
         TPLocationManager.shared.startXModeAPI()
+        
+        // Configure the Firebase API:
+        FIRApp.configure()
         
         return true
     }

@@ -9,6 +9,7 @@
 import Foundation
 import CoreLocation
 import XModeAPI
+import Firebase
 
 class TPLocationManager: NSObject, CLLocationManagerDelegate {
 

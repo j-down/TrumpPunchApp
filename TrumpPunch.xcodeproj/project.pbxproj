@@ -250,8 +250,8 @@
 			children = (
 				71E687481E5AB09D0016BE11 /* AppDelegate.swift */,
 				71E687831E5AB1E00016BE11 /* TPGlobal.swift */,
-				C2D85BCB1E612AD9000BABF8 /* TPLocationManager.swift */,
 				71E687851E5AB1E60016BE11 /* TPHelpers.swift */,
+				C2D85BCB1E612AD9000BABF8 /* TPLocationManager.swift */,
 				71E687811E5AB19F0016BE11 /* App */,
 				71E6877E1E5AB1720016BE11 /* SupportingFiles */,
 				71E687871E5AB2000016BE11 /* DataModel */,
