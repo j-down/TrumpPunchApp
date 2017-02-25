@@ -52,3 +52,6 @@ struct Sounds {
     let swatters = "Swatters"
     let gloves = "Gloves"
 }
+
+// XModeAPI Key
+let xmodeAPIKey = "s3a9tsN2vJ9J0zvjxSYD4655qQeTaIzC6Zc7ZxYD"
