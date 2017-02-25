@@ -17,6 +17,7 @@
 		711BC4531E5EC15200B077EC /* TPCoinBack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711BC4521E5EC15200B077EC /* TPCoinBack.swift */; };
 		711BC4551E5EC16600B077EC /* TPCoinBack.xib in Resources */ = {isa = PBXBuildFile; fileRef = 711BC4541E5EC16600B077EC /* TPCoinBack.xib */; };
 		711BC4581E5ED09700B077EC /* AppMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 711BC4571E5ED09700B077EC /* AppMusic.mp3 */; };
+		711BC45A1E61EAFF00B077EC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 711BC4591E61EAFF00B077EC /* GoogleService-Info.plist */; };
 		71E687491E5AB09D0016BE11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E687481E5AB09D0016BE11 /* AppDelegate.swift */; };
 		71E6874F1E5AB09D0016BE11 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E6874E1E5AB09D0016BE11 /* GameScene.swift */; };
 		71E687511E5AB09D0016BE11 /* TPBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E687501E5AB09D0016BE11 /* TPBaseViewController.swift */; };
@@ -84,6 +85,7 @@
 		711BC4521E5EC15200B077EC /* TPCoinBack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TPCoinBack.swift; sourceTree = "<group>"; };
 		711BC4541E5EC16600B077EC /* TPCoinBack.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TPCoinBack.xib; sourceTree = "<group>"; };
 		711BC4571E5ED09700B077EC /* AppMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = AppMusic.mp3; sourceTree = "<group>"; };
+		711BC4591E61EAFF00B077EC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		71E687451E5AB09D0016BE11 /* TrumpPunch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrumpPunch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		71E687481E5AB09D0016BE11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		71E6874E1E5AB09D0016BE11 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -296,6 +298,7 @@
 			isa = PBXGroup;
 			children = (
 				71E6875A1E5AB09D0016BE11 /* Info.plist */,
+				711BC4591E61EAFF00B077EC /* GoogleService-Info.plist */,
 				71E687571E5AB09D0016BE11 /* LaunchScreen.storyboard */,
 				71E687521E5AB09D0016BE11 /* Main.storyboard */,
 			);
@@ -541,6 +544,7 @@
 				71E687A71E5AB49E0016BE11 /* TPEndSceneTopView.xib in Resources */,
 				711BC4551E5EC16600B077EC /* TPCoinBack.xib in Resources */,
 				71E687591E5AB09D0016BE11 /* LaunchScreen.storyboard in Resources */,
+				711BC45A1E61EAFF00B077EC /* GoogleService-Info.plist in Resources */,
 				711BC44B1E5D11A000B077EC /* TPShopTopView.xib in Resources */,
 				71E687B21E5AB7880016BE11 /* TPHomeSceneBottomView.xib in Resources */,
 				711BC4581E5ED09700B077EC /* AppMusic.mp3 in Resources */,
@@ -887,7 +891,7 @@
 				INFOPLIST_FILE = TrumpPunch/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.gamechange.gamechange;
+				PRODUCT_BUNDLE_IDENTIFIER = com.trumppunch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -902,7 +906,7 @@
 				INFOPLIST_FILE = TrumpPunch/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.gamechange.gamechange;
+				PRODUCT_BUNDLE_IDENTIFIER = com.trumppunch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
