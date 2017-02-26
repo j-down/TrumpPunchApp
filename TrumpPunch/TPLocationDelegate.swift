@@ -16,7 +16,9 @@ class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
     // Create out singlton shared instance
     static let shared = TPLocationDelegate()
     
+    // The current location will be checked before going & retreiving all the other users locations:
     var currentLocation : CLLocation?=nil
+    
     
     var updatingLocation = false
     
@@ -111,7 +113,7 @@ class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
         
     }
     
-    func getUsersLocations() {
+    func getOtherUsersLocations() {
         
         // Lets get all the users locations from Firebase:
         if let cL = currentLocation {
@@ -121,11 +123,11 @@ class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
             // This is apparently how we loop through those locations:
             query?.observe(.keyEntered) {
                 key, location in
-                // Keys are unique (we will check this to see if we need to actually add it in:
-                print("Key: ", key ?? "NULL KEY", " Location: ", location ?? "NULL LOCATION")
-                
+                // Keys are unique & set from current user (we will check this to see if we need to actually add it in:)
+                if key != FIRAuth.auth()?.currentUser?.uid {
+                    print("Key: ", key ?? "NULL KEY", " Location: ", location ?? "NULL LOCATION")
+                }
             }
         }
     }
-    
 }
