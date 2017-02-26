@@ -53,5 +53,18 @@ struct Sounds {
     let gloves = "Gloves"
 }
 
-// XModeAPI Key
+// XModeAPI Key:
 let xmodeAPIKey = "s3a9tsN2vJ9J0zvjxSYD4655qQeTaIzC6Zc7ZxYD"
+
+let locationKey = "XModeCurrentLocationKey"
+
+// XMode Logging:
+func xmodeLog(logMessage: String?=nil, error: Error?=nil, functionString: String, line: String) {
+    if error != nil {
+        print("Function: \(functionString), Line: \(line) : \(error?.localizedDescription)")
+    } else if let logMsg = logMessage {
+        print("Function: \(functionString), Line: \(line) : \(logMsg)")
+    } else {
+        print("Function: \(functionString), Line: \(line) : Unknown Error")
+    }
+}

@@ -13,6 +13,7 @@ target 'TrumpPunch' do
     ## Location/HeatMap Pods:
     pod 'XModeAPI'
     pod 'DTMHeatmap'
+    pod 'Firebase/Auth'
 end
 
 target 'TrumpPunchTests' do
