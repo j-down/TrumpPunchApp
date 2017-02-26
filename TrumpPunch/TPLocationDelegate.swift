@@ -125,6 +125,7 @@ class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
                 key, location in
                 // Keys are unique & set from current user (we will check this to see if we need to actually add it in:)
                 if key != FIRAuth.auth()?.currentUser?.uid {
+                    // Here we can add the location into an array to show for the heatmap:
                     print("Key: ", key ?? "NULL KEY", " Location: ", location ?? "NULL LOCATION")
                 }
             }
