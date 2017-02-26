@@ -16,8 +16,10 @@ class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
     // Create out singlton shared instance
     static let shared = TPLocationDelegate()
     
+    var currentLocation : CLLocation?=nil
+    
     // Create the dbReference pointing to the users locations:
-   let geoFire = GeoFire(firebaseRef: FIRDatabase.database().reference(withPath: "users_location"))
+    let geoFire = GeoFire(firebaseRef: FIRDatabase.database().reference(withPath: "users_location"))
     
     private override init() {
         super.init()
@@ -33,6 +35,8 @@ class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
         let userInfo = notification.userInfo
         // Check if the newLocation is nil here, this way we are not dealing with an optional:
         if let newLocation = userInfo?[locationKey] as? XModeSdkVisitedPlace {
+            // Set the current location:
+            currentLocation = newLocation.location
             // we got this -- lets tell the world where you are....
             if let user = FIRAuth.auth()?.currentUser {
                 // Okay - they must be signed in anonomously already, lets save their currentLocation:
@@ -92,6 +96,23 @@ class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
         // Start it up using the API key:
         xmode?.start(withApiKey: xmodeAPIKey)
         
+    }
+    
+    func getAllUsersLocations() {
+        
+        // Lets get all the users locations from Firebase:
+        if let cL = currentLocation {
+            // If we have the currentLocation (above), lets query from that location using a radius of 100:
+            let query = geoFire?.query(at: cL, withRadius: 100)
+            
+            // This is apparently how we loop through those locations:
+            query?.observe(.keyEntered) {
+                key, location in
+                
+                print("Key: ", key ?? "NULL KEY", " Location: ", location ?? "NULL LOCATION")
+                
+            }
+        }
     }
     
 }
