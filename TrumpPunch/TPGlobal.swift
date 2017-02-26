@@ -60,8 +60,10 @@ let locationKey = "XModeCurrentLocationKey"
 
 // XMode Logging:
 func xmodeLog(logMessage: String?=nil, error: Error?=nil, functionString: String, line: String) {
-    if error != nil {
-        print("Function: \(functionString), Line: \(line) : \(error?.localizedDescription)")
+    // If error is not nil:
+    if let er = error {
+        print("Function: \(functionString), Line: \(line) : \(er.localizedDescription)")
+    // If the log message is not nil:
     } else if let logMsg = logMessage {
         print("Function: \(functionString), Line: \(line) : \(logMsg)")
     } else {
