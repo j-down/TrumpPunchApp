@@ -21,6 +21,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
                         <segue destination="gCq-v2-eaW" kind="show" identifier="showLocationPage" id="Ik4-wi-qNx"/>
                     </connections>
@@ -71,14 +72,14 @@
                         <constraints>
                             <constraint firstItem="igY-dk-Qys" firstAttribute="leading" secondItem="NjQ-aZ-oVO" secondAttribute="leading" id="B55-3u-OiE"/>
                             <constraint firstAttribute="trailing" secondItem="igY-dk-Qys" secondAttribute="trailing" id="BHL-2k-PUf"/>
-                            <constraint firstItem="igY-dk-Qys" firstAttribute="top" secondItem="IMV-eP-4pE" secondAttribute="bottom" id="MBi-SB-3Kd"/>
+                            <constraint firstItem="igY-dk-Qys" firstAttribute="top" secondItem="IMV-eP-4pE" secondAttribute="bottom" constant="20" id="MBi-SB-3Kd"/>
                             <constraint firstAttribute="bottom" secondItem="yaC-xK-tR7" secondAttribute="bottom" id="gQv-OS-VY9"/>
                             <constraint firstAttribute="trailing" secondItem="yaC-xK-tR7" secondAttribute="trailing" id="syH-r0-sP2"/>
                             <constraint firstItem="yaC-xK-tR7" firstAttribute="top" secondItem="igY-dk-Qys" secondAttribute="bottom" id="tZr-i8-PrE"/>
                             <constraint firstItem="yaC-xK-tR7" firstAttribute="leading" secondItem="NjQ-aZ-oVO" secondAttribute="leading" id="x7a-4Z-jyv"/>
                         </constraints>
                     </view>
-                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+                    <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="heatMap" destination="yaC-xK-tR7" id="Djl-z3-P5E"/>
                         <outlet property="navigationBar" destination="igY-dk-Qys" id="Set-JV-K7a"/>
