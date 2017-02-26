@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Start the XModeAPI:
         TPLocationDelegate.shared.startXModeAPI()
-        
+    
         return true
     }
 

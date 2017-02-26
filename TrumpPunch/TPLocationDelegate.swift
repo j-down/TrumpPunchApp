@@ -18,6 +18,8 @@ class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
     
     var currentLocation : CLLocation?=nil
     
+    var updatingLocation = false
+    
     // Create the dbReference pointing to the users locations:
     let geoFire = GeoFire(firebaseRef: FIRDatabase.database().reference(withPath: "users_location"))
     
@@ -41,30 +43,41 @@ class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
             if let user = FIRAuth.auth()?.currentUser {
                 // Okay - they must be signed in anonomously already, lets save their currentLocation:
                 // Create set the location using the user uid:
-                self.geoFire?.setLocation(newLocation.location, forKey: user.uid) {
-                    error in
-                    if error != nil {
-                        xmodeLog(error: error, functionString: String(#function), line: String(#line))
-                    } else {
-                        print("Saved NEW location for CURRENT user!")
+                if self.updatingLocation == false {
+                    self.updatingLocation = true
+                    self.geoFire?.setLocation(newLocation.location, forKey: user.uid) {
+                        error in
+                        // Update the boolean now that we are done with our asych:
+                        self.updatingLocation = false
+                        // If the error is not nil, lets print the error:
+                        if error != nil {
+                            xmodeLog(error: error, functionString: String(#function), line: String(#line))
+                        // Lets just put this here for now:
+                        } else {
+                            print("Saved NEW location for CURRENT user!")
+                        }
                     }
                 }
                 
             } else {
                 // Ugh oh - they dont have an account right now - we will just have to create another one:
-                FIRAuth.auth()?.signInAnonymously() {
-                    //  Okay lets set their location:
-                    user, error in
-                    // Check if the user is nil:
-                    if let thisUser = user {
-                        // User is not nil, lets set the location:
-                        self.geoFire?.setLocation(newLocation.location, forKey: thisUser.uid) {
-                            error in
-                            print("Saved NEW location for NEW user!")
+                if self.updatingLocation == false {
+                    self.updatingLocation = true
+                    FIRAuth.auth()?.signInAnonymously() {
+                        //  Okay lets set their location:
+                        user, error in
+                        self.updatingLocation = false
+                        // Check if the user is nil:
+                        if let thisUser = user {
+                            // User is not nil, lets set the location:
+                            self.geoFire?.setLocation(newLocation.location, forKey: thisUser.uid) {
+                                error in
+                                print("Saved NEW location for NEW user!")
+                            }
+                        } else {
+                            // User is nil:
+                            xmodeLog(logMessage: "check for user being nil -- well its nil...", functionString: String(#function), line: String(#line))
                         }
-                    } else {
-                        // User is nil:
-                        xmodeLog(logMessage: "check for user being nil -- well its nil...", functionString: String(#function), line: String(#line))
                     }
                 }
             }
@@ -98,7 +111,7 @@ class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
         
     }
     
-    func getAllUsersLocations() {
+    func getUsersLocations() {
         
         // Lets get all the users locations from Firebase:
         if let cL = currentLocation {
@@ -108,7 +121,7 @@ class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
             // This is apparently how we loop through those locations:
             query?.observe(.keyEntered) {
                 key, location in
-                
+                // Keys are unique (we will check this to see if we need to actually add it in:
                 print("Key: ", key ?? "NULL KEY", " Location: ", location ?? "NULL LOCATION")
                 
             }
