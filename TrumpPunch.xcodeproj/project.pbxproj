@@ -54,6 +54,7 @@
 		C2BD597E1E6251A7007C1571 /* GFGeoHash.m in Sources */ = {isa = PBXBuildFile; fileRef = C2BD59751E6251A7007C1571 /* GFGeoHash.m */; };
 		C2BD597F1E6251A7007C1571 /* GFGeoHashQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C2BD59771E6251A7007C1571 /* GFGeoHashQuery.m */; };
 		C2BD59801E6251A7007C1571 /* GFQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C2BD59791E6251A7007C1571 /* GFQuery.m */; };
+		C2BD59831E6380BF007C1571 /* TPLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BD59821E6380BF007C1571 /* TPLocationViewController.swift */; };
 		C2D85BCC1E612AD9000BABF8 /* TPLocationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D85BCB1E612AD9000BABF8 /* TPLocationDelegate.swift */; };
 		C2D85BD01E622E0B000BABF8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C2D85BCF1E622E0B000BABF8 /* GoogleService-Info.plist */; };
 		E4944416033EA77E64F8958E /* Pods_TrumpPunchTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D1A5958965FBA1BD2A2B56D /* Pods_TrumpPunchTests.framework */; };
@@ -148,6 +149,7 @@
 		C2BD59791E6251A7007C1571 /* GFQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFQuery.m; sourceTree = "<group>"; };
 		C2BD597A1E6251A7007C1571 /* GFQuery+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GFQuery+Private.h"; sourceTree = "<group>"; };
 		C2BD597B1E6251A7007C1571 /* GFRegionQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFRegionQuery.h; sourceTree = "<group>"; };
+		C2BD59821E6380BF007C1571 /* TPLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TPLocationViewController.swift; sourceTree = "<group>"; };
 		C2D85BCB1E612AD9000BABF8 /* TPLocationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TPLocationDelegate.swift; sourceTree = "<group>"; };
 		C2D85BCD1E612C58000BABF8 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		C2D85BCF1E622E0B000BABF8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -352,6 +354,7 @@
 		71E687811E5AB19F0016BE11 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				C2BD59821E6380BF007C1571 /* TPLocationViewController.swift */,
 				71E687501E5AB09D0016BE11 /* TPBaseViewController.swift */,
 				71E687901E5AB35B0016BE11 /* Features */,
 				71E6877C1E5AB15E0016BE11 /* Game */,
@@ -793,6 +796,7 @@
 				71E687491E5AB09D0016BE11 /* AppDelegate.swift in Sources */,
 				71E687B61E5AB8390016BE11 /* TPPerson.swift in Sources */,
 				711BC4491E5D119300B077EC /* TPShopTopView.swift in Sources */,
+				C2BD59831E6380BF007C1571 /* TPLocationViewController.swift in Sources */,
 				C2BD59801E6251A7007C1571 /* GFQuery.m in Sources */,
 				71E687921E5AB3900016BE11 /* TPPeopleView.swift in Sources */,
 			);
