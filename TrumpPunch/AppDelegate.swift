@@ -15,11 +15,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
     
-        // Configure the Firebase API:
+        // Configure the Firebase API first before starting the XModeAPI to keep from having timing issues:
         FIRApp.configure()
         
         // Start the XModeAPI:
@@ -51,4 +50,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 }
-
