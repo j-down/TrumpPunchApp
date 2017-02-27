@@ -59,7 +59,7 @@ let xmodeAPIKey = "s3a9tsN2vJ9J0zvjxSYD4655qQeTaIzC6Zc7ZxYD"
 // XModeAPI Notification Keys:
 let sdkLocationKey = "XModeCurrentLocationKey"
 
-// XMode Logging:
+// CCX Logging:
 extension NSObject {
     func ccxLog(logMessage: String?=nil, error: Error?=nil, fileName : String = #file , functionName: String = #function, lineOfCode : Int = #line) {
         // If error is not nil:
