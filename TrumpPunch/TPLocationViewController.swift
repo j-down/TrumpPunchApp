@@ -38,13 +38,13 @@ class TPLocationViewController: UIViewController, MKMapViewDelegate, HeatmapDele
     
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         
-        // First lets zoom in to the user a little:
-        let span = MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
-        let region = MKCoordinateRegionMake(userLocation.coordinate, span)
-        self.heatMap.setRegion(region, animated: true)
-        
         // Fetch the data now that we are listening for the callback:
         if !updatedLocations {
+            // First lets zoom in to the user a little:
+            let span = MKCoordinateSpan(latitudeDelta: 0.010, longitudeDelta: 0.010)
+            let region = MKCoordinateRegionMake(userLocation.coordinate, span)
+            self.heatMap.setRegion(region, animated: true)
+            
             TPLocationDelegate.shared.getUserLocationData(withLocation: userLocation.location)
             // Set this boolean so we dont update mutiple times:
             updatedLocations = true
