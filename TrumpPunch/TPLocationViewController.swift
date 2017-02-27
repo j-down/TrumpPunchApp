@@ -23,6 +23,7 @@ class TPLocationViewController: UIViewController, MKMapViewDelegate, HeatmapDele
         super.viewDidLoad()
         // Set the HeatMapDelegate: (This will update the other users locations:
         TPLocationDelegate.shared.delegate = self
+        self.modalTransitionStyle = .flipHorizontal
         
     }
     

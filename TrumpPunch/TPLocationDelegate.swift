@@ -43,14 +43,12 @@ final class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
         let userInfo = notification.userInfo
         // Check if the newLocation is nil here, this way we are not dealing with an optional:
         if let newLocation = userInfo?[sdkLocationKey] as? XModeSdkVisitedPlace {
-            // Set the current location:
-//            currentLocation = newLocation.location
             // we got this -- lets tell the world where you are....
             if let user = FIRAuth.auth()?.currentUser {
                 // Okay - they must be signed in anonomously already, lets save their currentLocation:
                 // Create set the location using the user uid:
                 if self.updatingLocation == false {
-                    // Make sure the currentLocation is not nil:
+                    // Make sure the currentLocation is not nil - here we will check & make sure the users location has changed more then 50 meters:
                     if let lastLocation = self.currentLocation {
                         // If the distance is greater than or equal to 50 meters, then we will update the location:
                         if lastLocation.distance(from: newLocation.location) >= 50 {
@@ -67,7 +65,28 @@ final class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
                                     // Lets just put this here for now:
                                 } else {
                                     print("Saved NEW location for CURRENT user!")
+                                    // Update the currentLocation for the next notification call from the SDK:
+                                    self.currentLocation = newLocation.location
                                 }
+                            }
+                        }
+                    // If we dont have the last location set, lets set it:
+                    } else {
+                        // Set the updatingLcation to true so we dont keep hitting this:
+                        self.updatingLocation = true
+                        // Okay lets save over the last one:
+                        self.geoFire?.setLocation(newLocation.location, forKey: user.uid) {
+                            error in
+                            // Update the boolean now that we are done with our asych:
+                            self.updatingLocation = false
+                            // If the error is not nil, lets print the error:
+                            if error != nil {
+                                xmodeLog(error: error, functionString: String(#function), line: String(#line))
+                                // Lets just put this here for now:
+                            } else {
+                                print("Saved NEW location for CURRENT user!")
+                                // Update the currentLocation for the next notification call from the SDK:
+                                self.currentLocation = newLocation.location
                             }
                         }
                     }
@@ -87,6 +106,8 @@ final class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
                             self.geoFire?.setLocation(newLocation.location, forKey: thisUser.uid) {
                                 error in
                                 print("Saved NEW location for NEW user!")
+                                // Update the currentLocation for the next notification call from the SDK:
+                                self.currentLocation = newLocation.location
                             }
                         } else {
                             // User is nil:
@@ -95,8 +116,6 @@ final class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
                     }
                 }
             }
-            // Update the currentLocation for the next notification call from the SDK:
-            currentLocation = newLocation.location
             
         } else {
             // newLocation object is nil here:
@@ -130,7 +149,7 @@ final class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
     func getUserLocationData(withLocation: CLLocation?=nil) {
     
         // Lets get all the users locations from Firebase:
-        if let cL = currentLocation {
+        if let cL = self.currentLocation {
             // If we have the currentLocation (above), lets query from that location using a radius of 1000 KM:
             let query = geoFire?.query(at: cL, withRadius: 1000)
             
@@ -139,23 +158,21 @@ final class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
             query?.observe(.keyEntered) {
                 key, location in
                 
-                // Keys are unique & set from current user (we will check this to see if we need to actually add it in:)
-                if key != FIRAuth.auth()?.currentUser?.uid {
-                    
-                    //MARK:  This AND statement checks for if the location timestamp is less than 2 weeks old:
-        //            && (location?.timestamp.timeIntervalSinceNow.isLessThanOrEqualTo(1209600))! {
-                    
-                    // Here we can add the location into an array to show for the heatmap:
-                    if let loc = location {
-                        // Get the NSValue from the coordinate:
-                        let thepoint = MKMapPointForCoordinate(loc.coordinate)
-                        // Get the NSValue from the point:
-                        if let value = NSValue(mkMapPoint: thepoint) {
-                            // 1 is default weight:
-                            self.heatMapData[value] = 1
-                        }
+                // Make sure the location is not nil:
+                if let loc = location {
+                    // Get the NSValue from the coordinate:
+                    let thepoint = MKMapPointForCoordinate(loc.coordinate)
+                    // Get the NSValue from the point:
+                    if let value = NSValue(mkMapPoint: thepoint) {
+                        // 1 is default weight:
+                        self.heatMapData[value] = 1
                     }
                 }
+                
+                    //MARK:  This AND statement checks for if the location timestamp is less than 2 weeks old & disregards the current users heat map location:
+                //                if key != FIRAuth.auth()?.currentUser?.uid && (location?.timestamp.timeIntervalSinceNow.isLessThanOrEqualTo(1209600))! {
+                
+                //                }
             }
             // This will tell us when we are done observing:
             query?.observeReady({
@@ -171,22 +188,21 @@ final class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
             query?.observe(.keyEntered) {
                 key, location in
                 
-                // Keys are unique & set from current user (we will check this to see if we need to actually add it in:)
-                if key != FIRAuth.auth()?.currentUser?.uid {
-                    //MARK:  This AND statement checks for if the location timestamp is less than 2 weeks old:
-         //           && (location?.timestamp.timeIntervalSinceNow.isLessThanOrEqualTo(1209600))! {
-                    
-                    // Here we can add the location into an array to show for the heatmap:
-                    if let loc = location {
-                        // Get the NSValue from the coordinate:
-                        let thepoint = MKMapPointForCoordinate(loc.coordinate)
-                        // Get the NSValue from the point:
-                        if let value = NSValue(mkMapPoint: thepoint) {
-                            // 1 is default weight:
-                            self.heatMapData[value] = 1
-                        }
+                // Make sure the location is not nil:
+                if let loc = location {
+                    // Get the NSValue from the coordinate:
+                    let thepoint = MKMapPointForCoordinate(loc.coordinate)
+                    // Get the NSValue from the point:
+                    if let value = NSValue(mkMapPoint: thepoint) {
+                        // 1 is default weight:
+                        self.heatMapData[value] = 1
                     }
                 }
+                
+                //MARK:  This AND statement checks for if the location timestamp is less than 2 weeks old & disregards the current users heat map location:
+//                if key != FIRAuth.auth()?.currentUser?.uid && (location?.timestamp.timeIntervalSinceNow.isLessThanOrEqualTo(1209600))! {
+                
+//                }
             }
             // This will tell us when we are done observing:
             query?.observeReady({
