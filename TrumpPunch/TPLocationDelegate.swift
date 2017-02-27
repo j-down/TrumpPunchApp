@@ -61,7 +61,7 @@ final class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
                                 self.updatingLocation = false
                                 // If the error is not nil, lets print the error:
                                 if error != nil {
-                                    xmodeLog(error: error, functionString: String(#function), line: String(#line))
+                                    self.ccxLog(error: error)
                                     // Lets just put this here for now:
                                 } else {
                                     print("Saved NEW location for CURRENT user!")
@@ -81,7 +81,7 @@ final class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
                             self.updatingLocation = false
                             // If the error is not nil, lets print the error:
                             if error != nil {
-                                xmodeLog(error: error, functionString: String(#function), line: String(#line))
+                                self.ccxLog(error: error)
                                 // Lets just put this here for now:
                             } else {
                                 print("Saved NEW location for CURRENT user!")
@@ -111,7 +111,7 @@ final class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
                             }
                         } else {
                             // User is nil:
-                            xmodeLog(logMessage: "check for user being nil -- well its nil...", functionString: String(#function), line: String(#line))
+                            self.ccxLog(logMessage: "check for user being nil -- well its nil...")
                         }
                     }
                 }
@@ -119,7 +119,7 @@ final class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
             
         } else {
             // newLocation object is nil here:
-            xmodeLog(logMessage: "newLocation object is nil", functionString: String(#function), line: String(#line))
+            self.ccxLog(logMessage: "newLocation object is nil")
         }
     }
     

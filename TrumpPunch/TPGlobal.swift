@@ -60,14 +60,16 @@ let xmodeAPIKey = "s3a9tsN2vJ9J0zvjxSYD4655qQeTaIzC6Zc7ZxYD"
 let sdkLocationKey = "XModeCurrentLocationKey"
 
 // XMode Logging:
-func xmodeLog(logMessage: String?=nil, error: Error?=nil, functionString: String, line: String) {
-    // If error is not nil:
-    if let er = error {
-        print("Function: \(functionString), Line: \(line) : \(er.localizedDescription)")
-    // If the log message is not nil:
-    } else if let logMsg = logMessage {
-        print("Function: \(functionString), Line: \(line) : \(logMsg)")
-    } else {
-        print("Function: \(functionString), Line: \(line) : Unknown Error")
+extension NSObject {
+    func ccxLog(logMessage: String?=nil, error: Error?=nil, fileName : String = #file , functionName: String = #function, lineOfCode : Int = #line) {
+        // If error is not nil:
+        if let er = error {
+            print("CCX Logging -> File: \(fileName), Function: \(functionName), Line: \(lineOfCode) : \(er.localizedDescription)")
+            // If the log message is not nil:
+        } else if let logMsg = logMessage {
+            print("CCX Logging -> File: \(fileName), Function: \(functionName), Line: \(lineOfCode) : \(logMsg)")
+        } else {
+            print("CCX Logging -> File: \(fileName), Function: \(functionName), Line: \(lineOfCode) : Unknown Error")
+        }
     }
 }
