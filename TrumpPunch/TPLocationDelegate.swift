@@ -50,12 +50,13 @@ final class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
                 // Okay - they must be signed in anonomously already, lets save their currentLocation:
                 // Create set the location using the user uid:
                 if self.updatingLocation == false {
-                    
+                    // Make sure the currentLocation is not nil:
                     if let lastLocation = self.currentLocation {
-                        // If the distance is greater than or equal to 50, then we will update the location:
-                        if lastLocation.distance(from: newLocation.location) >= 100 {
-                            // Okay lets save over the last one:
+                        // If the distance is greater than or equal to 50 meters, then we will update the location:
+                        if lastLocation.distance(from: newLocation.location) >= 50 {
+                            // Set the updatingLcation to true so we dont keep hitting this:
                             self.updatingLocation = true
+                            // Okay lets save over the last one:
                             self.geoFire?.setLocation(newLocation.location, forKey: user.uid) {
                                 error in
                                 // Update the boolean now that we are done with our asych:
@@ -139,7 +140,11 @@ final class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
                 key, location in
                 
                 // Keys are unique & set from current user (we will check this to see if we need to actually add it in:)
-                if key != FIRAuth.auth()?.currentUser?.uid && (location?.timestamp.timeIntervalSinceNow.isLessThanOrEqualTo(60000))! {
+                if key != FIRAuth.auth()?.currentUser?.uid {
+                    
+                    //MARK:  This AND statement checks for if the location timestamp is less than 2 weeks old:
+        //            && (location?.timestamp.timeIntervalSinceNow.isLessThanOrEqualTo(1209600))! {
+                    
                     // Here we can add the location into an array to show for the heatmap:
                     if let loc = location {
                         // Get the NSValue from the coordinate:
@@ -167,7 +172,10 @@ final class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
                 key, location in
                 
                 // Keys are unique & set from current user (we will check this to see if we need to actually add it in:)
-                if key != FIRAuth.auth()?.currentUser?.uid && (location?.timestamp.timeIntervalSinceNow.isLessThanOrEqualTo(60000))! {
+                if key != FIRAuth.auth()?.currentUser?.uid {
+                    //MARK:  This AND statement checks for if the location timestamp is less than 2 weeks old:
+         //           && (location?.timestamp.timeIntervalSinceNow.isLessThanOrEqualTo(1209600))! {
+                    
                     // Here we can add the location into an array to show for the heatmap:
                     if let loc = location {
                         // Get the NSValue from the coordinate:
