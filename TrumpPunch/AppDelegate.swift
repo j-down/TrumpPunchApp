@@ -24,7 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Start the XModeAPI:
         TPLocationDelegate.shared.startXModeAPI()
     
-        self.ccxLog(logMessage: "TESTTT")
         return true
     }
 
