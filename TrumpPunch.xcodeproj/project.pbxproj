@@ -55,6 +55,7 @@
 		C2BD597F1E6251A7007C1571 /* GFGeoHashQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C2BD59771E6251A7007C1571 /* GFGeoHashQuery.m */; };
 		C2BD59801E6251A7007C1571 /* GFQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C2BD59791E6251A7007C1571 /* GFQuery.m */; };
 		C2BD59831E6380BF007C1571 /* TPLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BD59821E6380BF007C1571 /* TPLocationViewController.swift */; };
+		C2BD59861E63D640007C1571 /* NSValue+MKMapPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = C2BD59851E63D640007C1571 /* NSValue+MKMapPoint.m */; };
 		C2D85BCC1E612AD9000BABF8 /* TPLocationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D85BCB1E612AD9000BABF8 /* TPLocationDelegate.swift */; };
 		C2D85BD01E622E0B000BABF8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C2D85BCF1E622E0B000BABF8 /* GoogleService-Info.plist */; };
 		E4944416033EA77E64F8958E /* Pods_TrumpPunchTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D1A5958965FBA1BD2A2B56D /* Pods_TrumpPunchTests.framework */; };
@@ -150,6 +151,8 @@
 		C2BD597A1E6251A7007C1571 /* GFQuery+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GFQuery+Private.h"; sourceTree = "<group>"; };
 		C2BD597B1E6251A7007C1571 /* GFRegionQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFRegionQuery.h; sourceTree = "<group>"; };
 		C2BD59821E6380BF007C1571 /* TPLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TPLocationViewController.swift; sourceTree = "<group>"; };
+		C2BD59841E63D640007C1571 /* NSValue+MKMapPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSValue+MKMapPoint.h"; sourceTree = "<group>"; };
+		C2BD59851E63D640007C1571 /* NSValue+MKMapPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSValue+MKMapPoint.m"; sourceTree = "<group>"; };
 		C2D85BCB1E612AD9000BABF8 /* TPLocationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TPLocationDelegate.swift; sourceTree = "<group>"; };
 		C2D85BCD1E612C58000BABF8 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		C2D85BCF1E622E0B000BABF8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -282,6 +285,8 @@
 				71E687871E5AB2000016BE11 /* DataModel */,
 				71E6877F1E5AB1780016BE11 /* Assets */,
 				C2BD596D1E6251A6007C1571 /* TrumpPunch-Bridging-Header.h */,
+				C2BD59841E63D640007C1571 /* NSValue+MKMapPoint.h */,
+				C2BD59851E63D640007C1571 /* NSValue+MKMapPoint.m */,
 			);
 			path = TrumpPunch;
 			sourceTree = "<group>";
@@ -777,6 +782,7 @@
 				71E6874F1E5AB09D0016BE11 /* GameScene.swift in Sources */,
 				711BC4531E5EC15200B077EC /* TPCoinBack.swift in Sources */,
 				C2BD597D1E6251A7007C1571 /* GFBase32Utils.m in Sources */,
+				C2BD59861E63D640007C1571 /* NSValue+MKMapPoint.m in Sources */,
 				71E687891E5AB2170016BE11 /* TPPlayer.swift in Sources */,
 				C2BD597F1E6251A7007C1571 /* GFGeoHashQuery.m in Sources */,
 				71E687B81E5AB8420016BE11 /* TPItem.swift in Sources */,

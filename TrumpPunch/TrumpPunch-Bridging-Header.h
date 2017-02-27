@@ -3,4 +3,5 @@
 //
 
 #import "GeoFire.h"
+#import "NSValue+MKMapPoint.h"
 

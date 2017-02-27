@@ -10,8 +10,9 @@ import Foundation
 import CoreLocation
 import XModeAPI
 import Firebase
+import MapKit
 
-class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
+final class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
 
     // Create out singlton shared instance
     static let shared = TPLocationDelegate()
@@ -19,6 +20,9 @@ class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
     // The current location will be checked before going & retreiving all the other users locations:
     var currentLocation : CLLocation?=nil
     
+    var delegate : HeatmapDelegate?
+    
+    var heatMapData : [NSValue : Double] = [:]
     
     var updatingLocation = false
     
@@ -38,25 +42,32 @@ class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
         // Yay location updated! :)  Lets do our thangg:
         let userInfo = notification.userInfo
         // Check if the newLocation is nil here, this way we are not dealing with an optional:
-        if let newLocation = userInfo?[locationKey] as? XModeSdkVisitedPlace {
+        if let newLocation = userInfo?[sdkLocationKey] as? XModeSdkVisitedPlace {
             // Set the current location:
-            currentLocation = newLocation.location
+//            currentLocation = newLocation.location
             // we got this -- lets tell the world where you are....
             if let user = FIRAuth.auth()?.currentUser {
                 // Okay - they must be signed in anonomously already, lets save their currentLocation:
                 // Create set the location using the user uid:
                 if self.updatingLocation == false {
-                    self.updatingLocation = true
-                    self.geoFire?.setLocation(newLocation.location, forKey: user.uid) {
-                        error in
-                        // Update the boolean now that we are done with our asych:
-                        self.updatingLocation = false
-                        // If the error is not nil, lets print the error:
-                        if error != nil {
-                            xmodeLog(error: error, functionString: String(#function), line: String(#line))
-                        // Lets just put this here for now:
-                        } else {
-                            print("Saved NEW location for CURRENT user!")
+                    
+                    if let lastLocation = self.currentLocation {
+                        // If the distance is greater than or equal to 50, then we will update the location:
+                        if lastLocation.distance(from: newLocation.location) >= 100 {
+                            // Okay lets save over the last one:
+                            self.updatingLocation = true
+                            self.geoFire?.setLocation(newLocation.location, forKey: user.uid) {
+                                error in
+                                // Update the boolean now that we are done with our asych:
+                                self.updatingLocation = false
+                                // If the error is not nil, lets print the error:
+                                if error != nil {
+                                    xmodeLog(error: error, functionString: String(#function), line: String(#line))
+                                    // Lets just put this here for now:
+                                } else {
+                                    print("Saved NEW location for CURRENT user!")
+                                }
+                            }
                         }
                     }
                 }
@@ -83,6 +94,8 @@ class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
                     }
                 }
             }
+            // Update the currentLocation for the next notification call from the SDK:
+            currentLocation = newLocation.location
             
         } else {
             // newLocation object is nil here:
@@ -113,22 +126,69 @@ class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
         
     }
     
-    func getOtherUsersLocations() {
-        
+    func getUserLocationData(withLocation: CLLocation?=nil) {
+    
         // Lets get all the users locations from Firebase:
         if let cL = currentLocation {
             // If we have the currentLocation (above), lets query from that location using a radius of 100:
             let query = geoFire?.query(at: cL, withRadius: 100)
             
+            self.heatMapData.removeAll()
             // This is apparently how we loop through those locations:
             query?.observe(.keyEntered) {
                 key, location in
+                
                 // Keys are unique & set from current user (we will check this to see if we need to actually add it in:)
-                if key != FIRAuth.auth()?.currentUser?.uid {
+                if key != FIRAuth.auth()?.currentUser?.uid && (location?.timestamp.timeIntervalSinceNow.isLessThanOrEqualTo(60000))! {
                     // Here we can add the location into an array to show for the heatmap:
-                    print("Key: ", key ?? "NULL KEY", " Location: ", location ?? "NULL LOCATION")
+                    if let loc = location {
+                        // Get the NSValue from the coordinate:
+                        let thepoint = MKMapPointForCoordinate(loc.coordinate)
+                        // Get the NSValue from the point:
+                        if let value = NSValue(mkMapPoint: thepoint) {
+                            // 1 is default weight:
+                            self.heatMapData[value] = 1
+                        }
+                    }
                 }
             }
+            // This will tell us when we are done observing:
+            query?.observeReady({
+                self.delegate?.updateHeatmapData(data: self.heatMapData)
+            })
+            
+        } else {
+            // Lets check if we sent in the location:
+            let query = geoFire?.query(at: withLocation, withRadius: 100)
+            
+            self.heatMapData.removeAll()
+            // This is apparently how we loop through those locations:
+            query?.observe(.keyEntered) {
+                key, location in
+                
+                // Keys are unique & set from current user (we will check this to see if we need to actually add it in:)
+                if key != FIRAuth.auth()?.currentUser?.uid && (location?.timestamp.timeIntervalSinceNow.isLessThanOrEqualTo(60000))! {
+                    // Here we can add the location into an array to show for the heatmap:
+                    if let loc = location {
+                        // Get the NSValue from the coordinate:
+                        let thepoint = MKMapPointForCoordinate(loc.coordinate)
+                        // Get the NSValue from the point:
+                        if let value = NSValue(mkMapPoint: thepoint) {
+                            // 1 is default weight:
+                            self.heatMapData[value] = 1
+                        }
+                    }
+                }
+            }
+            // This will tell us when we are done observing:
+            query?.observeReady({
+                // We are finished loading i think?:
+                self.delegate?.updateHeatmapData(data: self.heatMapData)
+            })
         }
     }
+}
+// Delegate Protocol:
+protocol HeatmapDelegate {
+    func updateHeatmapData(data: [NSValue : Double])
 }

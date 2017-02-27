@@ -57,7 +57,7 @@ struct Sounds {
 let xmodeAPIKey = "s3a9tsN2vJ9J0zvjxSYD4655qQeTaIzC6Zc7ZxYD"
 
 // XModeAPI Notification Keys:
-let locationKey = "XModeCurrentLocationKey"
+let sdkLocationKey = "XModeCurrentLocationKey"
 
 // XMode Logging:
 func xmodeLog(logMessage: String?=nil, error: Error?=nil, functionString: String, line: String) {

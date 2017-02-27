@@ -9,19 +9,20 @@
 import UIKit
 import DTMHeatmap
 
-class TPLocationViewController: UIViewController, MKMapViewDelegate {
+class TPLocationViewController: UIViewController, MKMapViewDelegate, HeatmapDelegate {
     
     // Delegate set in storyboard
     @IBOutlet var heatMap : MKMapView!
     @IBOutlet var navigationBar : UINavigationBar!
     
+    var updatedLocations = false
+    
+    var dtm = DTMHeatmap()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Initialize the DTMHeatMap:
-//        let dtm = DTMHeatmap()
-//        dtm.setData(<#T##newHeatMapData: [AnyHashable : Any]!##[AnyHashable : Any]!#>)
-//        self.heatMap.add(dtm)
+        // Set the HeatMapDelegate: (This will update the other users locations:
+        TPLocationDelegate.shared.delegate = self
         
     }
     
@@ -35,21 +36,31 @@ class TPLocationViewController: UIViewController, MKMapViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+        
+        // First lets zoom in to the user a little:
+        let span = MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
+        let region = MKCoordinateRegionMake(userLocation.coordinate, span)
+        self.heatMap.setRegion(region, animated: true)
+        
+        // Fetch the data now that we are listening for the callback:
+        if !updatedLocations {
+            TPLocationDelegate.shared.getUserLocationData(withLocation: userLocation.location)
+            // Set this boolean so we dont update mutiple times:
+            updatedLocations = true
+        }
+    }
+    
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         // Take care of the map view overlays:
         return DTMHeatmapRenderer(overlay: overlay)
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    //MARK: HeatMapDelegate Function:
+    func updateHeatmapData(data: [NSValue : Double]) {
+        // Set the data to the DTMHeatmap:
+        self.dtm.setData(data)
+        // Now add the DTMHeatmap as the overlay:
+        self.heatMap.add(self.dtm)
     }
-    */
-    
-    
-
 }
