@@ -130,8 +130,8 @@ final class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
     
         // Lets get all the users locations from Firebase:
         if let cL = currentLocation {
-            // If we have the currentLocation (above), lets query from that location using a radius of 100:
-            let query = geoFire?.query(at: cL, withRadius: 100)
+            // If we have the currentLocation (above), lets query from that location using a radius of 1000 KM:
+            let query = geoFire?.query(at: cL, withRadius: 1000)
             
             self.heatMapData.removeAll()
             // This is apparently how we loop through those locations:
@@ -159,7 +159,7 @@ final class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
             
         } else {
             // Lets check if we sent in the location:
-            let query = geoFire?.query(at: withLocation, withRadius: 100)
+            let query = geoFire?.query(at: withLocation, withRadius: 1000)
             
             self.heatMapData.removeAll()
             // This is apparently how we loop through those locations:
