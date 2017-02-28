@@ -11,6 +11,11 @@ import UIKit
 
 class TPEndSceneBottomView: UIView {
     
+    @IBOutlet weak var playButton: UIButton!
+    
+    @IBOutlet weak var homeButton: UIButton!
+    
+    @IBOutlet weak var shopButton: UIButton!
     
     
     

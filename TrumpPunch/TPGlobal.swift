@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 import AVFoundation
+import StoreKit
+import SpriteKit
 
 let Defaults = UserDefaults.standard
 
@@ -23,6 +25,8 @@ var Item: TPItem!
 var People = [TPPerson]()
 var Person: TPPerson!
 
+var Products = [SKProduct]()
+
 var Coins: Int!
 
 var InHomeScene: String = "HomeScene"
@@ -34,6 +38,7 @@ var InPeople: String = "People"
 var InStore: String = "Store"
 
 var CurrentScene: String = "HomeScene"
+var ThisScene = SKScene()
 var CurrentPage: String = "None"
 var CurrentPagePart: String = "None"
 
@@ -45,10 +50,22 @@ var CommaNumberFormatter = NumberFormatter()
 
 struct Sounds {
     
-    let tomatoes = "Tomatoes"
-    let nukes = "Nukes"
-    let pans = "Pans"
-    let fish = "Fish"
-    let swatters = "Swatters"
-    let gloves = "Gloves"
+    static let tomatoes = "Tomatoes"
+    static let nukes = "Nukes"
+    static let pans = "Pans"
+    static let fish = "Fish"
+    static let swatters = "Swatters"
+    static let gloves = "Gloves"
+    static let background = "AppMusic.mp3"
+    
+}
+
+struct DefaultType {
+    
+    static let coins = "Coins"
+    static let firstLaunch = "FirstLaunchComplete"
+    static let currentPerson = "CurrentPerson"
+    static let currentItem = "CurrentItem"
+    static let sound = "Sound"
+    static let music = "Music"
 }

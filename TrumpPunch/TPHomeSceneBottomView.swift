@@ -23,9 +23,7 @@ class TPHomeSceneBottomView: UIView {
     
     @IBOutlet weak var locationButton: UIButton!
     
-    
     @IBOutlet weak var musicOffView: UIButton!
-    
     
     @IBOutlet weak var soundOffView: UIButton!
     

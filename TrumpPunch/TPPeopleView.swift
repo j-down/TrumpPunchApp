@@ -33,6 +33,7 @@ class TPPeopleView: UIView {
     }
 }
 
+//MARK: UICollectionViewDelegate
 extension TPPeopleView: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {

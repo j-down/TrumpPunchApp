@@ -32,6 +32,13 @@ class TPHomeScene: SKScene {
 //MARK: HomeScene
 extension TPBaseViewController {
     
+    func openHomeScene() {
+        
+        let homeScene = TPHomeScene(size: view!.bounds.size)
+        homeScene.scaleMode = .aspectFill
+        //view.presentScene(homeScene, transition: SKTransition.fade(withDuration: 0.5))
+    }
+    
     func setupHomeSceneBottomView() {
         
         homeSceneBottomView = Bundle.main.loadNibNamed("TPHomeSceneBottomView", owner: self, options: [:])?[0] as! TPHomeSceneBottomView

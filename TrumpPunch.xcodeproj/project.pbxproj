@@ -18,6 +18,10 @@
 		711BC4551E5EC16600B077EC /* TPCoinBack.xib in Resources */ = {isa = PBXBuildFile; fileRef = 711BC4541E5EC16600B077EC /* TPCoinBack.xib */; };
 		711BC4581E5ED09700B077EC /* AppMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 711BC4571E5ED09700B077EC /* AppMusic.mp3 */; };
 		711BC45A1E61EAFF00B077EC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 711BC4591E61EAFF00B077EC /* GoogleService-Info.plist */; };
+		711BC4601E64D7D600B077EC /* TPStoreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711BC45F1E64D7D600B077EC /* TPStoreCollectionViewCell.swift */; };
+		711BC4621E64D7E000B077EC /* TPStoreCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 711BC4611E64D7E000B077EC /* TPStoreCollectionViewCell.xib */; };
+		711BC4641E651F2B00B077EC /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711BC4631E651F2B00B077EC /* IAPHelper.swift */; };
+		711BC4661E65222D00B077EC /* TPProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711BC4651E65222D00B077EC /* TPProducts.swift */; };
 		71E687491E5AB09D0016BE11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E687481E5AB09D0016BE11 /* AppDelegate.swift */; };
 		71E6874F1E5AB09D0016BE11 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E6874E1E5AB09D0016BE11 /* GameScene.swift */; };
 		71E687511E5AB09D0016BE11 /* TPBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E687501E5AB09D0016BE11 /* TPBaseViewController.swift */; };
@@ -86,6 +90,10 @@
 		711BC4541E5EC16600B077EC /* TPCoinBack.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TPCoinBack.xib; sourceTree = "<group>"; };
 		711BC4571E5ED09700B077EC /* AppMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = AppMusic.mp3; sourceTree = "<group>"; };
 		711BC4591E61EAFF00B077EC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		711BC45F1E64D7D600B077EC /* TPStoreCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TPStoreCollectionViewCell.swift; sourceTree = "<group>"; };
+		711BC4611E64D7E000B077EC /* TPStoreCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TPStoreCollectionViewCell.xib; sourceTree = "<group>"; };
+		711BC4631E651F2B00B077EC /* IAPHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAPHelper.swift; sourceTree = "<group>"; };
+		711BC4651E65222D00B077EC /* TPProducts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TPProducts.swift; sourceTree = "<group>"; };
 		71E687451E5AB09D0016BE11 /* TrumpPunch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrumpPunch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		71E687481E5AB09D0016BE11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		71E6874E1E5AB09D0016BE11 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -200,6 +208,8 @@
 			children = (
 				71E687971E5AB3DA0016BE11 /* TPStoreView.swift */,
 				71E687A21E5AB47F0016BE11 /* TPStoreView.xib */,
+				711BC45F1E64D7D600B077EC /* TPStoreCollectionViewCell.swift */,
+				711BC4611E64D7E000B077EC /* TPStoreCollectionViewCell.xib */,
 			);
 			name = Store;
 			sourceTree = "<group>";
@@ -377,6 +387,8 @@
 		71E687961E5AB3C80016BE11 /* IAP */ = {
 			isa = PBXGroup;
 			children = (
+				711BC4631E651F2B00B077EC /* IAPHelper.swift */,
+				711BC4651E65222D00B077EC /* TPProducts.swift */,
 			);
 			name = IAP;
 			sourceTree = "<group>";
@@ -543,6 +555,7 @@
 				711BC4411E5D0B3600B077EC /* TPPeopleView.xib in Resources */,
 				71E687A71E5AB49E0016BE11 /* TPEndSceneTopView.xib in Resources */,
 				711BC4551E5EC16600B077EC /* TPCoinBack.xib in Resources */,
+				711BC4621E64D7E000B077EC /* TPStoreCollectionViewCell.xib in Resources */,
 				71E687591E5AB09D0016BE11 /* LaunchScreen.storyboard in Resources */,
 				711BC45A1E61EAFF00B077EC /* GoogleService-Info.plist in Resources */,
 				711BC44B1E5D11A000B077EC /* TPShopTopView.xib in Resources */,
@@ -713,6 +726,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				71E687941E5AB3A00016BE11 /* TPItemsView.swift in Sources */,
+				711BC4661E65222D00B077EC /* TPProducts.swift in Sources */,
 				71E687861E5AB1E60016BE11 /* TPHelpers.swift in Sources */,
 				711BC4451E5D0E0300B077EC /* TPPeopleCollectionViewCell.swift in Sources */,
 				71E6874F1E5AB09D0016BE11 /* GameScene.swift in Sources */,
@@ -722,6 +736,7 @@
 				71E6879B1E5AB42E0016BE11 /* TPEndSceneBottomView.swift in Sources */,
 				71E687AB1E5AB4F00016BE11 /* TPPeoplePopupView.swift in Sources */,
 				71E687B41E5AB7970016BE11 /* TPHomeSceneBottomView.swift in Sources */,
+				711BC4601E64D7D600B077EC /* TPStoreCollectionViewCell.swift in Sources */,
 				71E687AD1E5AB4FB0016BE11 /* TPItemsPopupView.swift in Sources */,
 				71E6878F1E5AB33E0016BE11 /* TPGlobalScene.swift in Sources */,
 				71E687511E5AB09D0016BE11 /* TPBaseViewController.swift in Sources */,
@@ -729,6 +744,7 @@
 				711BC4501E5E2EDB00B077EC /* TPItemsCollectionViewCell.swift in Sources */,
 				71E6878B1E5AB3070016BE11 /* TPHomeScene.swift in Sources */,
 				71E6879D1E5AB4490016BE11 /* TPEndSceneTopView.swift in Sources */,
+				711BC4641E651F2B00B077EC /* IAPHelper.swift in Sources */,
 				71E687981E5AB3DA0016BE11 /* TPStoreView.swift in Sources */,
 				71E687841E5AB1E00016BE11 /* TPGlobal.swift in Sources */,
 				71E687491E5AB09D0016BE11 /* AppDelegate.swift in Sources */,

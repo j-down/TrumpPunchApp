@@ -17,6 +17,10 @@ class TPBaseViewController: UIViewController, UIScrollViewDelegate {
     var homeSceneBottomView: TPHomeSceneBottomView!
     var homeSceneLogoView: UIImageView!
     
+    //EndScene
+    var endSceneBottomView: TPEndSceneBottomView!
+    var endSceneTopView: TPEndSceneTopView!
+    
     //Shop
     var shopTopView: TPShopTopView!
     var shopBackground: UIView!
@@ -44,7 +48,7 @@ class TPBaseViewController: UIViewController, UIScrollViewDelegate {
     
     func setup() {
         
-        if Defaults.integer(forKey: "HasDoneFirstLaunch") == 0 {
+        if Defaults.integer(forKey: DefaultType.firstLaunch) == 0 {
             setupFirstLaunch()
         }
         
@@ -78,6 +82,16 @@ class TPBaseViewController: UIViewController, UIScrollViewDelegate {
         let homeScene = TPHomeScene(size: skView.bounds.size)
         homeScene.scaleMode = .aspectFill
         skView.presentScene(homeScene)
+    }
+    
+    func setPerson() {
+        
+        Defaults.set(1, forKey: DefaultType.currentPerson)
+    }
+    
+    func setItem() {
+        
+        Defaults.set(1, forKey: DefaultType.currentItem)
     }
     
     
@@ -115,10 +129,10 @@ extension TPBaseViewController {
         else {
             
             let person1 = TPPerson(name: "Donald Trump", price: "0", body: "Body1", unlocked: true)
-            let person2 = TPPerson(name: "Mike Pence", price: "40000", body: "Body1", unlocked: false)
-            let person3 = TPPerson(name: "Hillary Clinton", price: "30000", body: "Body1", unlocked: false)
+            let person2 = TPPerson(name: "Hillary Clinton", price: "30000", body: "Body1", unlocked: false)
+            let person3 = TPPerson(name: "Jimmy Fallon", price: "40000", body: "Body1", unlocked: false)
             let person4 = TPPerson(name: "Bernie Sanders", price: "30000", body: "Body1", unlocked: false)
-            let person5 = TPPerson(name: "Soulja Boy", price: "30000", body: "Body1", unlocked: false)
+            let person5 = TPPerson(name: "Miley Cyrus", price: "30000", body: "Body1", unlocked: false)
             let person6 = TPPerson(name: "Justin Bieber", price: "30000", body: "Body1", unlocked: true)
             let person7 = TPPerson(name: "PewDiePie", price: "100000", body: "Body1", unlocked: false)
             let person8 = TPPerson(name: "Kanye West", price: "250000", body: "Body1", unlocked: false)
@@ -180,17 +194,17 @@ extension TPBaseViewController {
     
     func setupCoins() {
         
-        Coins = Defaults.integer(forKey: "Coins")
+        Coins = Defaults.integer(forKey: DefaultType.coins)
     }
     
     func saveCoins() {
         
-        Defaults.set(Coins, forKey: "Coins")
+        Defaults.set(Coins, forKey: DefaultType.coins)
     }
     
     func setupSound() {
         
-        Sound = Defaults.bool(forKey: "Sound")
+        Sound = Defaults.bool(forKey: DefaultType.sound)
         
         if Sound {
             
@@ -203,7 +217,7 @@ extension TPBaseViewController {
     
     func setupMusic() {
         
-        Music = Defaults.bool(forKey: "Music")
+        Music = Defaults.bool(forKey: DefaultType.music)
         
         if Music {
             
@@ -218,23 +232,23 @@ extension TPBaseViewController {
     
     func setupFirstLaunch() {
         
-        if Defaults.integer(forKey: "HasDoneFirstLaunch") == 0 {
+        if Defaults.integer(forKey: DefaultType.firstLaunch) == 0 {
             
-            Defaults.set(1, forKey: "HasDoneFirstLaunch")
+            Defaults.set(1, forKey: DefaultType.firstLaunch)
             
-            Defaults.set(true, forKey: "Music")
-            Defaults.set(true, forKey: "Sound")
+            Defaults.set(true, forKey: DefaultType.music)
+            Defaults.set(true, forKey: DefaultType.sound)
         }
     }
     
     func setupTesting() {
         
-        Defaults.set(1000000, forKey: "Coins")
+        Defaults.set(1000000, forKey: DefaultType.coins)
     }
     
     func makeMusic(playing choice: Bool) {
         
-        let path = Bundle.main.path(forResource: "AppMusic.mp3", ofType:nil)!
+        let path = Bundle.main.path(forResource: Sounds.background, ofType:nil)!
         let url = URL(fileURLWithPath: path)
         
         do {
@@ -381,7 +395,7 @@ extension TPBaseViewController {
         shopCoinBack.backgroundColor = UIColor.clear
         view.addSubview(shopCoinBack)
         
-        shopCoinBack.coinLabel.text = CommaNumberFormatter.string(from: NSNumber(value: Defaults.integer(forKey: "Coins")))
+        //shopCoinBack.coinLabel.text = priceFormat(from: Coins)
         
     }
     
@@ -602,7 +616,7 @@ extension TPBaseViewController {
         }
         
         makeMusic(playing: Music)
-        Defaults.set(Music, forKey: "Music")
+        Defaults.set(Music, forKey: DefaultType.music)
     }
     
     func toggleSound() {
@@ -618,7 +632,7 @@ extension TPBaseViewController {
             Sound = true
         }
         
-        Defaults.set(Sound, forKey: "Sound")
+        Defaults.set(Sound, forKey: DefaultType.sound)
     }
     
     func openLocation() {
@@ -673,7 +687,7 @@ extension TPBaseViewController {
                 
                 Coins = Coins - price
                 
-                Defaults.set(Coins, forKey: "Coins")
+                Defaults.set(Coins, forKey: DefaultType.coins)
                 
                 for i in Items {
                     
@@ -703,3 +717,59 @@ extension TPBaseViewController {
     }
 }
 
+//MARK: IAP
+extension TPBaseViewController {
+    
+    func setupIAP() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(TPBaseViewController.handlePurchaseNotification(_:)),
+                                               name: NSNotification.Name(rawValue: IAPHelper.IAPHelperPurchaseNotification),
+                                               object: nil)
+
+    }
+    
+    func handlePurchaseNotification(_ notification: Notification) {
+        
+        guard let productID = notification.object as? String else { return }
+        
+        for (index, product) in Products.enumerated() {
+            guard product.productIdentifier == productID else { continue }
+            
+            addCoins(for: product.productIdentifier)
+        }
+    }
+    
+    func addCoins(for product: String) {
+        
+        if product == TPProducts.PileOfCoins {
+            
+            Coins = Coins + TPProducts.PileOfCoinsPrize
+        }
+        else if product == TPProducts.BagOfCoins {
+            
+            Coins = Coins + TPProducts.BagOfCoinsPrize
+        }
+        else if product == TPProducts.ChestOfCoins {
+            
+            Coins = Coins + TPProducts.ChestOfCoinsPrize
+        }
+        else if product == TPProducts.SmallLoanOfCoins {
+            
+            Coins = Coins + TPProducts.SmallLoanOfCoinsPrize
+        }
+        
+        Defaults.set(Coins, forKey: DefaultType.coins)
+        shopCoinBack.coinLabel.text = priceFormat(from: Coins)
+    }
+    
+    func priceFormat(from price: Int) -> String {
+        
+        if let priceString = CommaNumberFormatter.string(from: NSNumber(value: price)) {
+            
+            return priceString
+        }
+        
+        return "0"
+    }
+    
+}

@@ -26,8 +26,11 @@
                     </collectionViewFlowLayout>
                 </collectionView>
             </subviews>
-            <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="collectionView" destination="EQ8-Jn-lRc" id="iPL-m8-iz8"/>
+            </connections>
             <point key="canvasLocation" x="34.5" y="192.5"/>
         </view>
     </objects>

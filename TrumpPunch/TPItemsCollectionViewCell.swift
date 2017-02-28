@@ -25,12 +25,11 @@ class TPItemsCollectionViewCell: UICollectionViewCell {
         self.item = item
         backgroundColor = UIColor.clear
         
-        let tapGesture = UILongPressGestureRecognizer(target: self, action: #selector(cellTapped(gesture:)))
-        tapGesture.minimumPressDuration = 0
-        
         isUserInteractionEnabled = true
         isExclusiveTouch = true
         
+        let tapGesture = UILongPressGestureRecognizer(target: self, action: #selector(cellTapped(gesture:)))
+        tapGesture.minimumPressDuration = 0
         addGestureRecognizer(tapGesture)
         
         setupContent()
