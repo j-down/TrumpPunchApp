@@ -24,6 +24,8 @@
 	<true/>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Trump Punch would like access to your location.  We can then give you a great feature and show a heat map of all the people Trump Punching!</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>We use this to check your locations while in background - cause that helps you know whats going on.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>
