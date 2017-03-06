@@ -10,6 +10,7 @@ target 'TrumpPunch' do
 	pod 'Firebase/Core'
 	pod 'Firebase/Messaging'
 	pod 'Firebase/Database'
+  	pod 'Firebase/AdMob'
 end
 
 target 'TrumpPunchTests' do

@@ -10,8 +10,7 @@ import Foundation
 import UIKit
 import SpriteKit
 
-class TPHomeScene: SKScene {
-    
+class TPHomeScene: TPGlobalScene {
     
     override func didMove(to view: SKView) {
         
@@ -20,12 +19,14 @@ class TPHomeScene: SKScene {
     
     func setup() {
         
-        CurrentScene = InHomeScene
+        CurrentScene = SceneType.homeScene
         
         backgroundColor = UIColor.white
         
         BaseViewController.setupHomeSceneBottomView()
         BaseViewController.presentHomeSceneBottomView()
+        
+        authenticateGameCenter()
     }
 }
 
@@ -39,16 +40,25 @@ extension TPBaseViewController {
         //view.presentScene(homeScene, transition: SKTransition.fade(withDuration: 0.5))
     }
     
+    func removeHomeScene() {
+        
+        homeSceneBottomView.removeFromSuperview()
+        homeSceneLogoView.removeFromSuperview()
+    }
+    
     func setupHomeSceneBottomView() {
         
         homeSceneBottomView = Bundle.main.loadNibNamed("TPHomeSceneBottomView", owner: self, options: [:])?[0] as! TPHomeSceneBottomView
         
+        homeSceneBottomView.backgroundColor = UIColor.clear
         homeSceneBottomView.frame = CGRect(x: MidX, y: MidY, width: 286, height: 300)
         homeSceneBottomView.center = CGPoint(x: MidX,y: MidY + 75)
         
         homeSceneLogoView = UIImageView(image: UIImage(named: "HomeSceneLogo"))
         homeSceneLogoView.frame = CGRect(x: MidX, y: MidY, width: 150, height: 130)
         homeSceneLogoView.center = CGPoint(x: MidX,y: MidY - 125)
+        homeSceneLogoView.backgroundColor = UIColor.clear
+        homeSceneLogoView.alpha = 0
         
         let playButtonTapGesture = UILongPressGestureRecognizer(target: self, action: #selector(playButtonPressed(gesture:)))
         playButtonTapGesture.minimumPressDuration = 0
@@ -95,6 +105,12 @@ extension TPBaseViewController {
         
         view.addSubview(homeSceneBottomView)
         view.addSubview(homeSceneLogoView)
+        
+        UIView.animate(withDuration: 0.2, delay: 0.5, animations: {
+        
+            
+            self.homeSceneLogoView.alpha = 1
+        })
     }
     
     func removeHomeSceneButtonView() {
@@ -111,7 +127,8 @@ extension TPBaseViewController {
                 self.homeSceneBottomView.playButton.transform = CGAffineTransform.identity
             }, completion: { finished in
                 
-                //Do work
+                ThisGlobalScene.playSound(named: Sounds.button)
+                ThisGlobalScene.presentGameScene()
             })
         }
         else if gesture.state == .began {
@@ -132,7 +149,8 @@ extension TPBaseViewController {
                 self.homeSceneBottomView.trophyButton.transform = CGAffineTransform.identity
             }, completion: { finished in
                 
-                //Do work
+                ThisGlobalScene.playSound(named: Sounds.button)
+                ThisGlobalScene.showGameCenterLeaderboard()
             })
         }
         else if gesture.state == .began {
@@ -153,6 +171,7 @@ extension TPBaseViewController {
                 self.homeSceneBottomView.shopButton.transform = CGAffineTransform.identity
             }, completion: { finished in
                 
+                ThisGlobalScene.playSound(named: Sounds.button)
                 BaseViewController.openShop()
             })
         }
@@ -196,6 +215,7 @@ extension TPBaseViewController {
                 self.homeSceneBottomView.musicOffView.transform = CGAffineTransform.identity
             }, completion: { finished in
                 
+                ThisGlobalScene.playSound(named: Sounds.button)
                 BaseViewController.toggleMusic()
             })
         }
@@ -219,6 +239,7 @@ extension TPBaseViewController {
                 self.homeSceneBottomView.soundOffView.transform = CGAffineTransform.identity
             }, completion: { finished in
                 
+                ThisGlobalScene.playSound(named: Sounds.button)
                 BaseViewController.toggleSound()
             })
         }

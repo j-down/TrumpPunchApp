@@ -14,6 +14,7 @@ class TPPerson: NSObject, NSCoding {
     var price: String
     var body: String
     var unlocked: Bool
+    var current: Bool
     
     var quotes = [String]()
     
@@ -39,14 +40,16 @@ class TPPerson: NSObject, NSCoding {
         static let priceKey = "price"
         static let bodyKey = "body"
         static let unlockedKey = "unlocked"
+        static let currentKey = "current"
     }
     
-    init(name: String = "Setup", price: String = "0", body: String = "Setup", unlocked: Bool = false) {
+    init(name: String = "Setup", price: String = "0", body: String = "Setup", unlocked: Bool = false, current: Bool = false) {
         
         self.name = name
         self.price = price
         self.body = body
         self.unlocked = unlocked
+        self.current = current
         
         super.init()
     }
@@ -57,6 +60,7 @@ class TPPerson: NSObject, NSCoding {
         aCoder.encode(price, forKey: PropertyKey.priceKey)
         aCoder.encode(body, forKey: PropertyKey.bodyKey)
         aCoder.encode(unlocked, forKey: PropertyKey.unlockedKey)
+        aCoder.encode(current, forKey: PropertyKey.currentKey)
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
@@ -65,8 +69,9 @@ class TPPerson: NSObject, NSCoding {
         let price = aDecoder.decodeObject(forKey: PropertyKey.priceKey) as! String
         let body = aDecoder.decodeObject(forKey: PropertyKey.bodyKey) as! String
         let unlocked = aDecoder.decodeBool(forKey: PropertyKey.unlockedKey)
+        let current = aDecoder.decodeBool(forKey: PropertyKey.currentKey)
         
-        self.init(name: name, price: price, body: body, unlocked: unlocked)
+        self.init(name: name, price: price, body: body, unlocked: unlocked, current: current)
         
     }
     
@@ -77,7 +82,8 @@ class TPPerson: NSObject, NSCoding {
             "name" : name,
             "price" : price,
             "body" : body,
-            "unlocked" : unlocked
+            "unlocked" : unlocked,
+            "current" : current
         ]
     }
 }
@@ -131,30 +137,28 @@ extension TPPerson {
         
         quotes = []
         
-        quotes.append("\"Listen you mother f****r, we're going to tax you 25 percent!\"")
+        quotes.append("\"Terrible! Just found out that Obama had my “wires tapped” in Trump Tower just before the victory.  Nothing found.  This is McCarthyism!\"")
         quotes.append("\"You know, it really doesn't matter what [the media] write as long as you've got a young and beautiful piece of ass.\"")
+        quotes.append("\"When Mexico is sending its people, they’re not sending their best... They’re bringing drugs. They’re bringing crime.  They’re rapists.  And some, I assume are good people.\"")
         quotes.append("\"When was the last time anybody saw us beating, let's say, China in a trade deal? They kill us. I beat China all the time. All the time. \"")
         quotes.append("\"I will build a great wall, and nobody builds walls better than me, believe me.\"")
-        quotes.append("\"The wall will go up and Mexico will start behaving.\"")
-        quotes.append("\"Laziness is a trait in the blacks.\"")
+        quotes.append("\"It is hard for them to attack me on looks, because I am so good looking\"")
         quotes.append("\"If I were running 'The View,' I'd fire Rosie. I mean, I'd look her right in that fat, ugly face of hers, I'd say, 'Rosie, you're fired.' \"")
         quotes.append("\"Hillary Clinton was the worst Secretary of State in the history of the United States\"")
-        quotes.append("\"If you can't get rich dealing with politicians, there's something wrong with you.\"")
-        quotes.append("\"All of the women on The Apprentice flirted with me, consciously or unconsciously. That's to be expected.\"")
-        quotes.append("\"One of the key problems today is that politics is such a disgrace. \"")
-        quotes.append("\"The beauty of me is that I'm very rich.\"")
-        quotes.append("\"It's freezing and snowing in New York we need global warming!\"")
-        quotes.append("\"I've said if Ivanka weren't my daughter, perhaps I'd be dating her\"")
-        quotes.append("\"My fingers are long and beautiful, as, it has been well documented, are various other parts of my body.\"")
-        quotes.append("\"I have never seen a thin person drinking Diet Coke.\"")
+        quotes.append("\"Donald J. Trump is calling for a total and complete shutdown of Muslims entering the United States. \"")
+        quotes.append("\"I guess it was the biggest electoral college win since Ronald Reagan\"")
+        quotes.append("\"[Putin] is a strong leader…He’s making mincemeat out of our President. \"")
+        quotes.append("\"I could stand in the middle of 5th Avenue and shoot somebody, and I wouldn’t lose voters.\"")
+        quotes.append("\"The leaks are real.  The news is fake.\"")
+        quotes.append("\"Any negative polls are fake news\"")
+        quotes.append("\"I turn on the T.V., open the newspaper and I see stories of chaos.  Chaos. Yet it is the exact opposite.  This administration is running like a fine-tuned machine.\"")
+        quotes.append("\"The point is, you can never be too greedy. \"")
         quotes.append("\"The point is, you can never be too greedy. \"")
         quotes.append("\"I have so many fabulous friends who happen to be gay, but I am a traditionalist. \"")
-        quotes.append("\"I'm the worst thing that's ever happened to Isis.\"")
-        quotes.append("\"I've said if Ivanka weren't my daughter, perhaps I'd be dating her\"")
-        quotes.append("\"I've said if Ivanka weren't my daughter, perhaps I'd be dating her\"")
-        quotes.append("\"I've said if Ivanka weren't my daughter, perhaps I'd be dating her\"")
+        quotes.append("\"I made a speech.  I looked out the field was – it looked like a million, a million and a half people\"")
+        quotes.append("\"I made a speech.  I looked out the field was – it looked like a million, a million and a half people\"")
         
-        return quotes[Int(arc4random_uniform(19))]
+        return quotes[randomNumberWith(max: quotes.count)]
     }
     
     func hillaryClintonQuote() -> String {
@@ -178,7 +182,7 @@ extension TPPerson {
         quotes.append("\"A right-wing network was after his presidency... including perverting the Constitution.\"")
         quotes.append("\"My husband may have his faults, but he has never lied to me.\"")
         
-        return quotes[Int(arc4random_uniform(14))]
+        return quotes[randomNumberWith(max: quotes.count)]
     }
     
     func justinBieberQuote() -> String {
@@ -202,7 +206,7 @@ extension TPPerson {
         quotes.append("\"When you are following me on Twitter, you are literally following my life. I think that’s pretty cool.\"")
         quotes.append("\"I have a swagger coach that helps me and teaches me different swaggerific things to do\"")
         
-        return quotes[Int(arc4random_uniform(14))]
+        return quotes[randomNumberWith(max: quotes.count)]
         
     }
     
@@ -221,7 +225,7 @@ extension TPPerson {
         quotes.append("\"I just want to entertain; that is my main objective and what comes before everything else.\"")
         quotes.append("\"The thing that has made YouTube so successful is that you can relate to the people you're watching to a much higher degree than to the people you see on TV.\"")
         
-        return quotes[Int(arc4random_uniform(9))]
+        return quotes[randomNumberWith(max: quotes.count)]
         
     }
     
@@ -240,7 +244,7 @@ extension TPPerson {
         quotes.append("\"Sometimes people write novels and they just be so wordy and so self-absorbed. I am not a fan of books. I would never want a book’s autograph.\"")
         quotes.append("\"I LIKE PORN!\"")
         
-        return quotes[Int(arc4random_uniform(9))]
+        return quotes[randomNumberWith(max: quotes.count)]
     }
     
     func kimKardashianQuote() -> String {
@@ -258,7 +262,7 @@ extension TPPerson {
         quotes.append("\"I am Armenian, so of course I am obsessed with laser hair removal!\"")
         quotes.append("\"We met the Jonas Brothers. Nick [Jonas] is so cute ... I don't think Reggie will get mad because [Nick] is, like, 15. I really shouldn't say he's cute. It's a little inappropriate!\"")
         
-        return quotes[Int(arc4random_uniform(9))]
+        return quotes[randomNumberWith(max: quotes.count)]
     }
     
     func mileyCyrusQuote() -> String {
@@ -276,7 +280,7 @@ extension TPPerson {
         quotes.append("\"I'm pretty cool. I'm pretty much the coolest person ever.\"")
         quotes.append("\"I listen to zero pop music, which is really weird from someone who makes pop music.\"")
         
-        return quotes[Int(arc4random_uniform(9))]
+        return quotes[randomNumberWith(max: quotes.count)]
     }
     
     func bernieSandersQuote() -> String {
@@ -290,7 +294,7 @@ extension TPPerson {
         quotes.append("\"We must transform our energy system away from fossil fuels and into energy efficiency and sustainable energies.\"")
         quotes.append("\"I have an ample supply of underwear.\"")
         
-        return quotes[Int(arc4random_uniform(5))]
+        return quotes[randomNumberWith(max: quotes.count)]
     }
     
     func jimmyFallonQuote() -> String {
@@ -308,7 +312,7 @@ extension TPPerson {
         quotes.append("\"Don't keep reaching for the stars because you'll just look like an idiot stretching that way for no reason.\"")
         quotes.append("\"Thank you... motion sensor hand towel machine. You never work, so I just end up looking like I'm waving hello to a wall robot.\"")
         
-        return quotes[Int(arc4random_uniform(9))]
+        return quotes[randomNumberWith(max: quotes.count)]
         
     }
     

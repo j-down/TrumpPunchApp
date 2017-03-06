@@ -20,15 +20,22 @@ import StoreKit
 
 class TPStoreCollectionViewCell: UICollectionViewCell {
     
+    static let priceFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        
+        formatter.formatterBehavior = .behavior10_4
+        formatter.numberStyle = .currency
+        
+        return formatter
+    }()
+    
     var product: SKProduct!
     
-    
     @IBOutlet weak var productImageView: UIImageView!
-    
-    
     @IBOutlet weak var productNameLabel: UILabel!
-    
-    
+    @IBOutlet weak var productCoinsLabel: UILabel!
+    @IBOutlet weak var productPriceLabel: UILabel!
+    @IBOutlet weak var productIconImageView: UIImageView!
     
     func setup(for product: SKProduct) {
         
@@ -51,9 +58,13 @@ class TPStoreCollectionViewCell: UICollectionViewCell {
         
         if let name = resourceNameForProductIdentifier(product.productIdentifier) {
             
-            productImageView.image = UIImage(named: name)
+            print("---"  + name)
+            productIconImageView.image = UIImage(named: name)
+            productNameLabel.text = product.localizedTitle
+            productCoinsLabel.text = product.localizedDescription
+            TPStoreCollectionViewCell.priceFormatter.locale = product.priceLocale
+            productPriceLabel.text = TPStoreCollectionViewCell.priceFormatter.string(from: product.price)
         }
-        
         
     }
     
@@ -66,8 +77,7 @@ class TPStoreCollectionViewCell: UICollectionViewCell {
                 self.productImageView.transform = CGAffineTransform.identity
             }, completion: { finished in
                 
-                //TODO: make do 
-                
+                TPProducts.store.buyProduct(self.product)
             })
         }
         else if gesture.state == .began {

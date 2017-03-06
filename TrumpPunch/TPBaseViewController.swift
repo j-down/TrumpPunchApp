@@ -10,8 +10,11 @@ import UIKit
 import SpriteKit
 import GameplayKit
 import AVFoundation
+import Firebase
+import FirebaseCore
+import GoogleMobileAds
 
-class TPBaseViewController: UIViewController, UIScrollViewDelegate {
+class TPBaseViewController: UIViewController {
 
     //HomeScene
     var homeSceneBottomView: TPHomeSceneBottomView!
@@ -20,12 +23,16 @@ class TPBaseViewController: UIViewController, UIScrollViewDelegate {
     //EndScene
     var endSceneBottomView: TPEndSceneBottomView!
     var endSceneTopView: TPEndSceneTopView!
+    var endSceneMiddleView: TPEndSceneMiddleView!
+    var shareImageView: UIImageView!
     
     //Shop
     var shopTopView: TPShopTopView!
     var shopBackground: UIView!
     var shopPopupBackground: UIView!
     var shopCoinBack: TPCoinBack!
+    
+    var shopSegmentedControl: UISegmentedControl!
     
     var peopleView: TPPeopleView!
     var peoplePopupView: TPPeoplePopupView!
@@ -35,14 +42,13 @@ class TPBaseViewController: UIViewController, UIScrollViewDelegate {
     var inItemPopup: Bool = false
     var inPersonPopup: Bool = false
     
-    var scrollView: UIScrollView!
-    var frame: CGRect = CGRect(x: 0, y: 0, width: 0, height: 0)
-    var pageControl : UIPageControl!
+    //Ads
+    @IBOutlet weak var bannerView: GADBannerView!
+    var interstitial: GADInterstitial!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupTesting()
         setup()
     }
     
@@ -68,10 +74,12 @@ class TPBaseViewController: UIViewController, UIScrollViewDelegate {
     func setupData() {
         
         setupCoins()
+        setupIAP()
         setupPeople()
         setupItems()
         setupSound()
         setupMusic()
+        setupAds()
     }
     
     func setupScene() {
@@ -79,19 +87,71 @@ class TPBaseViewController: UIViewController, UIScrollViewDelegate {
         let skView = self.view as! SKView
         skView.isMultipleTouchEnabled = false
         
-        let homeScene = TPHomeScene(size: skView.bounds.size)
-        homeScene.scaleMode = .aspectFill
-        skView.presentScene(homeScene)
+        ThisGlobalScene = TPGlobalScene()
+        ThisHomeScene = TPHomeScene(size: skView.bounds.size)
+        ThisHomeScene.scaleMode = .aspectFill
+        ThisGlobalScene = ThisHomeScene
+        skView.presentScene(ThisHomeScene)
     }
     
-    func setPerson() {
+    func setPerson(person: TPPerson) {
         
-        Defaults.set(1, forKey: DefaultType.currentPerson)
+        for i in People {
+            
+            if i.name == person.name {
+                
+                i.current = true
+            }
+            else {
+                
+                i.current = false
+            }
+        }
+        
+        savePeople()
     }
     
-    func setItem() {
+    func lastPerson() -> TPPerson {
         
-        Defaults.set(1, forKey: DefaultType.currentItem)
+        for i in People {
+            
+            if i.current {
+                
+                return i
+            }
+        }
+        
+        return People[0]
+    }
+    
+    func setItem(item: TPItem) {
+        
+        for i in Items {
+            
+            if i.name == item.name {
+                
+                i.current = true
+            }
+            else {
+                
+                i.current = false
+            }
+        }
+        
+        saveItems()
+    }
+    
+    func lastItem() -> TPItem {
+        
+        for i in Items {
+            
+            if i.current {
+                
+                return i
+            }
+        }
+        
+        return Items[0]
     }
     
     
@@ -125,18 +185,19 @@ extension TPBaseViewController {
         if let savedPeople = savedPeople() {
             
             People = savedPeople
+            Person = lastPerson()
         }
         else {
             
-            let person1 = TPPerson(name: "Donald Trump", price: "0", body: "Body1", unlocked: true)
-            let person2 = TPPerson(name: "Hillary Clinton", price: "30000", body: "Body1", unlocked: false)
-            let person3 = TPPerson(name: "Jimmy Fallon", price: "40000", body: "Body1", unlocked: false)
-            let person4 = TPPerson(name: "Bernie Sanders", price: "30000", body: "Body1", unlocked: false)
-            let person5 = TPPerson(name: "Miley Cyrus", price: "30000", body: "Body1", unlocked: false)
-            let person6 = TPPerson(name: "Justin Bieber", price: "30000", body: "Body1", unlocked: true)
-            let person7 = TPPerson(name: "PewDiePie", price: "100000", body: "Body1", unlocked: false)
-            let person8 = TPPerson(name: "Kanye West", price: "250000", body: "Body1", unlocked: false)
-            let person9 = TPPerson(name: "Kim Kardashian", price: "500000", body: "Body1", unlocked: false)
+            let person1 = TPPerson(name: "Donald Trump", price: "0", body: "Suit1", unlocked: true, current: true)
+            let person2 = TPPerson(name: "Hillary Clinton", price: "5000", body: "Dress1", unlocked: false)
+            let person3 = TPPerson(name: "Martin Shkreli", price: "10000", body: "Suit2", unlocked: false)
+            let person4 = TPPerson(name: "Bernie Sanders", price: "20000", body: "Suit2", unlocked: false)
+            let person5 = TPPerson(name: "Miley Cyrus", price: "30000", body: "Dress2", unlocked: false)
+            let person6 = TPPerson(name: "Justin Bieber", price: "50000", body: "Suit2", unlocked: false)
+            let person7 = TPPerson(name: "PewDiePie", price: "100000", body: "Suit1", unlocked: false)
+            let person8 = TPPerson(name: "Kanye West", price: "250000", body: "Suit2", unlocked: false)
+            let person9 = TPPerson(name: "Kim Kardashian", price: "500000", body: "Dress2", unlocked: false)
             
             People = [person1, person2, person3, person4, person5, person6, person7, person8, person9]
             Person = person1
@@ -165,17 +226,17 @@ extension TPBaseViewController {
         if let savedItems = savedItems() {
             
             Items = savedItems
+            Item = lastItem()
         }
         else {
             
-            let item1 = TPItem(name: "Tomatoes", price: "0", coinsEarned: "100", unlocked: true)
-            let item2 = TPItem(name: "Fish", price: "0", coinsEarned: "100", unlocked: false)
-            let item3 = TPItem(name: "Swatters", price: "0", coinsEarned: "100", unlocked: false)
-            let item4 = TPItem(name: "Gloves", price: "0", coinsEarned: "100", unlocked: false)
-            let item5 = TPItem(name: "Pans", price: "0", coinsEarned: "100", unlocked: false)
-            let item6 = TPItem(name: "Nukes", price: "0", coinsEarned: "100", unlocked: false)
+            let item1 = TPItem(name: WeaponType.tomatoes, price: "0", coinsEarned: String(WeaponCoins.tomatoes), unlocked: true, current: true)
+            let item2 = TPItem(name: WeaponType.fish, price: "1000", coinsEarned: String(WeaponCoins.fish), unlocked: false)
+            let item3 = TPItem(name: WeaponType.swatters, price: "10000", coinsEarned: String(WeaponCoins.swatters), unlocked: false)
+            let item4 = TPItem(name: WeaponType.gloves, price: "100000", coinsEarned: String(WeaponCoins.gloves), unlocked: false)
+            let item5 = TPItem(name: WeaponType.nukes, price: "250000", coinsEarned: String(WeaponCoins.nukes), unlocked: false)
             
-            Items = [item1, item2, item3, item4, item5, item6]
+            Items = [item1, item2, item3, item4, item5]
             Item = item1
             
             saveItems()
@@ -195,6 +256,10 @@ extension TPBaseViewController {
     func setupCoins() {
         
         Coins = Defaults.integer(forKey: DefaultType.coins)
+        
+        if Debug {
+            Coins = 1000000
+        }
     }
     
     func saveCoins() {
@@ -238,38 +303,38 @@ extension TPBaseViewController {
             
             Defaults.set(true, forKey: DefaultType.music)
             Defaults.set(true, forKey: DefaultType.sound)
+            
+            trackFirebase(for: "NewUser")
         }
     }
     
-    func setupTesting() {
-        
-        Defaults.set(1000000, forKey: DefaultType.coins)
-    }
     
     func makeMusic(playing choice: Bool) {
         
-        let path = Bundle.main.path(forResource: Sounds.background, ofType:nil)!
-        let url = URL(fileURLWithPath: path)
-        
-        do {
-            BackgroundMusic = try AVAudioPlayer(contentsOf: url)
+        if let path = Bundle.main.url(forResource: Sounds.background, withExtension: "mp3") {
             
-            if choice {
+            do {
+                BackgroundMusic = try AVAudioPlayer(contentsOf: path)
                 
-                BackgroundMusic.numberOfLoops = -1
-                BackgroundMusic.play()
+                if choice {
+                    
+                    BackgroundMusic.numberOfLoops = -1
+                    BackgroundMusic.play()
+                    
+                }
+                else {
+                    
+                    BackgroundMusic.numberOfLoops = 0
+                    BackgroundMusic.volume = 0
+                    BackgroundMusic.stop()
+                }
                 
+            } catch {
+                print(error)
             }
-            else {
-                
-                BackgroundMusic.numberOfLoops = 0
-                BackgroundMusic.volume = 0
-                BackgroundMusic.stop()
-            }
-            
-        } catch {
-            print(error)
         }
+        
+        
     }
     
 }
@@ -290,31 +355,61 @@ extension TPBaseViewController {
     
     func presentShop() {
     
+        trackFirebase(for: "Shop")
+        
         CurrentPage = InShop
         
         shopTopView.isHidden = false
         shopCoinBack.isHidden = false
         shopBackground.isHidden = false
         
-        shopTopView.peopleLabel.textColor = UIColor.init(red: 0.0/255.0, green: 64.0/255.0, blue: 128.0/255.0, alpha: 1)
-        shopTopView.storeLabel.textColor = UIColor.gray
-        shopTopView.itemsLabel.textColor = UIColor.gray
+        peopleView.isHidden = false
+        itemsView.isHidden = true
+        storeView.isHidden = true
         
-        setupShopScrollView()
-        presentShopScrollView()
+        view.addSubview(peopleView)
+        view.addSubview(itemsView)
+        view.addSubview(storeView)
+        
+        itemsView.isHidden = true
+        storeView.isHidden = true
+        
+        shopTopView.segmentedControl.selectedSegmentIndex = 0
+        shopTopView.segmentedControl.isUserInteractionEnabled = true
+        
+        view.bringSubview(toFront: shopBackground)
+        view.bringSubview(toFront: itemsView)
+        view.bringSubview(toFront: peopleView)
+        view.bringSubview(toFront: storeView)
+        view.bringSubview(toFront: shopCoinBack)
+        view.bringSubview(toFront: shopTopView)
+        
+        shopCoinBack.center = CGPoint(x: MidX,y: UIScreen.main.bounds.midY + UIScreen.main.bounds.height / 2 - shopCoinBack.frame.height / 2 - 40 )
     }
     
     func removeShop() {
         
+        removePopup()
+        
         shopTopView.isHidden = true
         shopBackground.isHidden = true
         shopPopupBackground.isHidden = true
-        shopCoinBack.isHidden = true
         
-        removeScrollView()
+        if CurrentScene == SceneType.homeScene {
+            shopCoinBack.isHidden = true
+        }
+        else {
+            shopCoinBack.center = CGPoint(x: MidX,y: UIScreen.main.bounds.midY + UIScreen.main.bounds.height / 2 - BaseViewController.shopCoinBack.frame.height / 2 - 200 )
+        }
         
         CurrentPage = "None"
+        
+        peopleView.removeFromSuperview()
+        itemsView.removeFromSuperview()
+        storeView.removeFromSuperview()
     }
+    
+    
     
     func setupShopBackgrounds() {
         
@@ -341,49 +436,60 @@ extension TPBaseViewController {
         
         shopTopView = Bundle.main.loadNibNamed("TPShopTopView", owner: self, options: [:])?[0] as! TPShopTopView
         
-        shopTopView.frame = CGRect(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY, width: UIScreen.main.bounds.width, height: 110)
-        shopTopView.center = CGPoint(x: UIScreen.main.bounds.midX,y: UIScreen.main.bounds.midY - UIScreen.main.bounds.height / 2 + shopTopView.frame.height / 2)
-        shopTopView.isHidden = true
-        shopTopView.isUserInteractionEnabled = true
-        view.addSubview(shopTopView)
+        shopTopView.setup()
         
         let shopExitTapGesture = UITapGestureRecognizer(target: self, action: #selector(removeShop))
         shopTopView.exitButton.isUserInteractionEnabled = true
         shopTopView.exitButton.addGestureRecognizer(shopExitTapGesture)
         
-        let shopPeopleTapGesture = UITapGestureRecognizer(target: self, action: #selector(moveShopToPeople))
-        shopTopView.peopleLabel.isUserInteractionEnabled = true
-        shopTopView.peopleLabel.addGestureRecognizer(shopPeopleTapGesture)
+        view.addSubview(shopTopView)
         
-        let shopItemsTapGesture = UITapGestureRecognizer(target: self, action: #selector(moveShopToItems))
-        shopTopView.itemsLabel.isUserInteractionEnabled = true
-        shopTopView.itemsLabel.addGestureRecognizer(shopItemsTapGesture)
+        shopTopView.segmentedControl.addTarget(self, action: #selector(shopSegmentAction(_:)), for: .valueChanged)
         
-        let shopStoreTapGesture = UITapGestureRecognizer(target: self, action: #selector(moveShopToStore))
-        shopTopView.storeLabel.isUserInteractionEnabled = true
-        shopTopView.storeLabel.addGestureRecognizer(shopStoreTapGesture)
+    }
+    
+    func shopSegmentAction(_ sender: UISegmentedControl!) {
+        
+        print("Pressed \(sender.selectedSegmentIndex)")
+        
+        switch sender.selectedSegmentIndex {
+            
+        case 0:
+            moveShopToPeople()
+        case 1:
+            moveShopToItems()
+        case 2:
+            moveShopToStore()
+        default:
+            moveShopToPeople()
+        }
     }
     
     func moveShopToPeople() {
         
-        shopTopView.peopleLabel.textColor = UIColor.init(red: 0.0/255.0, green: 64.0/255.0, blue: 128.0/255.0, alpha: 1)
-        shopTopView.storeLabel.textColor = UIColor.gray
-        shopTopView.itemsLabel.textColor = UIColor.gray
+        trackFirebase(for: "ShopPeople")
+        
+        peopleView.isHidden = false
+        itemsView.isHidden = true
+        storeView.isHidden = true
     }
     
     func moveShopToItems() {
         
-        shopTopView.itemsLabel.textColor = UIColor.init(red: 0.0/255.0, green: 64.0/255.0, blue: 128.0/255.0, alpha: 1)
-        shopTopView.storeLabel.textColor = UIColor.gray
-        shopTopView.peopleLabel.textColor = UIColor.gray
+        trackFirebase(for: "ShopItems")
+        
+        peopleView.isHidden = true
+        itemsView.isHidden = false
+        storeView.isHidden = true
     }
     
     func moveShopToStore() {
         
-        shopTopView.storeLabel.textColor = UIColor.init(red: 0.0/255.0, green: 64.0/255.0, blue: 128.0/255.0, alpha: 1)
-        shopTopView.peopleLabel.textColor = UIColor.gray
-        shopTopView.itemsLabel.textColor = UIColor.gray
+        trackFirebase(for: "ShopStore")
         
+        peopleView.isHidden = true
+        itemsView.isHidden = true
+        storeView.isHidden = false
     }
     
     func setupShopCoinBack() {
@@ -395,34 +501,37 @@ extension TPBaseViewController {
         shopCoinBack.backgroundColor = UIColor.clear
         view.addSubview(shopCoinBack)
         
-        //shopCoinBack.coinLabel.text = priceFormat(from: Coins)
+        let shopCoinBackGesture = UITapGestureRecognizer(target: self, action: #selector(moveShopToStore))
+        shopCoinBack.isUserInteractionEnabled = true
+        shopCoinBack.addGestureRecognizer(shopCoinBackGesture)
         
+        Coins = Defaults.integer(forKey: DefaultType.coins)
+        
+        shopCoinBack.coinLabel.text = priceFormat(from: Coins)
+        
+    }
+    
+    func presentShopCoinBack() {
+        
+        view.addSubview(shopCoinBack)
+        shopCoinBack.isHidden = false
     }
     
     func setupShopPeople() {
         
         peopleView = Bundle.main.loadNibNamed("TPPeopleView", owner: self, options: [:])?[0] as! TPPeopleView
-        
         peopleView.setup()
     }
     
     func setupShopItems() {
         
         itemsView = Bundle.main.loadNibNamed("TPItemsView", owner: self, options: [:])?[0] as! TPItemsView
-        
-        itemsView.frame = CGRect(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY + 40, width: UIScreen.main.bounds.width, height: 440)
-        itemsView.center = CGPoint(x: UIScreen.main.bounds.midX,y: UIScreen.main.bounds.midY - 40)
-        
         itemsView.setup()
     }
     
     func setupShopStore() {
         
         storeView = Bundle.main.loadNibNamed("TPStoreView", owner: self, options: [:])?[0] as! TPStoreView
-        
-        storeView.frame = CGRect(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY + 40, width: UIScreen.main.bounds.width, height: 440)
-        storeView.center = CGPoint(x: UIScreen.main.bounds.midX,y: UIScreen.main.bounds.midY - 40)
-        
         storeView.setup()
     }
     
@@ -444,94 +553,6 @@ extension TPBaseViewController {
             
             removeItemsPopup()
         }
-    }
-    
-    //MARK: ScrollView
-    func setupShopScrollView() {
-        
-        scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 1.25))
-        scrollView.center = CGPoint(x: MidX, y: MidY)
-        
-        pageControl = UIPageControl(frame: CGRect(x: 0, y: UIScreen.main.bounds.midY * 1.8, width: UIScreen.main.bounds.width, height: 50))
-        
-        pageControl.numberOfPages = 3
-        pageControl.currentPage = 0
-        pageControl.tintColor = UIColor.red
-        pageControl.pageIndicatorTintColor = UIColor.clear
-        pageControl.currentPageIndicatorTintColor = UIColor.clear
-        pageControl.alpha = 0
-    }
-    
-    func presentShopScrollView() {
-        
-        view.addSubview(pageControl)
-        
-        scrollView.delegate = self
-        scrollView.isUserInteractionEnabled = true
-        view.addSubview(scrollView)
-        view.bringSubview(toFront: shopCoinBack)
-        
-        for index in 0..<3 {
-            
-            frame.origin.x = scrollView.frame.size.width * CGFloat(index)
-            frame.size = scrollView.frame.size
-            
-            scrollView.isPagingEnabled = true
-            
-            if index == 0 {
-                
-                peopleView.frame = frame
-                scrollView.addSubview(peopleView)
-            }
-            else if index == 1 {
-                
-                itemsView.frame = frame
-                scrollView.addSubview(itemsView)
-            }
-            else if index == 2{
-                
-                storeView.frame = frame
-                scrollView.addSubview(storeView)
-            }
-            
-            scrollView.showsHorizontalScrollIndicator = false
-        }
-        
-        scrollView.contentSize = CGSize(width: scrollView.frame.size.width * 3, height: scrollView.frame.size.height)
-        pageControl.addTarget(self, action: #selector(TPBaseViewController.changePage(_:)), for: UIControlEvents.valueChanged)
-    }
-    
-    func changePage(_ sender: AnyObject) -> () {
-        
-        let x = CGFloat(pageControl.currentPage) * scrollView.frame.size.width
-        scrollView.setContentOffset(CGPoint(x: x, y: 0), animated: true)
-    }
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        
-        let pageNumber = round(scrollView.contentOffset.x / scrollView.frame.size.width)
-        pageControl.currentPage = Int(pageNumber)
-        print(String(describing: pageNumber))
-        
-        if pageNumber == 0.0  {
-            
-            moveShopToPeople()
-        }
-        else if pageNumber == 1.0{
-            
-            moveShopToItems()
-        }
-        else if pageNumber == 2.0  {
-            
-            moveShopToStore()
-        }
-        
-    }
-    
-    func removeScrollView() {
-        
-        pageControl.removeFromSuperview()
-        scrollView.removeFromSuperview()
     }
     
     func presentPopupFor(person: TPPerson) {
@@ -575,6 +596,7 @@ extension TPBaseViewController {
     
     func removePeoplePopup() {
         
+        inPersonPopup = false
         peoplePopupView.removeFromSuperview()
     }
     
@@ -582,12 +604,34 @@ extension TPBaseViewController {
         
         inItemPopup = true
         
+        itemsPopupView = Bundle.main.loadNibNamed("TPItemsPopupView", owner: self, options: [:])?[0] as! TPItemsPopupView
+        
+        itemsPopupView.setup(for: item)
+        
+        presentShopPopupBackground()
+        
+        view.addSubview(itemsPopupView)
+        
+        UIView.animate(withDuration: 0.3, delay: 0, animations: {
+            
+            self.itemsPopupView.transform = CGAffineTransform(translationX: 0, y: -10)
+            self.itemsPopupView.alpha = 1
+            
+        }, completion: { finished in
+            
+            UIView.animate(withDuration: 0.3, delay: 0, animations: {
+                
+                self.itemsPopupView.transform = CGAffineTransform(translationX: 0, y: 2)
+                
+            })
+        })
+        
     }
     
     func removeItemsPopup() {
         
         inItemPopup = false
-        
+        itemsPopupView.removeFromSuperview()
     }
 }
 
@@ -615,6 +659,7 @@ extension TPBaseViewController {
             Music = true
         }
         
+        trackFirebase(for: "MusicTurned\(Music.description)")
         makeMusic(playing: Music)
         Defaults.set(Music, forKey: DefaultType.music)
     }
@@ -632,6 +677,7 @@ extension TPBaseViewController {
             Sound = true
         }
         
+        trackFirebase(for: "SoundTurned\(Sound.description)")
         Defaults.set(Sound, forKey: DefaultType.sound)
     }
     
@@ -662,18 +708,24 @@ extension TPBaseViewController {
                     if i.name == person.name {
                         
                         i.unlocked = true
+                        trackFirebase(for: "Buy_\(person.name)")
                     }
                 }
                 
-                shopCoinBack.coinLabel.text = CommaNumberFormatter.string(from: NSNumber(value: Coins))
+                shopCoinBack.coinLabel.text = priceFormat(from: Coins)
                 
                 peoplePopupView.completePurchase()
+                peopleView.collectionView.reloadData()
                 
                 savePeople()
+                saveCoins()
             }
             else {
                 
-                //Go to Store
+                trackFirebase(for: "TriedToBuy_\(person.name)")
+                removePopup()
+                shopTopView.segmentedControl.selectedSegmentIndex = 2
+                moveShopToStore()
             }
         }
         
@@ -694,18 +746,29 @@ extension TPBaseViewController {
                     if i.name == item.name {
                         
                         i.unlocked = true
+                        trackFirebase(for: "Buy_\(item.name)")
                     }
                 }
                 
+                shopCoinBack.coinLabel.text = priceFormat(from: Coins)
+                
+                itemsPopupView.completePurchase()
+                itemsView.collectionView.reloadData()
+                
                 saveItems()
+                saveCoins()
             }
             else {
                 
-                //Go to Store
+                trackFirebase(for: "TriedToBuy_\(item.name)")
+                removePopup()
+                shopTopView.segmentedControl.selectedSegmentIndex = 2
+                moveShopToStore()
             }
         }
         
     }
+    
 }
 
 //MARK: Location
@@ -732,7 +795,8 @@ extension TPBaseViewController {
         
         guard let productID = notification.object as? String else { return }
         
-        for (index, product) in Products.enumerated() {
+        for (_, product) in Products.enumerated() {
+            
             guard product.productIdentifier == productID else { continue }
             
             addCoins(for: product.productIdentifier)
@@ -758,7 +822,9 @@ extension TPBaseViewController {
             Coins = Coins + TPProducts.SmallLoanOfCoinsPrize
         }
         
-        Defaults.set(Coins, forKey: DefaultType.coins)
+        trackFirebase(for: "Purchased_\(product)")
+        
+        saveCoins()
         shopCoinBack.coinLabel.text = priceFormat(from: Coins)
     }
     
@@ -772,4 +838,57 @@ extension TPBaseViewController {
         return "0"
     }
     
+}
+
+//MARK: Ads
+extension TPBaseViewController: GADInterstitialDelegate  {
+    
+    func setupAds() {
+        
+        bannerView.adUnitID = "ca-app-pub-3779823216194929/9794925099"
+        bannerView.rootViewController = self
+        bannerView.load(GADRequest())
+        
+        interstitial = getNewInterstitial()
+    }
+    
+    func loadIntertisial() {
+        
+        if interstitial != nil {
+            
+            if interstitial.isReady  {
+                
+                interstitial.present(fromRootViewController: BaseViewController)
+            }
+        }
+    }
+    
+    func getNewInterstitial() -> GADInterstitial {
+        
+        let request = GADRequest()
+        let interstitialAd = GADInterstitial(adUnitID: "ca-app-pub-3779823216194929/3288949893")
+        interstitialAd.delegate = self
+        interstitialAd.load(request)
+        
+        return interstitialAd
+    }
+    
+    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
+        
+        interstitial = getNewInterstitial()
+    }
+    
+}
+
+//MARK: Sharing
+extension TPBaseViewController {
+    
+    func shareScore() {
+        
+        let shareViewController = UIActivityViewController(activityItems: ["I just punched \(Person.name) in the face with \(Item.name) and scored \(Score) in the game #TrumpPunch - iTunes.apple.com/app/id1082962819"], applicationActivities: nil)
+        
+        shareViewController.excludedActivityTypes = [UIActivityType.postToFlickr,UIActivityType.mail,UIActivityType.print,UIActivityType.copyToPasteboard]
+        
+        BaseViewController.present(shareViewController, animated: true, completion: nil)
+    }
 }

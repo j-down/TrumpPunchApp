@@ -13,18 +13,17 @@ class TPShopTopView: UIView {
     
     @IBOutlet weak var shopLabel: UILabel!
     
-    @IBOutlet weak var peopleLabel: UILabel!
-    
-    @IBOutlet weak var itemsLabel: UILabel!
-    
-    @IBOutlet weak var storeLabel: UILabel!
-    
-    
     @IBOutlet weak var exitButton: UIImageView!
     
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
     
     
     func setup() {
+        
+        frame = CGRect(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY, width: UIScreen.main.bounds.width, height: 110)
+        center = CGPoint(x: UIScreen.main.bounds.midX,y: UIScreen.main.bounds.midY - UIScreen.main.bounds.height / 2 + frame.height / 2)
+        isHidden = true
+        isUserInteractionEnabled = true
         
     }
 }

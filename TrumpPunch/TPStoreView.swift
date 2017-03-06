@@ -21,8 +21,8 @@ class TPStoreView: UIView {
         backgroundColor = UIColor.clear
         isUserInteractionEnabled = true
         
-        frame = CGRect(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY + 40, width: UIScreen.main.bounds.width, height: 440)
-        center = CGPoint(x: UIScreen.main.bounds.midX,y: UIScreen.main.bounds.midY - 40)
+        frame = CGRect(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY + 40, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.75)
+        center = CGPoint(x: UIScreen.main.bounds.midX,y: UIScreen.main.bounds.midY - 15)
         
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -31,11 +31,29 @@ class TPStoreView: UIView {
         collectionView.isUserInteractionEnabled = true
         
         collectionView.register(UINib.init(nibName: "TPStoreCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TPStoreCollectionViewCell")
+        
+       loadProducts()
     }
     
-    func setupIAP() {
+    func loadProducts()  {
         
+        Products = []
         
+        TPProducts.store.requestProducts{success, products in
+            if success {
+                Products = products!
+                
+                self.sortData()
+                self.collectionView.reloadData()
+                
+            }
+        }
+        
+    }
+    
+    func sortData() {
+        
+        Products.sort(by: { $0.price.doubleValue < $1.price.doubleValue })
     }
 }
 
@@ -95,9 +113,9 @@ extension TPStoreView: UICollectionViewDelegateFlowLayout {
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         
-        let paddingSpace = sectionInsets.left * (3 + 1)
+        let paddingSpace = sectionInsets.left * (2 + 1)
         let availableWidth = frame.width - paddingSpace
-        let widthPerItem = availableWidth / 3
+        let widthPerItem = availableWidth / 2
         
         return CGSize(width: widthPerItem, height: widthPerItem)
     }
@@ -112,21 +130,4 @@ extension TPStoreView: UICollectionViewDelegateFlowLayout {
         return 20
     }
     
-}
-
-//MARK: IAP 
-extension TPStoreView {
-    
-    func loadProducts()  {
-        
-        Products = []
-        
-        TPProducts.store.requestProducts{success, products in
-            if success {
-                Products = products!
-                
-                self.collectionView.reloadData()
-            }
-        }
-    }
 }

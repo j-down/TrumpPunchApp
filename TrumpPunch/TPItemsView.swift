@@ -20,8 +20,8 @@ class TPItemsView: UIView {
         backgroundColor = UIColor.clear
         isUserInteractionEnabled = true
         
-        frame = CGRect(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY + 40, width: UIScreen.main.bounds.width, height: 440)
-        center = CGPoint(x: UIScreen.main.bounds.midX,y: UIScreen.main.bounds.midY - 40)
+        frame = CGRect(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY + 40, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.75)
+        center = CGPoint(x: UIScreen.main.bounds.midX,y: UIScreen.main.bounds.midY - 15)
         
         collectionView.dataSource = self
         collectionView.delegate = self

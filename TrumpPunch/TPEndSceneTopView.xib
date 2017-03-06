@@ -11,18 +11,18 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" restorationIdentifier="TPEndSceneTopView" id="iN0-l3-epB" customClass="TPEndSceneTopView" customModule="TrumpPunch" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="327" height="256"/>
+            <rect key="frame" x="0.0" y="0.0" width="327" height="178"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="QuoteBack" translatesAutoresizingMaskIntoConstraints="NO" id="yqL-jP-4jv">
-                    <rect key="frame" x="16" y="13" width="295" height="230"/>
+                    <rect key="frame" x="16" y="-1" width="295" height="180"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="295" id="c66-lr-152"/>
-                        <constraint firstAttribute="height" constant="230" id="ely-wg-W1i"/>
+                        <constraint firstAttribute="height" constant="180" id="ely-wg-W1i"/>
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yNt-mh-tc3">
-                    <rect key="frame" x="48.5" y="47.5" width="230" height="121"/>
+                    <rect key="frame" x="48.5" y="8.5" width="230" height="121"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="230" id="NJy-PE-1so"/>
                         <constraint firstAttribute="height" constant="121" id="pCp-EF-o8B"/>
@@ -45,7 +45,7 @@
                 <outlet property="quoteImageView" destination="yqL-jP-4jv" id="S5K-rS-92l"/>
                 <outlet property="quoteLabel" destination="yNt-mh-tc3" id="R8L-0H-aql"/>
             </connections>
-            <point key="canvasLocation" x="9.5" y="259"/>
+            <point key="canvasLocation" x="9.5" y="220"/>
         </view>
     </objects>
     <resources>

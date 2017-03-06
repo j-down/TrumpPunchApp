@@ -14,6 +14,7 @@ class TPItem: NSObject, NSCoding {
     var price: String
     var coinsEarned: String
     var unlocked: Bool
+    var current: Bool
     
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("items")
@@ -24,14 +25,16 @@ class TPItem: NSObject, NSCoding {
         static let priceKey = "price"
         static let coinsEarnedKey = "coinsEarned"
         static let unlockedKey = "unlocked"
+        static let currentKey = "current"
     }
     
-    init(name: String = "Setup", price: String = "0", coinsEarned: String = "0", unlocked: Bool = false) {
+    init(name: String = "Setup", price: String = "0", coinsEarned: String = "0", unlocked: Bool = false, current: Bool = false) {
         
         self.name = name
         self.price = price
         self.coinsEarned = coinsEarned
         self.unlocked = unlocked
+        self.current = current
         
         super.init()
     }
@@ -42,6 +45,7 @@ class TPItem: NSObject, NSCoding {
         aCoder.encode(price, forKey: PropertyKey.priceKey)
         aCoder.encode(coinsEarned, forKey: PropertyKey.coinsEarnedKey)
         aCoder.encode(unlocked, forKey: PropertyKey.unlockedKey)
+        aCoder.encode(current, forKey: PropertyKey.currentKey)
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
@@ -50,8 +54,9 @@ class TPItem: NSObject, NSCoding {
         let price = aDecoder.decodeObject(forKey: PropertyKey.priceKey) as! String
         let coinsEarned = aDecoder.decodeObject(forKey: PropertyKey.coinsEarnedKey) as! String
         let unlocked = aDecoder.decodeBool(forKey: PropertyKey.unlockedKey)
+        let current = aDecoder.decodeBool(forKey: PropertyKey.currentKey)
         
-        self.init(name: name, price: price, coinsEarned: coinsEarned, unlocked: unlocked)
+        self.init(name: name, price: price, coinsEarned: coinsEarned, unlocked: unlocked, current: current)
         
     }
     
@@ -62,7 +67,8 @@ class TPItem: NSObject, NSCoding {
             "name" : name,
             "price" : price,
             "coinsEarned" : coinsEarned,
-            "unlocked" : unlocked
+            "unlocked" : unlocked,
+            "current" : current
         ]
     }
 }

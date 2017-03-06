@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -19,12 +20,30 @@
                     <view key="view" contentMode="scaleToFill" id="kwF-Yi-aoB" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sP9-Dn-ELr" customClass="GADBannerView">
+                                <rect key="frame" x="16" y="613" width="343" height="54"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="54" id="VYQ-Ql-zca"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="0Op-nL-L2H" firstAttribute="top" secondItem="sP9-Dn-ELr" secondAttribute="bottom" id="4yT-Ml-Le0"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="sP9-Dn-ELr" secondAttribute="leading" id="Dxy-YT-lwH"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="sP9-Dn-ELr" secondAttribute="trailing" id="ic9-I9-ZJQ"/>
+                            <constraint firstItem="sP9-Dn-ELr" firstAttribute="centerX" secondItem="kwF-Yi-aoB" secondAttribute="centerX" id="ttI-KR-N1c"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="bannerView" destination="sP9-Dn-ELr" id="wRo-Zv-cV7"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8o0-Wo-oTl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-804" y="37"/>
+            <point key="canvasLocation" x="-804" y="36.431784107946029"/>
         </scene>
         <!--Game View Controller-->
         <scene sceneID="tXr-a1-R10">

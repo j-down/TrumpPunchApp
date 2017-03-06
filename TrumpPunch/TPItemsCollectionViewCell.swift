@@ -37,8 +37,16 @@ class TPItemsCollectionViewCell: UICollectionViewCell {
     
     func setupContent() {
         
-        itemImageView.image = UIImage(named: item.name)
+        itemImageView.image = UIImage(named: "\(item.name)_Right")
         itemNameLabel.text = item.name
+        
+        if !item.unlocked {
+            
+            if let image = itemImageView.image {
+                
+                itemImageView.image = convertToGrayScale(image: image)
+            }
+        }
     }
     
     func cellTapped(gesture: UITapGestureRecognizer) {
@@ -50,6 +58,7 @@ class TPItemsCollectionViewCell: UICollectionViewCell {
                 self.itemBackImageView.transform = CGAffineTransform.identity
             }, completion: { finished in
                 
+                ThisGlobalScene.playSound(named: Sounds.button)
                 BaseViewController.presentPopupFor(item: self.item)
             })
         }
