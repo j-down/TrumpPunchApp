@@ -8,6 +8,8 @@
 
 import Foundation
 import UIKit
+import Firebase
+import FirebaseAnalytics
 
 func convertToGrayScale(image: UIImage) -> UIImage {
     
@@ -33,4 +35,14 @@ func convertToGrayScale(image: UIImage) -> UIImage {
         }
     }
     return newImage
+}
+
+func randomNumberWith(max: Int) -> Int {
+    
+    return Int(arc4random_uniform(UInt32(max - 1)))
+}
+
+func trackFirebase(for event: String) {
+    
+    FIRAnalytics.logEvent(withName: event, parameters: [:])
 }

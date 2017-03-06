@@ -1,16 +1,95 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+        <view contentMode="scaleToFill" restorationIdentifier="TPItemsPopupView" id="iN0-l3-epB" customClass="TPItemsPopupView" customModule="TrumpPunch" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="286" height="250"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Tomato_Left" translatesAutoresizingMaskIntoConstraints="NO" id="N11-JA-jqo">
+                    <rect key="frame" x="37" y="30" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="M1H-Q9-ggN"/>
+                        <constraint firstAttribute="height" constant="40" id="pRO-wG-3fC"/>
+                    </constraints>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Tomato_Right" translatesAutoresizingMaskIntoConstraints="NO" id="gBA-sV-PgK">
+                    <rect key="frame" x="210" y="30" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="1ma-er-br5"/>
+                        <constraint firstAttribute="height" constant="40" id="O37-r6-QoX"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tomatoes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="szV-M5-Hdt">
+                    <rect key="frame" x="97" y="39" width="93" height="23"/>
+                    <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="20"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="200 coins per combo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bBE-XK-wu6">
+                    <rect key="frame" x="53" y="108" width="180" height="21"/>
+                    <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="18"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LYh-wh-i7t">
+                    <rect key="frame" x="68" y="165" width="150" height="65"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="150" id="EOD-hd-XBA"/>
+                        <constraint firstAttribute="height" constant="65" id="IUZ-nk-0re"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="20"/>
+                    <state key="normal" title="Buy" backgroundImage="GreenButton">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Coin" translatesAutoresizingMaskIntoConstraints="NO" id="1wJ-TM-ce2">
+                    <rect key="frame" x="53" y="178" width="40" height="39"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="9ac-hT-2Q0"/>
+                        <constraint firstAttribute="height" constant="39" id="YFg-i6-Qdl"/>
+                    </constraints>
+                </imageView>
+            </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="szV-M5-Hdt" firstAttribute="leading" secondItem="N11-JA-jqo" secondAttribute="trailing" constant="20" id="53P-h4-cyQ"/>
+                <constraint firstItem="bBE-XK-wu6" firstAttribute="top" secondItem="szV-M5-Hdt" secondAttribute="bottom" constant="46" id="Bex-xL-1Q7"/>
+                <constraint firstItem="N11-JA-jqo" firstAttribute="centerY" secondItem="szV-M5-Hdt" secondAttribute="centerY" id="CXM-Lj-OUG"/>
+                <constraint firstItem="gBA-sV-PgK" firstAttribute="centerY" secondItem="szV-M5-Hdt" secondAttribute="centerY" id="EZ1-lh-G5m"/>
+                <constraint firstItem="szV-M5-Hdt" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="V5f-FP-ybf"/>
+                <constraint firstItem="1wJ-TM-ce2" firstAttribute="centerY" secondItem="LYh-wh-i7t" secondAttribute="centerY" id="Ycc-aD-yCF"/>
+                <constraint firstItem="bBE-XK-wu6" firstAttribute="centerX" secondItem="szV-M5-Hdt" secondAttribute="centerX" id="cna-Ys-ZCl"/>
+                <constraint firstAttribute="bottom" secondItem="LYh-wh-i7t" secondAttribute="bottom" constant="20" id="kRP-7d-seo"/>
+                <constraint firstItem="LYh-wh-i7t" firstAttribute="leading" secondItem="1wJ-TM-ce2" secondAttribute="trailing" constant="-25" id="ptx-ao-k1q"/>
+                <constraint firstItem="LYh-wh-i7t" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="sLi-0U-Wej"/>
+                <constraint firstItem="szV-M5-Hdt" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="39" id="vuJ-SX-Qfz"/>
+                <constraint firstItem="gBA-sV-PgK" firstAttribute="leading" secondItem="szV-M5-Hdt" secondAttribute="trailing" constant="20" id="zqQ-Wo-Gb4"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="buyButton" destination="LYh-wh-i7t" id="hgR-Wg-dvb"/>
+                <outlet property="coinImageView" destination="1wJ-TM-ce2" id="Hno-LA-cNV"/>
+                <outlet property="descriptionLabel" destination="bBE-XK-wu6" id="ce3-F3-UZ0"/>
+                <outlet property="leftItemImageView" destination="N11-JA-jqo" id="bJv-Vq-Z3r"/>
+                <outlet property="nameLabel" destination="szV-M5-Hdt" id="erb-7p-FYn"/>
+                <outlet property="rightItemImageView" destination="gBA-sV-PgK" id="AQF-a8-PkL"/>
+            </connections>
+            <point key="canvasLocation" x="8" y="267"/>
         </view>
     </objects>
+    <resources>
+        <image name="Coin" width="100" height="99"/>
+        <image name="GreenButton" width="271" height="114"/>
+        <image name="Tomato_Left" width="200" height="198"/>
+        <image name="Tomato_Right" width="200" height="203"/>
+    </resources>
 </document>

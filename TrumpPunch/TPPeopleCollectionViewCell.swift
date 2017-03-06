@@ -57,6 +57,7 @@ class TPPeopleCollectionViewCell: UICollectionViewCell {
                 self.personBackImageView.transform = CGAffineTransform.identity
             }, completion: { finished in
                 
+                ThisGlobalScene.playSound(named: Sounds.button)
                 BaseViewController.presentPopupFor(person: self.person)
                 
             })

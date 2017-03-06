@@ -70,7 +70,9 @@ class TPPeoplePopupView: UIView {
                     
                     Person = self.person
                     
-                    BaseViewController.playGame()
+                    BaseViewController.setPerson(person: Person)
+                    trackFirebase(for: "SelectedPerson\(Person.name)")
+                    ThisGlobalScene.presentGameScene()
                 }
                 else {
                     

@@ -1,4 +1,5 @@
 PODS:
+
   - AFNetworking (2.6.3):
     - AFNetworking/NSURLConnection (= 2.6.3)
     - AFNetworking/NSURLSession (= 2.6.3)
@@ -23,6 +24,11 @@ PODS:
   - BeaconsInSpace (1.5.5)
   - DTMHeatmap (1.0)
   - Firebase/Auth (3.13.0):
+
+  - Firebase/AdMob (3.12.0):
+    - Firebase/Core
+    - Google-Mobile-Ads-SDK (= 7.17.0)
+  
     - Firebase/Core
     - FirebaseAuth (= 3.1.1)
   - Firebase/Core (3.13.0):
@@ -55,8 +61,15 @@ PODS:
   - Flurry-iOS-SDK/FlurryAds (7.9.2):
     - Flurry-iOS-SDK/FlurrySDK
   - Flurry-iOS-SDK/FlurrySDK (7.9.2)
+
   - GoogleToolboxForMac/DebugUtils (2.1.1):
     - GoogleToolboxForMac/Defines (= 2.1.1)
+    
+  - Google-Mobile-Ads-SDK (7.17.0)
+  - GoogleInterchangeUtilities (1.2.2):
+    - GoogleSymbolUtilities (~> 1.1)
+  - GoogleSymbolUtilities (1.1.2)
+
   - GoogleToolboxForMac/Defines (2.1.1)
   - GoogleToolboxForMac/Logger (2.1.1):
     - GoogleToolboxForMac/Defines (= 2.1.1)
@@ -76,6 +89,8 @@ PODS:
 DEPENDENCIES:
   - DTMHeatmap
   - Firebase/Auth
+  - Firebase/AdMob
+
   - Firebase/Core
   - Firebase/Database
   - Firebase/Messaging
@@ -95,11 +110,17 @@ SPEC CHECKSUMS:
   FirebaseInstanceID: 2d0518b1378fe9d685ef40cbdd63d2fdc1125339
   FirebaseMessaging: df8267f378580a24174ce7861233aa11d5c90109
   Flurry-iOS-SDK: 300dc1d78443dea3d433a38e76292f20f14f0a96
+
+  Google-Mobile-Ads-SDK: a8bf4211624999b73e4184be516f94770b139525
+  GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
+  GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 6f8d8b28b7e345549ac471071608170b31cb4977
   Protobuf: 745f59e122e5de98d4d7ef291e264a0eef80f58e
   XModeAPI: 5fce5cb660ed081babf15b948165228fe0c9b23e
 
+
 PODFILE CHECKSUM: 3109e5e227cb470be5f1b4b3f8a83856a20196e9
+
 
 COCOAPODS: 1.1.1

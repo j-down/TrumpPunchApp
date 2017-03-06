@@ -21,7 +21,7 @@ class TPPeopleView: UIView {
         isUserInteractionEnabled = true
         
         frame = CGRect(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY + 40, width: UIScreen.main.bounds.width, height: 440)
-        center = CGPoint(x: UIScreen.main.bounds.midX,y: UIScreen.main.bounds.midY - 40)
+        center = CGPoint(x: UIScreen.main.bounds.midX,y: UIScreen.main.bounds.midY - 15)
         
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -33,6 +33,7 @@ class TPPeopleView: UIView {
     }
 }
 
+//MARK: UICollectionViewDelegate
 extension TPPeopleView: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -91,7 +92,7 @@ extension TPPeopleView: UICollectionViewDelegateFlowLayout {
         let availableWidth = frame.width - paddingSpace
         let widthPerItem = availableWidth / 3
         
-        return CGSize(width: widthPerItem, height: widthPerItem)
+        return CGSize(width: widthPerItem, height: 100)
     }
     
     func collectionView(_ collectionView: UICollectionView,

@@ -4,19 +4,77 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="226"/>
+        <view contentMode="scaleToFill" restorationIdentifier="TPEndSceneBottomView" id="iN0-l3-epB" customClass="TPEndSceneBottomView" customModule="TrumpPunch" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="335" height="101"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aOw-UO-JjE">
+                    <rect key="frame" x="16" y="18" width="65" height="65"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="65" id="p11-K6-D9d"/>
+                        <constraint firstAttribute="height" constant="65" id="p9G-hv-GGf"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="17"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="10"/>
+                    <state key="normal" image="HomeIcon" backgroundImage="BlueButton">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5pK-cx-9Pb">
+                    <rect key="frame" x="254" y="18" width="65" height="65"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="65" id="6G5-mU-nEe"/>
+                        <constraint firstAttribute="height" constant="65" id="aFu-RU-5ui"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="17"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="10"/>
+                    <state key="normal" image="ShopIcon" backgroundImage="BlueButton">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q1n-jq-mVv">
+                    <rect key="frame" x="92" y="18" width="150" height="65"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="65" id="WYb-At-JmX"/>
+                        <constraint firstAttribute="width" constant="150" id="k6m-rd-ji5"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="17"/>
+                    <inset key="titleEdgeInsets" minX="9" minY="-5" maxX="0.0" maxY="0.0"/>
+                    <inset key="imageEdgeInsets" minX="-23" minY="-4" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" title="Play" image="PlayIcon" backgroundImage="RedButton">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                </button>
+            </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="q1n-jq-mVv" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="NZI-qm-cQ8"/>
+                <constraint firstItem="5pK-cx-9Pb" firstAttribute="centerY" secondItem="q1n-jq-mVv" secondAttribute="centerY" id="WPl-Ag-Yap"/>
+                <constraint firstItem="5pK-cx-9Pb" firstAttribute="leading" secondItem="q1n-jq-mVv" secondAttribute="trailing" constant="12" id="YFf-Fr-ZDr"/>
+                <constraint firstItem="aOw-UO-JjE" firstAttribute="centerY" secondItem="q1n-jq-mVv" secondAttribute="centerY" id="dOc-Df-IRr"/>
+                <constraint firstItem="q1n-jq-mVv" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="pDb-DB-BUt"/>
+                <constraint firstItem="q1n-jq-mVv" firstAttribute="leading" secondItem="aOw-UO-JjE" secondAttribute="trailing" constant="11" id="tK3-Gt-1k9"/>
+            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="34.5" y="274"/>
+            <connections>
+                <outlet property="homeButton" destination="aOw-UO-JjE" id="Y5v-Uv-I1J"/>
+                <outlet property="playButton" destination="q1n-jq-mVv" id="bFb-Kd-aqY"/>
+                <outlet property="shopButton" destination="5pK-cx-9Pb" id="Lx1-fM-gXp"/>
+            </connections>
+            <point key="canvasLocation" x="13.5" y="337.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="BlueButton" width="114" height="114"/>
+        <image name="HomeIcon" width="30" height="30"/>
+        <image name="PlayIcon" width="27" height="26"/>
+        <image name="RedButton" width="272" height="114"/>
+        <image name="ShopIcon" width="30" height="30"/>
+    </resources>
 </document>

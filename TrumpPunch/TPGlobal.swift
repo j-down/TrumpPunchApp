@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 import AVFoundation
+import StoreKit
+import SpriteKit
 
 let Defaults = UserDefaults.standard
 
@@ -23,6 +25,8 @@ var Item: TPItem!
 var People = [TPPerson]()
 var Person: TPPerson!
 
+var Products = [SKProduct]()
+
 var Coins: Int!
 
 var InHomeScene: String = "HomeScene"
@@ -34,8 +38,16 @@ var InPeople: String = "People"
 var InStore: String = "Store"
 
 var CurrentScene: String = "HomeScene"
+var ThisScene = SKScene()
 var CurrentPage: String = "None"
 var CurrentPagePart: String = "None"
+
+//Scenes
+var ThisEndScene: TPEndScene!
+var ThisHomeScene: TPHomeScene!
+var ThisGameScene: TPGameScene!
+var ThisGlobalScene: TPGlobalScene!
+var ThisSKView: SKView!
 
 var BackgroundMusic: AVAudioPlayer!
 var Music: Bool = false
@@ -43,14 +55,77 @@ var Sound: Bool = false
 
 var CommaNumberFormatter = NumberFormatter()
 
+var LeaderboardID: String = ""
+
+var TimeSinceAdPlayed: Int = 0
+
+var Debug: Bool = false
+
+//Game
+var Score: Int = 0
+var gameStart: Bool = false
+var streakScore: Int = 0
+var roundNumber: Int = 1
+var canPlay: Bool = true
+var speedClock: Int = 1
+var scoreToSave: Int = 0
+var coGold: Int = 8
+var lifeCount: Int = 3
+var trumpEx: Bool = false
+var trumpExLeft: Bool = false
+
 struct Sounds {
     
-    let tomatoes = "Tomatoes"
-    let nukes = "Nukes"
-    let pans = "Pans"
-    let fish = "Fish"
-    let swatters = "Swatters"
-    let gloves = "Gloves"
+    static let tomatoes = "Fish"
+    static let nukes = "Nuke"
+    static let fish = "Fish"
+    static let swatters = "Swatter"
+    static let gloves = "Punch"
+    
+    static let start = "Start"
+    static let score = "Score"
+    static let gameOver = "GameOver"
+    
+    static let background = "AppMusic"
+    static let button = "Button"
+    static let wrong = "Wrong"
+}
+
+struct DefaultType {
+    
+    static let coins = "Coins"
+    static let firstLaunch = "FirstLaunchComplete"
+    static let currentPerson = "CurrentPerson"
+    static let currentItem = "CurrentItem"
+    static let sound = "Sound"
+    static let music = "Music"
+    static let highScore = "HighScore"
+    static let tutorial = "Tutorial"
+}
+
+struct SceneType {
+    
+    static let homeScene = "HomeScene"
+    static let gameScene = "GameScene"
+    static let endScene = "EndScene"
+}
+
+struct WeaponCoins {
+    
+    static let tomatoes = 10
+    static let fish = 50
+    static let swatters = 250
+    static let gloves = 1500
+    static let nukes = 10000
+}
+
+struct WeaponType {
+    
+    static let tomatoes = "Tomatoes"
+    static let fish = "Fish"
+    static let swatters = "Swatters"
+    static let gloves = "Gloves"
+    static let nukes = "Nukes"
 }
 
 // XModeAPI Key:
