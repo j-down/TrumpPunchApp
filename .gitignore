@@ -1,4 +1,4 @@
-reated by https://www.gitignore.io/api/osx,swift,objective-c,xcode
+# Created by https://www.gitignore.io/api/xcode,swift,objective-c,osx
 
 ### Objective-C ###
 # Xcode
@@ -37,7 +37,8 @@ xcuserdata/
 # you should judge for yourself, the pros and cons are mentioned at:
 # https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
 #
-Pods/
+
+# Pods/
 
 # Carthage
 #
@@ -125,7 +126,8 @@ playground.xcworkspace
 # you should judge for yourself, the pros and cons are mentioned at:
 # https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
 #
-# Pods/
+
+Pods/
 
 # Carthage
 #
@@ -148,5 +150,5 @@ build
 !*.xcworkspace/contents.xcworkspacedata
 /*.gcno
 
-# End of https://www.gitignore.io/api/osx,swift,objective-c,xcode
+# End of https://www.gitignore.io/api/xcode,swift,objective-c,osx
 

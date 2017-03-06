@@ -92,7 +92,6 @@ extension TPBaseViewController {
     
     func setupEndScene() {
         
-       // makeMusic(playing: true)
         setupEndSceneTopView()
         setupEndSceneMiddleView()
         setupEndSceneBottomView()

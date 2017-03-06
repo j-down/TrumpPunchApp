@@ -339,8 +339,6 @@ class TPGameScene: TPGlobalScene {
         
         backgroundColor = UIColor.gray
         
-       // BaseViewController.makeMusic(playing: false)
-        
         didTutorial = 1
         
         canPlay = true

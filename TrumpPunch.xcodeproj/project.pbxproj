@@ -76,6 +76,15 @@
 		71E687B61E5AB8390016BE11 /* TPPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E687B51E5AB8390016BE11 /* TPPerson.swift */; };
 		71E687B81E5AB8420016BE11 /* TPItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E687B71E5AB8420016BE11 /* TPItem.swift */; };
 		A14F39A6DE2B46F755E2B5E2 /* Pods_TrumpPunchUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B88BCEB7D87EE676D2BA854C /* Pods_TrumpPunchUITests.framework */; };
+		C2BD597C1E6251A7007C1571 /* GeoFire.m in Sources */ = {isa = PBXBuildFile; fileRef = C2BD596F1E6251A7007C1571 /* GeoFire.m */; };
+		C2BD597D1E6251A7007C1571 /* GFBase32Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = C2BD59721E6251A7007C1571 /* GFBase32Utils.m */; };
+		C2BD597E1E6251A7007C1571 /* GFGeoHash.m in Sources */ = {isa = PBXBuildFile; fileRef = C2BD59751E6251A7007C1571 /* GFGeoHash.m */; };
+		C2BD597F1E6251A7007C1571 /* GFGeoHashQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C2BD59771E6251A7007C1571 /* GFGeoHashQuery.m */; };
+		C2BD59801E6251A7007C1571 /* GFQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C2BD59791E6251A7007C1571 /* GFQuery.m */; };
+		C2BD59831E6380BF007C1571 /* TPLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BD59821E6380BF007C1571 /* TPLocationViewController.swift */; };
+		C2BD59861E63D640007C1571 /* NSValue+MKMapPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = C2BD59851E63D640007C1571 /* NSValue+MKMapPoint.m */; };
+		C2D85BCC1E612AD9000BABF8 /* TPLocationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D85BCB1E612AD9000BABF8 /* TPLocationDelegate.swift */; };
+		C2D85BD01E622E0B000BABF8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C2D85BCF1E622E0B000BABF8 /* GoogleService-Info.plist */; };
 		E4944416033EA77E64F8958E /* Pods_TrumpPunchTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D1A5958965FBA1BD2A2B56D /* Pods_TrumpPunchTests.framework */; };
 		FDDF30C90235129F58EC8CCF /* Pods_TrumpPunch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90E0D03725A0827ED1B5B76A /* Pods_TrumpPunch.framework */; };
 /* End PBXBuildFile section */
@@ -180,6 +189,27 @@
 		9D1A5958965FBA1BD2A2B56D /* Pods_TrumpPunchTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrumpPunchTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE3882355237200F8C47038D /* Pods-TrumpPunchTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrumpPunchTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrumpPunchTests/Pods-TrumpPunchTests.release.xcconfig"; sourceTree = "<group>"; };
 		B88BCEB7D87EE676D2BA854C /* Pods_TrumpPunchUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrumpPunchUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C2BD596D1E6251A6007C1571 /* TrumpPunch-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TrumpPunch-Bridging-Header.h"; sourceTree = "<group>"; };
+		C2BD596E1E6251A7007C1571 /* GeoFire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeoFire.h; sourceTree = "<group>"; };
+		C2BD596F1E6251A7007C1571 /* GeoFire.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeoFire.m; sourceTree = "<group>"; };
+		C2BD59701E6251A7007C1571 /* GeoFire+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GeoFire+Private.h"; sourceTree = "<group>"; };
+		C2BD59711E6251A7007C1571 /* GFBase32Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFBase32Utils.h; sourceTree = "<group>"; };
+		C2BD59721E6251A7007C1571 /* GFBase32Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFBase32Utils.m; sourceTree = "<group>"; };
+		C2BD59731E6251A7007C1571 /* GFCircleQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFCircleQuery.h; sourceTree = "<group>"; };
+		C2BD59741E6251A7007C1571 /* GFGeoHash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFGeoHash.h; sourceTree = "<group>"; };
+		C2BD59751E6251A7007C1571 /* GFGeoHash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFGeoHash.m; sourceTree = "<group>"; };
+		C2BD59761E6251A7007C1571 /* GFGeoHashQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFGeoHashQuery.h; sourceTree = "<group>"; };
+		C2BD59771E6251A7007C1571 /* GFGeoHashQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFGeoHashQuery.m; sourceTree = "<group>"; };
+		C2BD59781E6251A7007C1571 /* GFQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFQuery.h; sourceTree = "<group>"; };
+		C2BD59791E6251A7007C1571 /* GFQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFQuery.m; sourceTree = "<group>"; };
+		C2BD597A1E6251A7007C1571 /* GFQuery+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GFQuery+Private.h"; sourceTree = "<group>"; };
+		C2BD597B1E6251A7007C1571 /* GFRegionQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFRegionQuery.h; sourceTree = "<group>"; };
+		C2BD59821E6380BF007C1571 /* TPLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TPLocationViewController.swift; sourceTree = "<group>"; };
+		C2BD59841E63D640007C1571 /* NSValue+MKMapPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSValue+MKMapPoint.h"; sourceTree = "<group>"; };
+		C2BD59851E63D640007C1571 /* NSValue+MKMapPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSValue+MKMapPoint.m"; sourceTree = "<group>"; };
+		C2D85BCB1E612AD9000BABF8 /* TPLocationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TPLocationDelegate.swift; sourceTree = "<group>"; };
+		C2D85BCD1E612C58000BABF8 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		C2D85BCF1E622E0B000BABF8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C82FB253162D324FBA00F6DC /* Pods-TrumpPunchUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrumpPunchUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrumpPunchUITests/Pods-TrumpPunchUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -214,6 +244,7 @@
 		4C1F8B9A62FAE2F8A8F42F22 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C2D85BCD1E612C58000BABF8 /* CoreLocation.framework */,
 				90E0D03725A0827ED1B5B76A /* Pods_TrumpPunch.framework */,
 				9D1A5958965FBA1BD2A2B56D /* Pods_TrumpPunchTests.framework */,
 				B88BCEB7D87EE676D2BA854C /* Pods_TrumpPunchUITests.framework */,
@@ -329,10 +360,15 @@
 				71E687481E5AB09D0016BE11 /* AppDelegate.swift */,
 				71E687831E5AB1E00016BE11 /* TPGlobal.swift */,
 				71E687851E5AB1E60016BE11 /* TPHelpers.swift */,
+				C2D85BCB1E612AD9000BABF8 /* TPLocationDelegate.swift */,
+				C2BD59811E6251C5007C1571 /* GeoFire */,
 				71E687811E5AB19F0016BE11 /* App */,
 				71E6877E1E5AB1720016BE11 /* SupportingFiles */,
 				71E687871E5AB2000016BE11 /* DataModel */,
 				71E6877F1E5AB1780016BE11 /* Assets */,
+				C2BD596D1E6251A6007C1571 /* TrumpPunch-Bridging-Header.h */,
+				C2BD59841E63D640007C1571 /* NSValue+MKMapPoint.h */,
+				C2BD59851E63D640007C1571 /* NSValue+MKMapPoint.m */,
 			);
 			path = TrumpPunch;
 			sourceTree = "<group>";
@@ -369,7 +405,9 @@
 			isa = PBXGroup;
 			children = (
 				71E6875A1E5AB09D0016BE11 /* Info.plist */,
-				711BC4591E61EAFF00B077EC /* GoogleService-Info.plist */,
+
+				C2D85BCF1E622E0B000BABF8 /* GoogleService-Info.plist */,
+
 				71E687571E5AB09D0016BE11 /* LaunchScreen.storyboard */,
 				71E687521E5AB09D0016BE11 /* Main.storyboard */,
 			);
@@ -397,6 +435,7 @@
 		71E687811E5AB19F0016BE11 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				C2BD59821E6380BF007C1571 /* TPLocationViewController.swift */,
 				71E687501E5AB09D0016BE11 /* TPBaseViewController.swift */,
 				71E6878E1E5AB33E0016BE11 /* TPGlobalScene.swift */,
 				71E687901E5AB35B0016BE11 /* Features */,
@@ -469,6 +508,27 @@
 				71E687B11E5AB7880016BE11 /* TPHomeSceneBottomView.xib */,
 			);
 			name = HomeScene;
+			sourceTree = "<group>";
+		};
+		C2BD59811E6251C5007C1571 /* GeoFire */ = {
+			isa = PBXGroup;
+			children = (
+				C2BD596E1E6251A7007C1571 /* GeoFire.h */,
+				C2BD596F1E6251A7007C1571 /* GeoFire.m */,
+				C2BD59701E6251A7007C1571 /* GeoFire+Private.h */,
+				C2BD59711E6251A7007C1571 /* GFBase32Utils.h */,
+				C2BD59721E6251A7007C1571 /* GFBase32Utils.m */,
+				C2BD59731E6251A7007C1571 /* GFCircleQuery.h */,
+				C2BD59741E6251A7007C1571 /* GFGeoHash.h */,
+				C2BD59751E6251A7007C1571 /* GFGeoHash.m */,
+				C2BD59761E6251A7007C1571 /* GFGeoHashQuery.h */,
+				C2BD59771E6251A7007C1571 /* GFGeoHashQuery.m */,
+				C2BD59781E6251A7007C1571 /* GFQuery.h */,
+				C2BD59791E6251A7007C1571 /* GFQuery.m */,
+				C2BD597A1E6251A7007C1571 /* GFQuery+Private.h */,
+				C2BD597B1E6251A7007C1571 /* GFRegionQuery.h */,
+			);
+			name = GeoFire;
 			sourceTree = "<group>";
 		};
 		DC5545E18C04213FFC643993 /* Pods */ = {
@@ -562,7 +622,13 @@
 					71E687441E5AB09D0016BE11 = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = U743V4PW2V;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					71E6875E1E5AB09D0016BE11 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -623,6 +689,7 @@
 				71BF547C1E6BED5600E3FA3E /* Swatter.mp3 in Resources */,
 				711BC45A1E61EAFF00B077EC /* GoogleService-Info.plist in Resources */,
 				711BC44B1E5D11A000B077EC /* TPShopTopView.xib in Resources */,
+				C2D85BD01E622E0B000BABF8 /* GoogleService-Info.plist in Resources */,
 				71E687B21E5AB7880016BE11 /* TPHomeSceneBottomView.xib in Resources */,
 				71BF548C1E6BEF1600E3FA3E /* Button.mp3 in Resources */,
 				71BF547A1E6BE55800E3FA3E /* TPEndSceneMiddleView.xib in Resources */,
@@ -794,13 +861,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				71E687941E5AB3A00016BE11 /* TPItemsView.swift in Sources */,
+				C2BD597E1E6251A7007C1571 /* GFGeoHash.m in Sources */,
 				71BF54951E6BFC0F00E3FA3E /* JDHomeButtons.swift in Sources */,
 				711BC4661E65222D00B077EC /* TPProducts.swift in Sources */,
 				71E687861E5AB1E60016BE11 /* TPHelpers.swift in Sources */,
+				C2D85BCC1E612AD9000BABF8 /* TPLocationDelegate.swift in Sources */,
 				711BC4451E5D0E0300B077EC /* TPPeopleCollectionViewCell.swift in Sources */,
 				71BF54781E6BE54A00E3FA3E /* TPEndSceneMiddleView.swift in Sources */,
 				71BF54A51E6C0A6D00E3FA3E /* JDMoneyNeeded.swift in Sources */,
 				711BC4531E5EC15200B077EC /* TPCoinBack.swift in Sources */,
+				C2BD597D1E6251A7007C1571 /* GFBase32Utils.m in Sources */,
+				C2BD59861E63D640007C1571 /* NSValue+MKMapPoint.m in Sources */,
+				71E687891E5AB2170016BE11 /* TPPlayer.swift in Sources */,
+				C2BD597F1E6251A7007C1571 /* GFGeoHashQuery.m in Sources */,
 				71E687891E5AB2170016BE11 /* TPGamePerson.swift in Sources */,
 				71E687B81E5AB8420016BE11 /* TPItem.swift in Sources */,
 				71BF54A11E6C0A0B00E3FA3E /* JDTrump.swift in Sources */,
@@ -826,10 +899,13 @@
 				71BF54921E6BF49100E3FA3E /* TPGameScene.swift in Sources */,
 				711BC4641E651F2B00B077EC /* IAPHelper.swift in Sources */,
 				71E687981E5AB3DA0016BE11 /* TPStoreView.swift in Sources */,
+				C2BD597C1E6251A7007C1571 /* GeoFire.m in Sources */,
 				71E687841E5AB1E00016BE11 /* TPGlobal.swift in Sources */,
 				71E687491E5AB09D0016BE11 /* AppDelegate.swift in Sources */,
 				71E687B61E5AB8390016BE11 /* TPPerson.swift in Sources */,
 				711BC4491E5D119300B077EC /* TPShopTopView.swift in Sources */,
+				C2BD59831E6380BF007C1571 /* TPLocationViewController.swift in Sources */,
+				C2BD59801E6251A7007C1571 /* GFQuery.m in Sources */,
 				71E687921E5AB3900016BE11 /* TPPeopleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -983,12 +1059,15 @@
 			baseConfigurationReference = 264150ADF2380572762BB9EE /* Pods-TrumpPunch.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = U743V4PW2V;
 				INFOPLIST_FILE = TrumpPunch/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.trumppunch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TrumpPunch/TrumpPunch-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -999,12 +1078,14 @@
 			baseConfigurationReference = 5852A1EC77905AFB7E71EA7A /* Pods-TrumpPunch.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = U743V4PW2V;
 				INFOPLIST_FILE = TrumpPunch/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.trumppunch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TrumpPunch/TrumpPunch-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
