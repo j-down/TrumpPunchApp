@@ -175,7 +175,8 @@ class TPBaseViewController: UIViewController {
     override var prefersStatusBarHidden: Bool {
         return true
     }
-}
+
+ }
 
 //MARK: DataModel
 extension TPBaseViewController {
@@ -775,8 +776,8 @@ extension TPBaseViewController {
 extension TPBaseViewController {
     
     func presentLocationView() {
-        
         //TODO: Add Location
+        self.performSegue(withIdentifier: "showLocationPage", sender: nil)
     }
 }
 

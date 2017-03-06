@@ -127,3 +127,24 @@ struct WeaponType {
     static let gloves = "Gloves"
     static let nukes = "Nukes"
 }
+
+// XModeAPI Key:
+let xmodeAPIKey = "s3a9tsN2vJ9J0zvjxSYD4655qQeTaIzC6Zc7ZxYD"
+
+// XModeAPI Notification Keys:
+let sdkLocationKey = "XModeCurrentLocationKey"
+
+// CCX Logging:
+extension NSObject {
+    func ccxLog(logMessage: String?=nil, error: Error?=nil, fileName : String = #file , functionName: String = #function, lineOfCode : Int = #line) {
+        // If error is not nil:
+        if let er = error {
+            print("CCX Logging -> File: \(fileName), Function: \(functionName), Line: \(lineOfCode) Error: \(er.localizedDescription)")
+            // If the log message is not nil:
+        } else if let logMsg = logMessage {
+            print("CCX Logging -> File: \(fileName), Function: \(functionName), Line: \(lineOfCode) Message: \(logMsg)")
+        } else {
+            print("CCX Logging -> File: \(fileName), Function: \(functionName), Line: \(lineOfCode) Error: Unknown Error")
+        }
+    }
+}
