@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import XModeAPI
 import Firebase
 import FirebaseDatabase
 import FirebaseCore
@@ -16,14 +17,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         FIRApp.configure()
+      
+      // Start the XModeAPI:
+        TPLocationDelegate.shared.startXModeAPI()
         
         GADMobileAds.configure(withApplicationID: "ca-app-pub-3779823216194929~1812216696")
-        
+
         return true
     }
 
@@ -49,6 +52,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-
 }
-
