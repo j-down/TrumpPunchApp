@@ -22,19 +22,19 @@ PODS:
     - AFNetworking/NSURLSession
   - BeaconsInSpace (1.5.5)
   - DTMHeatmap (1.0)
-  - Firebase/AdMob (3.13.0):
+  - Firebase/AdMob (3.15.0):
     - Firebase/Core
-    - Google-Mobile-Ads-SDK (= 7.17.0)
-  - Firebase/Auth (3.13.0):
+    - Google-Mobile-Ads-SDK (= 7.19.0)
+  - Firebase/Auth (3.15.0):
     - Firebase/Core
     - FirebaseAuth (= 3.1.1)
-  - Firebase/Core (3.13.0):
+  - Firebase/Core (3.15.0):
     - FirebaseAnalytics (= 3.7.0)
-    - FirebaseCore (= 3.5.0)
-  - Firebase/Database (3.13.0):
+    - FirebaseCore (= 3.5.2)
+  - Firebase/Database (3.15.0):
     - Firebase/Core
     - FirebaseDatabase (= 3.1.2)
-  - Firebase/Messaging (3.13.0):
+  - Firebase/Messaging (3.15.0):
     - Firebase/Core
     - FirebaseMessaging (= 1.2.2)
   - FirebaseAnalytics (3.7.0):
@@ -45,7 +45,7 @@ PODS:
     - FirebaseAnalytics (~> 3.7)
     - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
     - GTMSessionFetcher/Core (~> 1.1)
-  - FirebaseCore (3.5.0):
+  - FirebaseCore (3.5.2):
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
   - FirebaseDatabase (3.1.2):
     - FirebaseAnalytics (~> 3.7)
@@ -55,10 +55,10 @@ PODS:
     - FirebaseInstanceID (~> 1.0)
     - GoogleToolboxForMac/Logger (~> 2.1)
     - Protobuf (~> 3.1)
-  - Flurry-iOS-SDK/FlurryAds (7.9.2):
+  - Flurry-iOS-SDK/FlurryAds (7.10.0):
     - Flurry-iOS-SDK/FlurrySDK
-  - Flurry-iOS-SDK/FlurrySDK (7.9.2)
-  - Google-Mobile-Ads-SDK (7.17.0)
+  - Flurry-iOS-SDK/FlurrySDK (7.10.0)
+  - Google-Mobile-Ads-SDK (7.19.0)
   - GoogleToolboxForMac/DebugUtils (2.1.1):
     - GoogleToolboxForMac/Defines (= 2.1.1)
   - GoogleToolboxForMac/Defines (2.1.1)
@@ -71,9 +71,9 @@ PODS:
     - GoogleToolboxForMac/Defines (= 2.1.1)
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.1)
   - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
-  - GTMSessionFetcher/Core (1.1.8)
+  - GTMSessionFetcher/Core (1.1.9)
   - Protobuf (3.2.0)
-  - XModeAPI (0.2.2):
+  - XModeAPI (0.3.2):
     - AFNetworking (~> 2.3)
     - BeaconsInSpace
 
@@ -92,19 +92,19 @@ SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   BeaconsInSpace: af71781fab13da64d2b1d66cfa1e0a4e2d662fac
   DTMHeatmap: f5588af0730fbfe78c75d6d013f1932d7d327ab2
-  Firebase: 5bc34d7b5ff5792e3386c8b28dc6265deeab0da4
+  Firebase: 2b1cdfba1cda8589f32904a697cc753322bff9d8
   FirebaseAnalytics: 0d1b7d81d5021155be37702a94ba1ec16d45365d
   FirebaseAuth: cc8a1824170adbd351edb7f994490a3fb5c18be6
-  FirebaseCore: 1c0a13bf59bb95cdd19577252499f0ec6a03e999
+  FirebaseCore: a024587e43778508700af8c6b1209f7c4516ba02
   FirebaseDatabase: 05c96d7b43a7368dc91c07791adb49683e1738d1
   FirebaseInstanceID: 2d0518b1378fe9d685ef40cbdd63d2fdc1125339
   FirebaseMessaging: df8267f378580a24174ce7861233aa11d5c90109
-  Flurry-iOS-SDK: 300dc1d78443dea3d433a38e76292f20f14f0a96
-  Google-Mobile-Ads-SDK: a8bf4211624999b73e4184be516f94770b139525
+  Flurry-iOS-SDK: e6975df9e57010d582bf9bed0f6312553cf24bc2
+  Google-Mobile-Ads-SDK: d1bcdbd8347a105a687345b8511701172a5074e9
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
-  GTMSessionFetcher: 6f8d8b28b7e345549ac471071608170b31cb4977
+  GTMSessionFetcher: 5c046c76a1f859bc9c187e918f18e4fc7bb57b5e
   Protobuf: 745f59e122e5de98d4d7ef291e264a0eef80f58e
-  XModeAPI: 879763cf08dfbb50adae7c1560fdd42b0edef6fc
+  XModeAPI: 2e750cce1792833bfce12cc6bc6c87849b60f1b7
 
 PODFILE CHECKSUM: e4b7f434babb957434bab5806e6eafc686afe76b
 
