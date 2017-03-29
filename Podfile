@@ -19,7 +19,6 @@ target 'TrumpPunch' do
         pod 'FacebookLogin'
         pod 'FacebookCore'
         pod 'TwitterKit'
-        pod 'Fabric'
 end
 
 target 'TrumpPunchTests' do
