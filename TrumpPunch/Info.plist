@@ -20,12 +20,31 @@
 	<string>4.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>Fabric</key>
+	<dict>
+		<key>APIKey</key>
+		<string>9ea39c2d0e0d5c688dd9e32583ce3260c5e87802</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict>
+					<key>consumerKey</key>
+					<string>qASacwlOzaezvhHrBH1CnjquB</string>
+					<key>consumerSecret</key>
+					<string>ukkJJySoXzfjq8IqHE0CS3QfjBAYD3zgvITpB0KlnrlhUUh4ul</string>
+				</dict>
+				<key>KitName</key>
+				<string>Twitter</string>
+			</dict>
+		</array>
+	</dict>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Trump Punch would like access to your location.  We can then give you a great feature and show a heat map of all the people Trump Punching!</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>We use this to check your locations while in background - cause that helps you know whats going on.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Trump Punch would like access to your location.  We can then give you a great feature and show a heat map of all the people Trump Punching!</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>

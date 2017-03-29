@@ -76,6 +76,7 @@
 		71E687B61E5AB8390016BE11 /* TPPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E687B51E5AB8390016BE11 /* TPPerson.swift */; };
 		71E687B81E5AB8420016BE11 /* TPItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E687B71E5AB8420016BE11 /* TPItem.swift */; };
 		A14F39A6DE2B46F755E2B5E2 /* Pods_TrumpPunchUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B88BCEB7D87EE676D2BA854C /* Pods_TrumpPunchUITests.framework */; };
+		C29801B91E8AA2B900230B17 /* InitialLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29801B81E8AA2B900230B17 /* InitialLoginViewController.swift */; };
 		C2BD597C1E6251A7007C1571 /* GeoFire.m in Sources */ = {isa = PBXBuildFile; fileRef = C2BD596F1E6251A7007C1571 /* GeoFire.m */; };
 		C2BD597D1E6251A7007C1571 /* GFBase32Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = C2BD59721E6251A7007C1571 /* GFBase32Utils.m */; };
 		C2BD597E1E6251A7007C1571 /* GFGeoHash.m in Sources */ = {isa = PBXBuildFile; fileRef = C2BD59751E6251A7007C1571 /* GFGeoHash.m */; };
@@ -188,6 +189,7 @@
 		9D1A5958965FBA1BD2A2B56D /* Pods_TrumpPunchTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrumpPunchTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE3882355237200F8C47038D /* Pods-TrumpPunchTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrumpPunchTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrumpPunchTests/Pods-TrumpPunchTests.release.xcconfig"; sourceTree = "<group>"; };
 		B88BCEB7D87EE676D2BA854C /* Pods_TrumpPunchUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrumpPunchUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C29801B81E8AA2B900230B17 /* InitialLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialLoginViewController.swift; sourceTree = "<group>"; };
 		C2BD596D1E6251A6007C1571 /* TrumpPunch-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TrumpPunch-Bridging-Header.h"; sourceTree = "<group>"; };
 		C2BD596E1E6251A7007C1571 /* GeoFire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeoFire.h; sourceTree = "<group>"; };
 		C2BD596F1E6251A7007C1571 /* GeoFire.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeoFire.m; sourceTree = "<group>"; };
@@ -406,6 +408,7 @@
 				711BC4591E61EAFF00B077EC /* GoogleService-Info.plist */,
 				71E687571E5AB09D0016BE11 /* LaunchScreen.storyboard */,
 				71E687521E5AB09D0016BE11 /* Main.storyboard */,
+				C29801B81E8AA2B900230B17 /* InitialLoginViewController.swift */,
 			);
 			name = SupportingFiles;
 			sourceTree = "<group>";
@@ -553,6 +556,7 @@
 				71E687431E5AB09D0016BE11 /* Resources */,
 				5E7F1E5F5FFAC005920A285A /* [CP] Embed Pods Frameworks */,
 				23F271CD687ACA813C2427B6 /* [CP] Copy Pods Resources */,
+				C29801BA1E8AB69F00230B17 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -833,6 +837,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TrumpPunchUITests/Pods-TrumpPunchUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		C29801BA1E8AB69F00230B17 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 9ea39c2d0e0d5c688dd9e32583ce3260c5e87802 b8f674a27a8a77631b3309b5426405adec816f386225e9f11a1d2006c0de0c8d";
+		};
 		CEE54B9984B26F548A294467 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -861,6 +878,7 @@
 				711BC4661E65222D00B077EC /* TPProducts.swift in Sources */,
 				C2BD597E1E6251A7007C1571 /* GFGeoHash.m in Sources */,
 				71E687861E5AB1E60016BE11 /* TPHelpers.swift in Sources */,
+				C29801B91E8AA2B900230B17 /* InitialLoginViewController.swift in Sources */,
 				C2D85BCC1E612AD9000BABF8 /* TPLocationDelegate.swift in Sources */,
 				711BC4451E5D0E0300B077EC /* TPPeopleCollectionViewCell.swift in Sources */,
 				71BF54781E6BE54A00E3FA3E /* TPEndSceneMiddleView.swift in Sources */,

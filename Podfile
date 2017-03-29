@@ -15,6 +15,11 @@ target 'TrumpPunch' do
         pod 'XModeAPI'
         pod 'DTMHeatmap'
         pod 'Firebase/Auth'
+        pod 'Google/SignIn'
+        pod 'FacebookLogin'
+        pod 'FacebookCore'
+        pod 'TwitterKit'
+        pod 'Fabric'
 end
 
 target 'TrumpPunchTests' do

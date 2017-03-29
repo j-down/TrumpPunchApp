@@ -21,7 +21,26 @@ PODS:
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - BeaconsInSpace (1.5.5)
+  - Bolts (1.8.4):
+    - Bolts/AppLinks (= 1.8.4)
+    - Bolts/Tasks (= 1.8.4)
+  - Bolts/AppLinks (1.8.4):
+    - Bolts/Tasks
+  - Bolts/Tasks (1.8.4)
   - DTMHeatmap (1.0)
+  - Fabric (1.6.11)
+  - FacebookCore (0.2.0):
+    - Bolts (~> 1.8)
+    - FBSDKCoreKit (~> 4.15)
+  - FacebookLogin (0.2.0):
+    - Bolts (~> 1.8)
+    - FacebookCore (~> 0.2)
+    - FBSDKCoreKit (~> 4.15)
+    - FBSDKLoginKit (~> 4.15)
+  - FBSDKCoreKit (4.20.2):
+    - Bolts (~> 1.7)
+  - FBSDKLoginKit (4.20.2):
+    - FBSDKCoreKit
   - Firebase/AdMob (3.15.0):
     - Firebase/Core
     - Google-Mobile-Ads-SDK (= 7.19.0)
@@ -59,6 +78,16 @@ PODS:
     - Flurry-iOS-SDK/FlurrySDK
   - Flurry-iOS-SDK/FlurrySDK (7.10.0)
   - Google-Mobile-Ads-SDK (7.19.0)
+  - Google/Core (3.0.3):
+    - FirebaseAnalytics (~> 3.2)
+  - Google/SignIn (3.0.3):
+    - Google/Core
+    - GoogleSignIn (~> 4.0)
+  - GoogleSignIn (4.0.2):
+    - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
+    - GoogleToolboxForMac/NSString+URLArguments (~> 2.1)
+    - GTMOAuth2 (~> 1.0)
+    - GTMSessionFetcher/Core (~> 1.1)
   - GoogleToolboxForMac/DebugUtils (2.1.1):
     - GoogleToolboxForMac/Defines (= 2.1.1)
   - GoogleToolboxForMac/Defines (2.1.1)
@@ -71,14 +100,26 @@ PODS:
     - GoogleToolboxForMac/Defines (= 2.1.1)
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.1)
   - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
+  - GTMOAuth2 (1.1.4):
+    - GTMSessionFetcher (~> 1.1)
+  - GTMSessionFetcher (1.1.9):
+    - GTMSessionFetcher/Full (= 1.1.9)
   - GTMSessionFetcher/Core (1.1.9)
+  - GTMSessionFetcher/Full (1.1.9):
+    - GTMSessionFetcher/Core (= 1.1.9)
   - Protobuf (3.2.0)
+  - TwitterCore (2.8.0):
+    - Fabric
+  - TwitterKit (2.8.1):
+    - TwitterCore (>= 2.8)
   - XModeAPI (0.3.2):
     - AFNetworking (~> 2.3)
     - BeaconsInSpace
 
 DEPENDENCIES:
   - DTMHeatmap
+  - FacebookCore
+  - FacebookLogin
   - Firebase/AdMob
   - Firebase/Auth
   - Firebase/Core
@@ -86,12 +127,20 @@ DEPENDENCIES:
   - Firebase/Messaging
   - Flurry-iOS-SDK/FlurryAds
   - Flurry-iOS-SDK/FlurrySDK
+  - Google/SignIn
+  - TwitterKit
   - XModeAPI
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   BeaconsInSpace: af71781fab13da64d2b1d66cfa1e0a4e2d662fac
+  Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   DTMHeatmap: f5588af0730fbfe78c75d6d013f1932d7d327ab2
+  Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
+  FacebookCore: 2cb3f0fbff218e9d3119cec84bae983b232412de
+  FacebookLogin: c9d606504735780a9e3002465a615512e0a691a5
+  FBSDKCoreKit: 82eac696eb6157da5f4266c3a241f00e9bd72471
+  FBSDKLoginKit: 2211bede07c83391349eacc1fd86cf6d9289ce38
   Firebase: 2b1cdfba1cda8589f32904a697cc753322bff9d8
   FirebaseAnalytics: 0d1b7d81d5021155be37702a94ba1ec16d45365d
   FirebaseAuth: cc8a1824170adbd351edb7f994490a3fb5c18be6
@@ -100,12 +149,17 @@ SPEC CHECKSUMS:
   FirebaseInstanceID: 2d0518b1378fe9d685ef40cbdd63d2fdc1125339
   FirebaseMessaging: df8267f378580a24174ce7861233aa11d5c90109
   Flurry-iOS-SDK: e6975df9e57010d582bf9bed0f6312553cf24bc2
+  Google: 813c467362eabc11385f5a5cc9ad0cb651a58f4e
   Google-Mobile-Ads-SDK: d1bcdbd8347a105a687345b8511701172a5074e9
+  GoogleSignIn: d7ad83f13480e1f30453471d00d19b5293ac46af
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
+  GTMOAuth2: 7fc9c10f5c745f4d9850419ea88889fe3baa6b7d
   GTMSessionFetcher: 5c046c76a1f859bc9c187e918f18e4fc7bb57b5e
   Protobuf: 745f59e122e5de98d4d7ef291e264a0eef80f58e
+  TwitterCore: e959987be23c767004d29eb7fab8d85d8585a2e5
+  TwitterKit: 3b6044a7320340326a4098f3e37aa1dbaeb94942
   XModeAPI: 2e750cce1792833bfce12cc6bc6c87849b60f1b7
 
-PODFILE CHECKSUM: e4b7f434babb957434bab5806e6eafc686afe76b
+PODFILE CHECKSUM: 653ae4a166b2c1d786f2e58a08e24e99f1e1d358
 
 COCOAPODS: 1.1.1

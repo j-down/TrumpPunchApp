@@ -11,9 +11,13 @@ import Firebase
 import FirebaseDatabase
 import FirebaseCore
 import XModeAPI
+import Fabric
+import TwitterKit
+import GoogleSignIn
+import Google
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
     var window: UIWindow?
 
@@ -26,7 +30,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Start the XModeAPI:
         TPLocationDelegate.shared.startXModeAPI()
-
+        
+        // Activate Twitter:
+        Fabric.with([Twitter.self])
+        
+        // Set the Google delegate:
+        GIDSignIn.sharedInstance().delegate = self
+        // Set the clientID:
+        GIDSignIn.sharedInstance().clientID = FIRApp.defaultApp()?.options.clientID
+        
+        // First, lets check and see if we have an anonomous user.  We will still make them log in:
+        if let isAnon = FIRAuth.auth()?.currentUser?.isAnonymous {
+            if isAnon {
+                // They are an anonymous user still.. We should act like they are not logged in now:
+                
+            } else {
+                // Okay we should be good to go to pop them into the main view:
+                
+            }
+        } else {
+            // auth or current user is nil: Lets bring them to the initial setup page:
+            
+        }
+        
         return true
     }
 
@@ -50,6 +76,52 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    //MARK:  Google-Sign-In Delegate Methods:
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        
+        // If we have an error, we should not continue this function:
+        if error != nil { return }
+        
+        // Okay now that we know theres no error lets check everything we need here from the sign in, lets authenticate back with Firebase:
+        
+        if let accessToken = user.authentication.accessToken {
+            // We may want to save this on our backend:
+            let name = user.profile.name
+            let email = user.profile.email
+            
+            guard let authentication = user.authentication else { return }
+            let credential = FIRGoogleAuthProvider.credential(withIDToken: user.authentication.idToken,
+                                                              accessToken: accessToken)
+            
+        } else {
+            // Ugh we dont have an accessToken:
+            ccxLog(logMessage: "No accessToken for GoogleSignIn")
+        }
+        
+    }
+    
+    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
+        // If they disconnect, we should sign them out to clear the sign in sharedInstance and bring them back to the initialViewController in the main storyboard:
+        GIDSignIn.sharedInstance().signOut()
+        if let initialVC = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController() {
+            self.window?.rootViewController = initialVC
+            self.window?.makeKeyAndVisible()
+        }
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        // We are popping the user out into Safari to log in:
+        return GIDSignIn.sharedInstance().handle(url,
+                                                 sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String,
+                                                 annotation: options[UIApplicationOpenURLOptionsKey.annotation])
+    }
+    
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        return GIDSignIn.sharedInstance().handle(url,
+                                                 sourceApplication: sourceApplication,
+                                                 annotation: annotation)
     }
 
 }
