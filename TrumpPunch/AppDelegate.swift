@@ -28,12 +28,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         FIRApp.configure()
 
         GADMobileAds.configure(withApplicationID: "ca-app-pub-3779823216194929~1812216696")
-
-        // Start the XModeAPI:
-//        TPLocationDelegate.shared.startXModeAPI()
         
         // Activate Twitter:
-//        Fabric.with([Twitter.self])
+        Fabric.with([Twitter.self])
         
         // Set the Google delegate:        
         GIDSignIn.sharedInstance().delegate = self
@@ -48,6 +45,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             } else {
                 // Okay we should be good to go to pop them into the main view:
                 self.continueToMain()
+                
+                // Start the XModeAPI:
+                TPLocationDelegate.shared.startXModeAPI()
             }
         } else {
             // auth or current user is nil: Lets bring them to the initial setup page:
@@ -90,16 +90,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         
         // Okay now that we know theres no error lets check everything we need here from the sign in, lets authenticate back with Firebase:
         if let accessToken = user.authentication.accessToken, let idToken = user.authentication.idToken {
-            // We may want to save this on our backend:
-//            let name = user.profile.name
-//            let email = user.profile.email
             
+            // We may want to save this on our backend:
             let credential = FIRGoogleAuthProvider.credential(withIDToken: idToken,
                                                               accessToken: accessToken)
             
             FIRAuth.auth()?.signIn(with: credential, completion: { (fireBaseUser, error) in
                 
-                if error != nil { self.ccxLog(error: error!) ; return }
+                if error != nil && fireBaseUser == nil { self.ccxLog(error: error!) ; return }
+                
+                // Here we should take them over to the mainVC:
                 
             })
             
@@ -133,16 +133,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         // We are popping the user out into Safari to log in:
         print(options)
-        return GIDSignIn.sharedInstance().handle(url,
-                                                 sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String,
-                                                 annotation: options[UIApplicationOpenURLOptionsKey.annotation])
+        
+        if GIDSignIn.sharedInstance().handle(url,
+                                             sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String,
+                                             annotation: options[UIApplicationOpenURLOptionsKey.annotation]) {
+            // Google Login:
+            return true
+        } else if FBSDKApplicationDelegate.sharedInstance().application(app,
+                                                                        open: url,
+                                                                        options: options) {
+            // Facebook Login:
+            return true
+        } else if Twitter.sharedInstance().application(app, open: url, options: options) {
+            // Twitter Login:
+            return true
+        } else {
+            return false
+        }
+        
     }
     // Older iOS Versions:
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        print(sourceApplication)
-        return GIDSignIn.sharedInstance().handle(url,
-                                                 sourceApplication: sourceApplication,
-                                                 annotation: annotation)
+        if GIDSignIn.sharedInstance().handle(url,
+                                             sourceApplication: sourceApplication,
+                                             annotation: annotation){
+            return true
+        } else if FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation) {
+            return true
+        } else {
+            return false
+        }
     }
 
 }
