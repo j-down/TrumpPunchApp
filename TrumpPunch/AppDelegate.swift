@@ -43,14 +43,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         if let isAnon = FIRAuth.auth()?.currentUser?.isAnonymous {
             if isAnon {
                 // They are an anonymous user still.. We should act like they are not logged in now:
-                
+                self.goToSignIn()
             } else {
                 // Okay we should be good to go to pop them into the main view:
-                
+                self.continueToMain()
             }
         } else {
             // auth or current user is nil: Lets bring them to the initial setup page:
-            
+            self.goToSignIn()
         }
         
         return true
@@ -97,18 +97,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             
         } else {
             // Ugh we dont have an accessToken:
-            ccxLog(logMessage: "No accessToken for GoogleSignIn")
+            ccxLog(logMessage: "No accessToken for GoogleSignIn"); return
         }
         
+    }
+    
+    func goToSignIn() {
+        if let initialVC = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController() {
+            self.window?.rootViewController = initialVC
+            self.window?.makeKeyAndVisible()
+        }
+    }
+    
+    func continueToMain() {
+        if let initialVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TPBaseViewController") as? TPBaseViewController {
+            self.window?.rootViewController = initialVC
+            self.window?.makeKeyAndVisible()
+        }
     }
     
     func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
         // If they disconnect, we should sign them out to clear the sign in sharedInstance and bring them back to the initialViewController in the main storyboard:
         GIDSignIn.sharedInstance().signOut()
-        if let initialVC = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController() {
-            self.window?.rootViewController = initialVC
-            self.window?.makeKeyAndVisible()
-        }
+        self.goToSignIn()
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
