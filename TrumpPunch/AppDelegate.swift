@@ -85,15 +85,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         if error != nil { return }
         
         // Okay now that we know theres no error lets check everything we need here from the sign in, lets authenticate back with Firebase:
-        
-        if let accessToken = user.authentication.accessToken {
+        if let accessToken = user.authentication.accessToken, let idToken = user.authentication.idToken {
             // We may want to save this on our backend:
             let name = user.profile.name
             let email = user.profile.email
             
-            guard let authentication = user.authentication else { return }
-            let credential = FIRGoogleAuthProvider.credential(withIDToken: user.authentication.idToken,
+            let credential = FIRGoogleAuthProvider.credential(withIDToken: idToken,
                                                               accessToken: accessToken)
+            print("Name: ", name, " Email: ", email)
             
         } else {
             // Ugh we dont have an accessToken:
