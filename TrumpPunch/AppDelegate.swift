@@ -15,6 +15,7 @@ import Fabric
 import TwitterKit
 import GoogleSignIn
 import Google
+import FBSDKCoreKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
@@ -53,6 +54,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             self.goToSignIn()
         }
         
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        
         return true
     }
 
@@ -72,6 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        FBSDKAppEvents.activateApp()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -93,14 +97,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             let credential = FIRGoogleAuthProvider.credential(withIDToken: idToken,
                                                               accessToken: accessToken)
             
-            FIRAuth.auth()?.signIn(with: credential, completion: { (FirebaseUser, error) in
+            FIRAuth.auth()?.signIn(with: credential, completion: { (fireBaseUser, error) in
                 
-                let user = FirebaseUser
-                // If theres an error, log it & return:
                 if error != nil { self.ccxLog(error: error!) ; return }
-                
-                // Okay... lets deal with the user:
-                
                 
             })
             
@@ -133,12 +132,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     // Newer iOS Versions:
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         // We are popping the user out into Safari to log in:
+        print(options)
         return GIDSignIn.sharedInstance().handle(url,
                                                  sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String,
                                                  annotation: options[UIApplicationOpenURLOptionsKey.annotation])
     }
     // Older iOS Versions:
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        print(sourceApplication)
         return GIDSignIn.sharedInstance().handle(url,
                                                  sourceApplication: sourceApplication,
                                                  annotation: annotation)
