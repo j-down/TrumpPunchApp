@@ -10,7 +10,7 @@ import UIKit
 import GoogleSignIn
 import Google
 
-class InitialLoginViewController: UIViewController {
+class InitialLoginViewController: UIViewController, GIDSignInUIDelegate {
 
     @IBOutlet var trumpTitleConstraint : NSLayoutConstraint!
     
@@ -23,6 +23,8 @@ class InitialLoginViewController: UIViewController {
         default:
             break
         }
+        // Set the signIn uiDelegate so we can talk back to our AppDelegate:
+        GIDSignIn.sharedInstance().uiDelegate = self
     }
 
     override func didReceiveMemoryWarning() {

@@ -29,19 +29,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         GADMobileAds.configure(withApplicationID: "ca-app-pub-3779823216194929~1812216696")
 
         // Start the XModeAPI:
-        TPLocationDelegate.shared.startXModeAPI()
+//        TPLocationDelegate.shared.startXModeAPI()
         
         // Activate Twitter:
-        Fabric.with([Twitter.self])
+//        Fabric.with([Twitter.self])
         
-        // Set the Google delegate:
+        // Set the Google delegate:        
         GIDSignIn.sharedInstance().delegate = self
         // Set the clientID:
         GIDSignIn.sharedInstance().clientID = FIRApp.defaultApp()?.options.clientID
         
         // First, lets check and see if we have an anonomous user.  We will still make them log in:
-        if let isAnon = FIRAuth.auth()?.currentUser?.isAnonymous {
-            if isAnon {
+        if let user = FIRAuth.auth()?.currentUser {
+            if user.isAnonymous {
                 // They are an anonymous user still.. We should act like they are not logged in now:
                 self.goToSignIn()
             } else {
@@ -87,12 +87,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         // Okay now that we know theres no error lets check everything we need here from the sign in, lets authenticate back with Firebase:
         if let accessToken = user.authentication.accessToken, let idToken = user.authentication.idToken {
             // We may want to save this on our backend:
-            let name = user.profile.name
-            let email = user.profile.email
+//            let name = user.profile.name
+//            let email = user.profile.email
             
             let credential = FIRGoogleAuthProvider.credential(withIDToken: idToken,
                                                               accessToken: accessToken)
-            print("Name: ", name, " Email: ", email)
+            
+            FIRAuth.auth()?.signIn(with: credential, completion: { (FirebaseUser, error) in
+                
+                let user = FirebaseUser
+                // If theres an error, log it & return:
+                if error != nil { self.ccxLog(error: error!) ; return }
+                
+                // Okay... lets deal with the user:
+                
+                
+            })
             
         } else {
             // Ugh we dont have an accessToken:
@@ -120,14 +130,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         GIDSignIn.sharedInstance().signOut()
         self.goToSignIn()
     }
-    
+    // Newer iOS Versions:
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         // We are popping the user out into Safari to log in:
         return GIDSignIn.sharedInstance().handle(url,
                                                  sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String,
                                                  annotation: options[UIApplicationOpenURLOptionsKey.annotation])
     }
-    
+    // Older iOS Versions:
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
         return GIDSignIn.sharedInstance().handle(url,
                                                  sourceApplication: sourceApplication,
