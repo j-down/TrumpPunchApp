@@ -21,6 +21,8 @@ import FBSDKCoreKit
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
     var window: UIWindow?
+    
+    static let shared = UIApplication.shared.delegate as! AppDelegate
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -30,6 +32,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         GADMobileAds.configure(withApplicationID: "ca-app-pub-3779823216194929~1812216696")
         
         // Activate Twitter:
+        Twitter.sharedInstance().start(withConsumerKey: "qASacwlOzaezvhHrBH1CnjquB", consumerSecret: "ukkJJySoXzfjq8IqHE0CS3QfjBAYD3zgvITpB0KlnrlhUUh4ul")
+        // CLIENT APP ID: 13592939
         Fabric.with([Twitter.self])
         
         // Set the Google delegate:        
@@ -134,14 +138,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         // We are popping the user out into Safari to log in:
         print(options)
         
-        if GIDSignIn.sharedInstance().handle(url,
-                                             sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String,
-                                             annotation: options[UIApplicationOpenURLOptionsKey.annotation]) {
+        if FBSDKApplicationDelegate.sharedInstance().application(app,
+                                                                 open: url,
+                                                                 options: options) {
             // Google Login:
             return true
-        } else if FBSDKApplicationDelegate.sharedInstance().application(app,
-                                                                        open: url,
-                                                                        options: options) {
+        } else if GIDSignIn.sharedInstance().handle(url,
+                                                    sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String,
+                                                    annotation: options[UIApplicationOpenURLOptionsKey.annotation]) {
             // Facebook Login:
             return true
         } else if Twitter.sharedInstance().application(app, open: url, options: options) {

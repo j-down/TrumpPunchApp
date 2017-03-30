@@ -10,6 +10,9 @@ import UIKit
 import GoogleSignIn
 import Google
 import TwitterKit
+import FBSDKLoginKit
+import FBSDKCoreKit
+import Firebase
 
 class InitialLoginViewController: UIViewController, GIDSignInUIDelegate {
 
@@ -39,13 +42,42 @@ class InitialLoginViewController: UIViewController, GIDSignInUIDelegate {
     }
     
     @IBAction func facebookSignInPressed(sender: UIButton) {
-        
-        
+        FBSDKLoginManager.init().logIn(withReadPermissions: ["public_profile"], from: self) { (result, error) in
+            // User cancelled facebook:
+            if let _ = result?.isCancelled {print("User cancelled facebook login.");return}
+            
+            if error == nil, let token = result?.token.tokenString  {
+                // Okay here we should try logging them in:
+                let credential = FIRFacebookAuthProvider.credential(withAccessToken: token)
+                self.signInWithoAuthCredentials(credential: credential)
+            } else {
+                print(error ?? "NIL ERROR -- NO ACTION")
+            }
+            
+        }
     }
     
     @IBAction func twitterSignInPressed(sender: UIButton) {
-        
-        
+        Twitter.sharedInstance().logIn { session, error in
+            if (session != nil) {
+                print("signed in as \(session?.userName)");
+                let credential = FIRTwitterAuthProvider.credential(withToken: session!.authToken, secret: session!.authTokenSecret)
+                self.signInWithoAuthCredentials(credential: credential)
+            } else {
+                print("error: \(error?.localizedDescription)");
+            }
+        }
+    }
+    
+    func signInWithoAuthCredentials(credential: FIRAuthCredential) {
+        FIRAuth.auth()?.signIn(with: credential, completion: { (user, error) in
+            if error == nil {
+                // Yay we signed in... lets take them to the main page:
+                AppDelegate.shared.continueToMain()
+            } else {
+                print(error ?? "NIL ERROR")
+            }
+        })
     }
 
     /*
