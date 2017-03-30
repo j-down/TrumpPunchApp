@@ -125,6 +125,26 @@ class SignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
                     default:
                         break
                     }
+                } else {
+                    switch txtField.tag {
+                    case 0:
+                        self.checkingUsernameAvailability = true
+                        txtField.checkUsernameAvailability {
+                            available in
+                            // Set the checking status back to false (we will check this when we check the fields to sign up:
+                            self.checkingUsernameAvailability = false
+                            // Set this check to what was given back through the block:
+                            self.usernameAvailable = available
+                        }
+                    case 1:
+                        if !txtField.isEmailValid && txtField.isTextEmpty {
+                            txtField.errorString = "Please enter an email!"
+                        } else if !txtField.isEmailValid && !txtField.isTextEmpty {
+                            txtField.errorString = "Invalid email address!"
+                        }
+                    default:
+                        break
+                    }
                 }
             } else  {
                 // If we were showing a success, and the textfield is empty, then we need to clear out the success.
@@ -134,13 +154,13 @@ class SignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
                         if txtField.showingSuccess { txtField.clearSuccess() }
                         txtField.errorString = "Please enter a username!"
                     case 1:
-                        txtField.errorString = "Please enter an email!"
-                    case 2:
                         if !txtField.isEmailValid && txtField.isTextEmpty {
                             txtField.errorString = "Please enter an email!"
                         } else if !txtField.isEmailValid && !txtField.isTextEmpty {
                             txtField.errorString = "Invalid email address!"
                         }
+                    case 2:
+                        txtField.errorString = "Please enter a password!"
                     case 3:
                         txtField.errorString = "Please confirm your password!"
                     default:
@@ -313,29 +333,24 @@ fileprivate extension CCXSignUpTextField {
         let label = UILabel(); label.translatesAutoresizingMaskIntoConstraints = false; label.font = UIFont(name: "Helvetica-Bold", size: 10); label.text = stringMessage ?? error?.localizedDescription; label.textColor = UIColor.red; label.alpha = 0;
         let constraints : [NSLayoutConstraint] = [ label.leadingAnchor.constraint(equalTo: self.leadingAnchor), label.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0) ]
         
+        
+        self.superview?.addSubview(label)
+        self.superview?.addConstraints(constraints)
         // Finish up our animation in:
-        UIView.animate(withDuration: 1.25, delay: 0.15, options: .curveEaseIn, animations: { 
+        UIView.animate(withDuration: 1.25, delay: 0.15, options: .curveEaseIn, animations: {
             label.alpha = 1
-        }) { (finished) in
-            if finished {
-                self.superview?.addSubview(label)
-                self.superview?.addConstraints(constraints)
-            }
-        }
+        })
     }
     
     func showSuccess(stringMessage : String) {
         let label = UILabel(); label.translatesAutoresizingMaskIntoConstraints = false; label.font = UIFont(name: "Helvetica-Bold", size: 10); label.text = stringMessage; label.textColor = UIColor.green; label.alpha = 0
         let constraints : [NSLayoutConstraint] = [ label.leadingAnchor.constraint(equalTo: self.leadingAnchor), label.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0) ]
         
+        self.superview?.addSubview(label)
+        self.superview?.addConstraints(constraints)
         UIView.animate(withDuration: 1.25, delay: 0.15, options: .curveEaseIn, animations: {
             label.alpha = 1
-        }) { (finished) in
-            if finished {
-                self.superview?.addSubview(label)
-                self.superview?.addConstraints(constraints)
-            }
-        }
+        })
     }
     
     func clearErrors() {
