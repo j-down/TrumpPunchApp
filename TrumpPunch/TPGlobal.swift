@@ -11,6 +11,7 @@ import UIKit
 import AVFoundation
 import StoreKit
 import SpriteKit
+import Firebase
 
 let Defaults = UserDefaults.standard
 
@@ -133,6 +134,9 @@ let xmodeAPIKey = "s3a9tsN2vJ9J0zvjxSYD4655qQeTaIzC6Zc7ZxYD"
 
 // XModeAPI Notification Keys:
 let sdkLocationKey = "XModeCurrentLocationKey"
+
+// Database Reference:
+let dbRef = FIRDatabase.database().reference(withPath: "users_location")
 
 // CCX Logging:
 extension NSObject {

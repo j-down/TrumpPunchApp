@@ -23,8 +23,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     var window: UIWindow?
     
     static let shared = UIApplication.shared.delegate as! AppDelegate
-
-    let users = FIRDatabase.database().reference(withPath: "user_profile")
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -42,6 +40,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         GIDSignIn.sharedInstance().delegate = self
         // Set the clientID:
         GIDSignIn.sharedInstance().clientID = FIRApp.defaultApp()?.options.clientID
+        
+//        do {
+//            try FIRAuth.auth()?.signOut()
+//        } catch {
+//            print(error)
+//        }
         
         // First, lets check and see if we have an anonomous user.  We will still make them log in:
         if let user = FIRAuth.auth()?.currentUser {
@@ -181,7 +185,7 @@ extension FIRUser {
         set {
             // If the newvalue is nil, lets return:
             if newValue == nil {return}
-            AppDelegate.shared.users.updateChildValues(["fullName" : newValue!, "id" : self.uid, "email" : self.email ?? ""]) { (error, reference) in
+            dbRef.child(self.uid).setValue(["fullName" : newValue!,"email" : self.email ?? ""]) { (error, reference) in
                 if error != nil { self.ccxLog(error: error) }
                 else { print("Yay - we set the fullName"); Defaults.set(newValue!, forKey: "fullName") }
             }
@@ -194,7 +198,7 @@ extension FIRUser {
         set {
             // If the newvalue is nil, lets return:
             if newValue == nil {return}
-            AppDelegate.shared.users.updateChildValues(["username" : newValue!, "id" : self.uid, "email" : self.email ?? ""]) { (error, reference) in
+            dbRef.child(self.uid).setValue(["username" : newValue!, "email" : self.email ?? ""]) { (error, ref) in
                 if error != nil { self.ccxLog(error: error) }
                 else { print("Yay - we set the username"); Defaults.set(newValue!, forKey: "username") }
             }
