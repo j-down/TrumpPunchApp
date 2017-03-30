@@ -21,14 +21,10 @@ class InitialLoginViewController: UIViewController, GIDSignInUIDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        switch UIScreen.main.bounds.height {
-        case 480:
-            trumpTitleConstraint.setMultiplier(multiplier: 0.6)
-        default:
-            break
-        }
+        if UIScreen.main.bounds.height == 480 { trumpTitleConstraint.setMultiplier(multiplier: 0.6) }
         // Set the signIn uiDelegate so we can talk back to our AppDelegate:
         GIDSignIn.sharedInstance().uiDelegate = self
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,14 +38,15 @@ class InitialLoginViewController: UIViewController, GIDSignInUIDelegate {
     }
     
     @IBAction func facebookSignInPressed(sender: UIButton) {
-        FBSDKLoginManager.init().logIn(withReadPermissions: ["public_profile"], from: self) { (result, error) in
+        FBSDKLoginManager().logIn(withReadPermissions: ["public_profile"], from: self) { (result, error) in
             // User cancelled facebook:
-            if let _ = result?.isCancelled {print("User cancelled facebook login.");return}
+            if let _ = result?.isCancelled { print("User cancelled facebook login."); return }
             
             if error == nil, let token = result?.token.tokenString  {
                 // Okay here we should try logging them in:
                 let credential = FIRFacebookAuthProvider.credential(withAccessToken: token)
                 self.signInWithoAuthCredentials(credential: credential)
+                
             } else {
                 print(error ?? "NIL ERROR -- NO ACTION")
             }
@@ -60,11 +57,12 @@ class InitialLoginViewController: UIViewController, GIDSignInUIDelegate {
     @IBAction func twitterSignInPressed(sender: UIButton) {
         Twitter.sharedInstance().logIn { session, error in
             if (session != nil) {
-                print("signed in as \(session?.userName)");
+                // Get the credentials & then sign in:
                 let credential = FIRTwitterAuthProvider.credential(withToken: session!.authToken, secret: session!.authTokenSecret)
                 self.signInWithoAuthCredentials(credential: credential)
+                
             } else {
-                print("error: \(error?.localizedDescription)");
+                print("TWITTER LOGIN ERROR: \(error?.localizedDescription)");
             }
         }
     }
@@ -79,16 +77,6 @@ class InitialLoginViewController: UIViewController, GIDSignInUIDelegate {
             }
         })
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 

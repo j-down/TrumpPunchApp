@@ -24,6 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
     static let shared = UIApplication.shared.delegate as! AppDelegate
 
+    let users = FIRDatabase.database().reference(withPath: "user_profile")
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 
@@ -169,4 +171,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         }
     }
 
+}
+
+extension FIRUser {
+    var fullName : String? {
+        get {
+            return Defaults.string(forKey: "fullName")
+        }
+        set {
+            // If the newvalue is nil, lets return:
+            if newValue == nil {return}
+            AppDelegate.shared.users.updateChildValues(["fullName" : newValue!, "id" : self.uid, "email" : self.email ?? ""]) { (error, reference) in
+                if error != nil { self.ccxLog(error: error) }
+                else { print("Yay - we set the fullName"); Defaults.set(newValue!, forKey: "fullName") }
+            }
+        }
+    }
+    var username : String? {
+        get {
+            return Defaults.string(forKey: "username")
+        }
+        set {
+            // If the newvalue is nil, lets return:
+            if newValue == nil {return}
+            AppDelegate.shared.users.updateChildValues(["username" : newValue!, "id" : self.uid, "email" : self.email ?? ""]) { (error, reference) in
+                if error != nil { self.ccxLog(error: error) }
+                else { print("Yay - we set the username"); Defaults.set(newValue!, forKey: "username") }
+            }
+        }
+    }
 }
