@@ -119,6 +119,8 @@ class SignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
                                 // Set this check to what was given back through the block:
                                 self.usernameAvailable = available
                             }
+                        } else {
+                            txtField.successString = "Username is available."
                         }
                     case 1:
                         self.checkingEmailAvailability = true
@@ -180,20 +182,17 @@ class SignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
                 }
             } else  {
                 // If we were showing a success, and the textfield is empty, then we need to clear out the success.
-                if !txtField.showingError {
-                    switch txtField.tag {
-                    case 0:
-                        if txtField.showingSuccess { txtField.clearSuccess() }
-                        txtField.errorString = "Please enter a username!"
-                    case 1:
-                        txtField.errorString = "Please enter an email!"
-                    case 2:
-                        txtField.errorString = "Please enter a password!"
-                    case 3:
-                        txtField.errorString = "Please confirm your password!"
-                    default:
-                        break
-                    }
+                switch txtField.tag {
+                case 0:
+                    txtField.errorString = "Please enter a username!"
+                case 1:
+                    txtField.errorString = "Please enter an email!"
+                case 2:
+                    txtField.errorString = "Please enter a password!"
+                case 3:
+                    txtField.errorString = "Please confirm your password!"
+                default:
+                    break
                 }
             }
             currentResponder = nil
@@ -285,7 +284,9 @@ class CCXSignUpTextField: UITextField {
             return self._errorString
         }
         set {
-            if self.showingSuccess { self.clearSuccess(); self.showingSuccess = false }
+            if self._showingSuccess { self.clearSuccess() }
+            
+            if newValue == "" && !self.errorString.isEmpty { self.clearErrors(); return }
             if self.errorString != newValue { self.clearErrors() } else { return }
             self.showingError = true
             self.showError(stringMessage: newValue)
@@ -298,11 +299,37 @@ class CCXSignUpTextField: UITextField {
             return self._successString
         }
         set {
-            if self.showingError { self.clearErrors(); self.showingError = false }
+            if self._showingError { self.clearErrors() }
+            if newValue == "" && !self.successString.isEmpty { self.clearSuccess(); return }
             if self.successString != newValue { self.clearSuccess() } else { return }
             self.showingSuccess = true
             self.showSuccess(stringMessage: newValue)
             self._successString = newValue
+        }
+    }
+    
+    func clearErrors() {
+        if let labelToRemove = self.superview?.subviews.filter({ ($0 as? UILabel)?.text == self.errorString }).first {
+            self._showingError = false
+            self._errorString = ""
+            UIView.animate(withDuration: 1.25, delay: 0.15, options: .transitionCurlDown, animations: {
+                labelToRemove.alpha = 0
+            }, completion: { (finished) in
+                labelToRemove.removeFromSuperview()
+            })
+            
+        }
+    }
+    
+    func clearSuccess() {
+        if let labelToRemove = self.superview?.subviews.filter({ ($0 as? UILabel)?.text == self.successString }).first {
+            self._showingSuccess = false
+            self._successString = ""
+            UIView.animate(withDuration: 1.25, delay: 0.15, options: .transitionCurlDown, animations: {
+                labelToRemove.alpha = 0
+            }, completion: { (finished) in
+                labelToRemove.removeFromSuperview()
+            })
         }
     }
 }
@@ -377,30 +404,5 @@ fileprivate extension CCXSignUpTextField {
         UIView.animate(withDuration: 1.25, delay: 0.15, options: .curveEaseIn, animations: {
             label.alpha = 1
         })
-    }
-    
-    func clearErrors() {
-        if let labelToRemove = self.superview?.subviews.filter({ ($0 as? UILabel)?.text == self.errorString }).first {
-            UIView.animate(withDuration: 1.25, delay: 0.15, options: .transitionCurlDown, animations: {
-                labelToRemove.alpha = 0
-            }, completion: { (finished) in
-                labelToRemove.removeFromSuperview()
-                self.errorString = ""
-                self.showingError = false
-            })
-            
-        }
-    }
-    
-    func clearSuccess() {
-        if let labelToRemove = self.superview?.subviews.filter({ ($0 as? UILabel)?.text == self.successString }).first {
-            UIView.animate(withDuration: 1.25, delay: 0.15, options: .transitionCurlDown, animations: {
-                labelToRemove.alpha = 0
-            }, completion: { (finished) in
-                labelToRemove.removeFromSuperview()
-                self.successString = ""
-                self.showingSuccess = false
-            })
-        }
     }
 }
