@@ -23,6 +23,7 @@ class SignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
     var currentResponder : CCXSignUpTextField?
     
     var usernameAvailable = false
+    var currentUsername = ""
     var checkingUsernameAvailability = false
     var checkingEmailAvailability = false
     var scrollBack = false
@@ -108,13 +109,16 @@ class SignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
                 if txtField.showingError {
                     switch txtField.tag {
                     case 0:
-                        self.checkingUsernameAvailability = true
-                        txtField.checkUsernameAvailability {
-                            available in
-                            // Set the checking status back to false (we will check this when we check the fields to sign up:
-                            self.checkingUsernameAvailability = false
-                            // Set this check to what was given back through the block:
-                            self.usernameAvailable = available
+                        if txtField.text != currentUsername  {
+                            self.checkingUsernameAvailability = true
+                            txtField.checkUsernameAvailability {
+                                available in
+                                if available { self.currentUsername = txtField.text! }
+                                // Set the checking status back to false (we will check this when we check the fields to sign up:
+                                self.checkingUsernameAvailability = false
+                                // Set this check to what was given back through the block:
+                                self.usernameAvailable = available
+                            }
                         }
                     case 1:
                         self.checkingEmailAvailability = true
@@ -134,7 +138,7 @@ class SignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
                             txtField.errorString = "Your passwords do not match."
                         } else if txtField.text == passwordField.text && txtField.text != nil {
                             if passwordField.showingError { passwordField.clearErrors() }
-                            if txtField.showingError { txtField.clearErrors() }
+                            txtField.clearErrors()
                         }
                     default:
                         break
@@ -142,13 +146,16 @@ class SignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
                 } else {
                     switch txtField.tag {
                     case 0:
-                        self.checkingUsernameAvailability = true
-                        txtField.checkUsernameAvailability {
-                            available in
-                            // Set the checking status back to false (we will check this when we check the fields to sign up:
-                            self.checkingUsernameAvailability = false
-                            // Set this check to what was given back through the block:
-                            self.usernameAvailable = available
+                        if txtField.text != currentUsername  {
+                            self.checkingUsernameAvailability = true
+                            txtField.checkUsernameAvailability {
+                                available in
+                                if available { self.currentUsername = txtField.text! }
+                                // Set the checking status back to false (we will check this when we check the fields to sign up:
+                                self.checkingUsernameAvailability = false
+                                // Set this check to what was given back through the block:
+                                self.usernameAvailable = available
+                            }
                         }
                     case 1:
                         self.checkingEmailAvailability = true
@@ -163,7 +170,6 @@ class SignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
                     case 3:
                         if txtField.text != passwordField.text && txtField.text != nil {
                             if passwordField.showingError { passwordField.clearErrors() }
-                            if txtField.showingError { txtField.clearErrors() }
                             txtField.errorString = "Your passwords do not match."
                         } else if txtField.text == passwordField.text && txtField.text != nil {
                             txtField.clearErrors()
@@ -279,8 +285,8 @@ class CCXSignUpTextField: UITextField {
             return self._errorString
         }
         set {
-            if self.showingError { self.clearErrors() }
             if self.showingSuccess { self.clearSuccess(); self.showingSuccess = false }
+            if self.errorString != newValue { self.clearErrors() } else { return }
             self.showingError = true
             self.showError(stringMessage: newValue)
             self._errorString = newValue
@@ -292,8 +298,8 @@ class CCXSignUpTextField: UITextField {
             return self._successString
         }
         set {
-            if self.showingSuccess { self.clearSuccess() }
             if self.showingError { self.clearErrors(); self.showingError = false }
+            if self.successString != newValue { self.clearSuccess() } else { return }
             self.showingSuccess = true
             self.showSuccess(stringMessage: newValue)
             self._successString = newValue
@@ -336,7 +342,7 @@ fileprivate extension CCXSignUpTextField {
     func checkEmailAvailability(completion: @escaping (_ available : Bool) -> Void) {
         if self.isTextEmpty { self.errorString = "Please enter an email!"; return}
         if !self.isEmailValid { self.errorString = "Invalid email address!"; return }
-        usersRef.queryEqual(toValue: self.text).observeSingleEvent(of: .value, with: { (snapshot) in
+        dbRef.queryEqual(toValue: self.text).observeSingleEvent(of: .value, with: { (snapshot) in
             if !snapshot.exists() {
                 self.clearErrors()
                 completion(true)
@@ -353,7 +359,6 @@ fileprivate extension CCXSignUpTextField {
         // Now that we know we have something to work with, lets continue:
         let label = UILabel(); label.translatesAutoresizingMaskIntoConstraints = false; label.font = UIFont(name: "Helvetica-Bold", size: 10); label.text = stringMessage ?? error?.localizedDescription; label.textColor = UIColor.red; label.alpha = 0;
         let constraints : [NSLayoutConstraint] = [ label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5), label.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0) ]
-        
         
         self.superview?.addSubview(label)
         self.superview?.addConstraints(constraints)
