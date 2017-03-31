@@ -28,6 +28,7 @@ class SignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
     var checkingEmailAvailability = false
     var scrollBack = false
     
+    //MARK: Override Functions:
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -52,7 +53,6 @@ class SignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
     }
     
     //MARK: Keyboard Notification Selectors:
-    //MARK: Keyboard Notifications
     func keyboardWillShow(notification: NSNotification) {
         if self.scrollBack {
             return
@@ -91,6 +91,7 @@ class SignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    // MARK: IBAction Functions
     @IBAction func closeSignUpView () {
         self.dismiss(animated: true)
     }
@@ -99,6 +100,7 @@ class SignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
         if currentResponder != nil { currentResponder!.resignFirstResponder() } else { return }
     }
     
+    //MARK: UITextField Delegate Functions:
     func textFieldDidBeginEditing(_ textField: UITextField) {
         currentResponder = textField as? CCXSignUpTextField
     }
@@ -131,14 +133,20 @@ class SignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
                             // Set this check to what was given back through the block:
                         }
                     case 2:
-                        if txtField.text == passwordConfirmField.text && txtField.text != nil {
+                        if !txtField.isTextEmpty && txtField.showingError {
+                            txtField.clearErrors()
+                        }
+                        if !txtField.isTextEmpty && passwordConfirmField.text == txtField.text {
                             passwordConfirmField.clearErrors()
                         }
+                        if !txtField.isTextEmpty && passwordConfirmField.text != txtField.text && !passwordConfirmField.isTextEmpty {
+                            passwordConfirmField.errorString = "Your passwords do not match."
+                        }
                     case 3:
-                        if passwordField.text != txtField.text && txtField.text != nil {
+                        if !txtField.isTextEmpty && passwordField.text != txtField.text {
                             if passwordField.showingError { passwordField.clearErrors() }
                             txtField.errorString = "Your passwords do not match."
-                        } else if txtField.text == passwordField.text && txtField.text != nil {
+                        } else if !txtField.isTextEmpty && txtField.text == passwordField.text {
                             if passwordField.showingError { passwordField.clearErrors() }
                             txtField.clearErrors()
                         }
@@ -158,6 +166,8 @@ class SignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
                                 // Set this check to what was given back through the block:
                                 self.usernameAvailable = available
                             }
+                        } else {
+                            txtField.successString = "Username is available."
                         }
                     case 1:
                         self.checkingEmailAvailability = true
@@ -166,14 +176,16 @@ class SignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
                             self.checkingEmailAvailability = false
                         }
                     case 2:
-                        if txtField.text == passwordConfirmField.text && txtField.text != nil {
+                        if !txtField.isTextEmpty && passwordConfirmField.text == txtField.text {
                             passwordConfirmField.clearErrors()
+                        } else if !txtField.isTextEmpty && passwordConfirmField.text != txtField.text && !passwordConfirmField.isTextEmpty {
+                            passwordConfirmField.errorString = "Your passwords do not match."
                         }
                     case 3:
-                        if txtField.text != passwordField.text && txtField.text != nil {
+                        if  !txtField.isTextEmpty && txtField.text != passwordField.text {
                             if passwordField.showingError { passwordField.clearErrors() }
                             txtField.errorString = "Your passwords do not match."
-                        } else if txtField.text == passwordField.text && txtField.text != nil {
+                        } else if !txtField.isTextEmpty && txtField.text == passwordField.text {
                             txtField.clearErrors()
                         }
                     default:
@@ -355,7 +367,7 @@ fileprivate extension CCXSignUpTextField {
     
     func checkUsernameAvailability(completion: @escaping (_ available : Bool) -> Void) {
         if self.isTextEmpty { self.errorString = "Please enter a username!"; return}
-        dbRef.queryEqual(toValue: self.text).observeSingleEvent(of: .value, with: { (snapshot) in
+        dbRef.queryOrdered(byChild: "username").queryEqual(toValue: self.text!).observeSingleEvent(of: .value, with: { (snapshot) in
             if !snapshot.exists() {
                 self.successString = "Username is available!"
                 completion(true)
@@ -368,8 +380,8 @@ fileprivate extension CCXSignUpTextField {
     
     func checkEmailAvailability(completion: @escaping (_ available : Bool) -> Void) {
         if self.isTextEmpty { self.errorString = "Please enter an email!"; return}
-        if !self.isEmailValid { self.errorString = "Invalid email address!"; return }
-        dbRef.queryEqual(toValue: self.text).observeSingleEvent(of: .value, with: { (snapshot) in
+        if !self.isEmailValid { self.errorString = "Invalid email address format!"; return }
+        dbRef.queryOrdered(byChild: "email").queryEqual(toValue: self.text!).observeSingleEvent(of: .value, with: { (snapshot) in
             if !snapshot.exists() {
                 self.clearErrors()
                 completion(true)
