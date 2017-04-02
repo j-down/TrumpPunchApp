@@ -85,6 +85,7 @@
 		C2BD59801E6251A7007C1571 /* GFQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C2BD59791E6251A7007C1571 /* GFQuery.m */; };
 		C2BD59831E6380BF007C1571 /* TPLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BD59821E6380BF007C1571 /* TPLocationViewController.swift */; };
 		C2BD59861E63D640007C1571 /* NSValue+MKMapPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = C2BD59851E63D640007C1571 /* NSValue+MKMapPoint.m */; };
+		C2D6E6641E9164B40030FCDA /* TopThreeLeaderboardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D6E6631E9164B40030FCDA /* TopThreeLeaderboardCell.swift */; };
 		C2D85BCC1E612AD9000BABF8 /* TPLocationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D85BCB1E612AD9000BABF8 /* TPLocationDelegate.swift */; };
 		E4944416033EA77E64F8958E /* Pods_TrumpPunchTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D1A5958965FBA1BD2A2B56D /* Pods_TrumpPunchTests.framework */; };
 		FDDF30C90235129F58EC8CCF /* Pods_TrumpPunch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90E0D03725A0827ED1B5B76A /* Pods_TrumpPunch.framework */; };
@@ -210,6 +211,7 @@
 		C2BD59821E6380BF007C1571 /* TPLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TPLocationViewController.swift; sourceTree = "<group>"; };
 		C2BD59841E63D640007C1571 /* NSValue+MKMapPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSValue+MKMapPoint.h"; sourceTree = "<group>"; };
 		C2BD59851E63D640007C1571 /* NSValue+MKMapPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSValue+MKMapPoint.m"; sourceTree = "<group>"; };
+		C2D6E6631E9164B40030FCDA /* TopThreeLeaderboardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopThreeLeaderboardCell.swift; sourceTree = "<group>"; };
 		C2D85BCB1E612AD9000BABF8 /* TPLocationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TPLocationDelegate.swift; sourceTree = "<group>"; };
 		C2D85BCD1E612C58000BABF8 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		C82FB253162D324FBA00F6DC /* Pods-TrumpPunchUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrumpPunchUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrumpPunchUITests/Pods-TrumpPunchUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -410,8 +412,6 @@
 				711BC4591E61EAFF00B077EC /* GoogleService-Info.plist */,
 				71E687571E5AB09D0016BE11 /* LaunchScreen.storyboard */,
 				71E687521E5AB09D0016BE11 /* Main.storyboard */,
-				C2684F611E8C90070030B06D /* TPSignUpWithEmailViewController.swift */,
-				C29801B81E8AA2B900230B17 /* TPInitialLoginViewController.swift */,
 			);
 			name = SupportingFiles;
 			sourceTree = "<group>";
@@ -440,6 +440,9 @@
 				C2BD59821E6380BF007C1571 /* TPLocationViewController.swift */,
 				71E687501E5AB09D0016BE11 /* TPBaseViewController.swift */,
 				71E6878E1E5AB33E0016BE11 /* TPGlobalScene.swift */,
+				C2684F611E8C90070030B06D /* TPSignUpWithEmailViewController.swift */,
+				C29801B81E8AA2B900230B17 /* TPInitialLoginViewController.swift */,
+				C2D6E6631E9164B40030FCDA /* TopThreeLeaderboardCell.swift */,
 				71E687901E5AB35B0016BE11 /* Features */,
 			);
 			name = App;
@@ -912,6 +915,7 @@
 				71E6878B1E5AB3070016BE11 /* TPHomeScene.swift in Sources */,
 				71E6879D1E5AB4490016BE11 /* TPEndSceneTopView.swift in Sources */,
 				71BF54921E6BF49100E3FA3E /* TPGameScene.swift in Sources */,
+				C2D6E6641E9164B40030FCDA /* TopThreeLeaderboardCell.swift in Sources */,
 				711BC4641E651F2B00B077EC /* IAPHelper.swift in Sources */,
 				71E687981E5AB3DA0016BE11 /* TPStoreView.swift in Sources */,
 				C2BD597C1E6251A7007C1571 /* GeoFire.m in Sources */,

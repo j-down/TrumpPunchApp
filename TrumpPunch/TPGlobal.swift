@@ -137,7 +137,6 @@ let sdkLocationKey = "XModeCurrentLocationKey"
 
 // Database Reference:
 let dbRef = FIRDatabase.database().reference(withPath: "users_location")
-let usersRef = FIRDatabase.database().reference(withPath: "users")
 
 // CCX Logging:
 extension NSObject {

@@ -347,7 +347,7 @@ class CCXSignUpTextField: UITextField {
 }
 
 //MARK: CCX Extensions:
-fileprivate extension SignUpWithEmailViewController {
+fileprivate extension TPSignUpWithEmailViewController {
     func showError(error: Error) {
         let alertController = UIAlertController(title: "Error signing up!", message: error.localizedDescription, preferredStyle: .alert)
         let okayAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)

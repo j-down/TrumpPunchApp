@@ -9,13 +9,17 @@
 import UIKit
 import DTMHeatmap
 
-class TPLocationViewController: UIViewController, MKMapViewDelegate, HeatmapDelegate {
+class TPLocationViewController: UIViewController, MKMapViewDelegate, HeatmapDelegate, UITableViewDelegate, UITableViewDataSource {
     
     // Delegate set in storyboard
     @IBOutlet var heatMap : MKMapView!
     @IBOutlet var navigationBar : UINavigationBar!
     
+    @IBOutlet var leaderboardTableView : UITableView!
+    
     var updatedLocations = false
+    
+    var topThreeUserData = NSArray()
     
     var dtm = DTMHeatmap()
     
@@ -24,7 +28,10 @@ class TPLocationViewController: UIViewController, MKMapViewDelegate, HeatmapDele
         // Set the HeatMapDelegate: (This will update the other users locations:
         TPLocationDelegate.shared.delegate = self
         self.modalTransitionStyle = .flipHorizontal
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.getTopThreeLeaderboardObjects()
     }
     
     @IBAction func popBackToMain(sender: UIBarButtonItem) {
@@ -63,5 +70,32 @@ class TPLocationViewController: UIViewController, MKMapViewDelegate, HeatmapDele
         self.dtm.setData(data)
         // Now add the DTMHeatmap as the overlay:
         self.heatMap.add(self.dtm)
+    }
+
+    //MARK:  UITableViewDataSource Functions:
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return tableView.frame.height/3
+    }
+    
+    //MARK:  UITableViewDelegate Functions:
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "lbCellIdentifier") as? TopThreeLeaderboardCell {
+            // Set the name, place & picture:
+            return cell
+        } else {
+            return UITableViewCell()
+        }
+    }
+}
+extension TPLocationViewController {
+    func getTopThreeLeaderboardObjects() {
+        dbRef.queryOrdered(byChild: "punches").queryLimited(toFirst: 3).observeSingleEvent(of: .value, with:  { (snapshot) in
+            let data = snapshot.value as? NSDictionary
+            print(data)
+        })
     }
 }
