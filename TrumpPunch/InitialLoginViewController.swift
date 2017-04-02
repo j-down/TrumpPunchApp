@@ -34,6 +34,7 @@ class InitialLoginViewController: UIViewController, GIDSignInUIDelegate {
     
     
     @IBAction func googleSignInPressed(sender: UIButton) {
+        // This is handled u=in the AppDelegate delegate function for GIDSignIn:
         GIDSignIn.sharedInstance().signIn()
     }
     

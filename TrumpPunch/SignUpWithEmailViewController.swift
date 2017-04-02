@@ -23,7 +23,6 @@ class SignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
     var currentResponder : CCXSignUpTextField?
     
     var usernameAvailable = false
-    var currentUsername = ""
     var checkingUsernameAvailability = false
     var checkingEmailAvailability = false
     var scrollBack = false
@@ -111,18 +110,13 @@ class SignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
                 if txtField.showingError {
                     switch txtField.tag {
                     case 0:
-                        if txtField.text != currentUsername  {
-                            self.checkingUsernameAvailability = true
-                            txtField.checkUsernameAvailability {
-                                available in
-                                if available { self.currentUsername = txtField.text! }
-                                // Set the checking status back to false (we will check this when we check the fields to sign up:
-                                self.checkingUsernameAvailability = false
-                                // Set this check to what was given back through the block:
-                                self.usernameAvailable = available
-                            }
-                        } else {
-                            txtField.successString = "Username is available."
+                        self.checkingUsernameAvailability = true
+                        txtField.checkUsernameAvailability {
+                            available in
+                            // Set the checking status back to false (we will check this when we check the fields to sign up:
+                            self.checkingUsernameAvailability = false
+                            // Set this check to what was given back through the block:
+                            self.usernameAvailable = available
                         }
                     case 1:
                         self.checkingEmailAvailability = true
@@ -156,18 +150,13 @@ class SignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
                 } else {
                     switch txtField.tag {
                     case 0:
-                        if txtField.text != currentUsername  {
-                            self.checkingUsernameAvailability = true
-                            txtField.checkUsernameAvailability {
-                                available in
-                                if available { self.currentUsername = txtField.text! }
-                                // Set the checking status back to false (we will check this when we check the fields to sign up:
-                                self.checkingUsernameAvailability = false
-                                // Set this check to what was given back through the block:
-                                self.usernameAvailable = available
-                            }
-                        } else {
-                            txtField.successString = "Username is available."
+                        self.checkingUsernameAvailability = true
+                        txtField.checkUsernameAvailability {
+                            available in
+                            // Set the checking status back to false (we will check this when we check the fields to sign up:
+                            self.checkingUsernameAvailability = false
+                            // Set this check to what was given back through the block:
+                            self.usernameAvailable = available
                         }
                     case 1:
                         self.checkingEmailAvailability = true
@@ -226,12 +215,14 @@ class SignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
             if !passwordConfirmField.isTextEmpty {
                 passwordConfirmField.resignFirstResponder()
                 self.checkFieldsAndAttemptSignUp {
-                    success in
+                    success, error, errorString in
                     if success {
                         // Yay we were successful.  Lets continue to the next page:
-                        
-                    } else {
+                        AppDelegate.shared.continueToMain()
+                    } else if let er = error {
                         // Okay we will still be on this page. All the errors should have been addressed in the UI:
+                        
+                    } else if let erString = errorString {
                         
                     }
                 }
@@ -246,25 +237,25 @@ class SignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
         }
     }
 
-    func checkFieldsAndAttemptSignUp (completion: @escaping (_ success: Bool) -> Void) {
-        if let pass = passwordField.text, let passConf = passwordConfirmField.text, let email = emailField.text, let username = usernameField.text, usernameAvailable, !checkingUsernameAvailability {
+    func checkFieldsAndAttemptSignUp (completion: @escaping (_ success: Bool, _ error: Error?, _ errorString : String?) -> Void) {
+        if let pass = passwordField.text, let passConf = passwordConfirmField.text, let email = emailField.text, let username = usernameField.text, usernameAvailable {
             
             if pass == passConf {
                 // Okay lets try and sign this guy up!
                 FIRAuth.auth()?.createUser(withEmail: email, password: pass) {
                     user, error in
-                    if error != nil { self.ccxLog(error: error); completion(false) }
+                    if error != nil { self.ccxLog(error: error); completion(false, error, nil) }
                     // Lets set the username to the currentUser:
-                    if user != nil { user?.username = username; completion(true) }
+                    if user != nil { user?.username = username; completion(true, nil, nil) }
                 }
             } else {
                 if passwordField.showingError { passwordField.clearErrors() }
                 self.passwordConfirmField.errorString =  "Your passwords do not match."
-                self.ccxLog(logMessage: "Passwords do NOT match!"); completion(false)
+                self.ccxLog(logMessage: "Passwords do NOT match!"); completion(false, nil, "Your passwords do not match.")
             }
             
         } else {
-            completion(false)
+            completion(false, nil, "Username is not available.")
         }
     }
 }
@@ -343,6 +334,23 @@ class CCXSignUpTextField: UITextField {
                 labelToRemove.removeFromSuperview()
             })
         }
+    }
+}
+
+//MARK: CCX Extensions:
+fileprivate extension SignUpWithEmailViewController {
+    func showError(error: Error) {
+        let alertController = UIAlertController(title: "Error signing up!", message: error.localizedDescription, preferredStyle: .alert)
+        let okayAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alertController.addAction(okayAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func showErrorString(errorString : String) {
+        let alertController = UIAlertController(title: "Error signing up!", message: errorString, preferredStyle: .alert)
+        let okayAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alertController.addAction(okayAction)
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 
