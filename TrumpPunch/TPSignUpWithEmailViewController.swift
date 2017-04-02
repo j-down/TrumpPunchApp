@@ -400,7 +400,7 @@ fileprivate extension CCXSignUpTextField {
     func checkEmailAvailability(completion: @escaping (_ available : Bool) -> Void) {
         if self.isTextEmpty { self.errorString = "Please enter an email!"; completion(false); return }
         if !self.isEmailValid { self.errorString = "Invalid email address format!"; completion(false); return }
-        usersRef.queryOrdered(byChild: "email").queryEqual(toValue: self.text!).observeSingleEvent(of: .value, with: { (snapshot) in
+        dbRef.queryOrdered(byChild: "email").queryEqual(toValue: self.text!).observeSingleEvent(of: .value, with: { (snapshot) in
             if !snapshot.exists() {
                 self.clearErrors()
                 completion(true)
