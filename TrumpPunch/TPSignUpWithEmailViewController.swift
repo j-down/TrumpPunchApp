@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class SignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
+class TPSignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet var usernameField : CCXSignUpTextField!
     @IBOutlet var emailField : CCXSignUpTextField!
@@ -61,13 +61,16 @@ class SignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             keyboardHeight = keyboardSize.height
         }
+        // If the currentResponder field is nil, we shold return.
         if self.currentResponder == nil { return }
+        // Lets get all the data points we need here for our calculation:
         let fldFrame = self.view.convert(self.currentResponder!.frame, from: self.fieldView)
         let fldHeight = self.currentResponder!.frame.size.height
         var visibileRect = self.view.frame
         
         visibileRect.size.height -= keyboardHeight
         
+        //  If the visible rect does not contain the currentResponders frame, we will scroll down to the correct point:
         if !visibileRect.contains(fldFrame) {
             // Create scrolling point:
             let scrollPoint = CGPoint(x: 0.0, y: fldFrame.origin.y - visibileRect.size.height + fldHeight)
@@ -92,10 +95,12 @@ class SignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: IBAction Functions
     @IBAction func closeSignUpView () {
+        // Dismiss this view:
         self.dismiss(animated: true)
     }
     
     @IBAction func dismissKeyboard () {
+//        if the currentResponder is nil, then we should return.  If it isn't we should resign the responder (or dismiss the keyboard):
         if currentResponder != nil { currentResponder!.resignFirstResponder() } else { return }
     }
     
@@ -105,6 +110,7 @@ class SignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
+        // First, cast the textField into the CCXSignUpTextField for our custom functions & variables:
         if let txtField = textField as? CCXSignUpTextField {
             if !txtField.isTextEmpty {
                 if txtField.showingError {
@@ -221,9 +227,9 @@ class SignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
                         AppDelegate.shared.continueToMain()
                     } else if let er = error {
                         // Okay we will still be on this page. All the errors should have been addressed in the UI:
-                        
+                        self.showError(error: er)
                     } else if let erString = errorString {
-                        
+                        self.showErrorString(errorString: erString)
                     }
                 }
                 return true
@@ -255,7 +261,10 @@ class SignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
             }
             
         } else {
-            completion(false, nil, "Username is not available.")
+            if !usernameAvailable {
+                completion(false, nil, "Username is not available.")
+            }
+            
         }
     }
 }

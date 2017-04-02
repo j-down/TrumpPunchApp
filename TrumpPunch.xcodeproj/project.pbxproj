@@ -76,8 +76,8 @@
 		71E687B61E5AB8390016BE11 /* TPPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E687B51E5AB8390016BE11 /* TPPerson.swift */; };
 		71E687B81E5AB8420016BE11 /* TPItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E687B71E5AB8420016BE11 /* TPItem.swift */; };
 		A14F39A6DE2B46F755E2B5E2 /* Pods_TrumpPunchUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B88BCEB7D87EE676D2BA854C /* Pods_TrumpPunchUITests.framework */; };
-		C2684F621E8C90070030B06D /* SignUpWithEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2684F611E8C90070030B06D /* SignUpWithEmailViewController.swift */; };
-		C29801B91E8AA2B900230B17 /* InitialLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29801B81E8AA2B900230B17 /* InitialLoginViewController.swift */; };
+		C2684F621E8C90070030B06D /* TPSignUpWithEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2684F611E8C90070030B06D /* TPSignUpWithEmailViewController.swift */; };
+		C29801B91E8AA2B900230B17 /* TPInitialLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29801B81E8AA2B900230B17 /* TPInitialLoginViewController.swift */; };
 		C2BD597C1E6251A7007C1571 /* GeoFire.m in Sources */ = {isa = PBXBuildFile; fileRef = C2BD596F1E6251A7007C1571 /* GeoFire.m */; };
 		C2BD597D1E6251A7007C1571 /* GFBase32Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = C2BD59721E6251A7007C1571 /* GFBase32Utils.m */; };
 		C2BD597E1E6251A7007C1571 /* GFGeoHash.m in Sources */ = {isa = PBXBuildFile; fileRef = C2BD59751E6251A7007C1571 /* GFGeoHash.m */; };
@@ -190,8 +190,8 @@
 		9D1A5958965FBA1BD2A2B56D /* Pods_TrumpPunchTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrumpPunchTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE3882355237200F8C47038D /* Pods-TrumpPunchTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrumpPunchTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrumpPunchTests/Pods-TrumpPunchTests.release.xcconfig"; sourceTree = "<group>"; };
 		B88BCEB7D87EE676D2BA854C /* Pods_TrumpPunchUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrumpPunchUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C2684F611E8C90070030B06D /* SignUpWithEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpWithEmailViewController.swift; sourceTree = "<group>"; };
-		C29801B81E8AA2B900230B17 /* InitialLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialLoginViewController.swift; sourceTree = "<group>"; };
+		C2684F611E8C90070030B06D /* TPSignUpWithEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TPSignUpWithEmailViewController.swift; sourceTree = "<group>"; };
+		C29801B81E8AA2B900230B17 /* TPInitialLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TPInitialLoginViewController.swift; sourceTree = "<group>"; };
 		C2BD596D1E6251A6007C1571 /* TrumpPunch-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TrumpPunch-Bridging-Header.h"; sourceTree = "<group>"; };
 		C2BD596E1E6251A7007C1571 /* GeoFire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeoFire.h; sourceTree = "<group>"; };
 		C2BD596F1E6251A7007C1571 /* GeoFire.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeoFire.m; sourceTree = "<group>"; };
@@ -410,8 +410,8 @@
 				711BC4591E61EAFF00B077EC /* GoogleService-Info.plist */,
 				71E687571E5AB09D0016BE11 /* LaunchScreen.storyboard */,
 				71E687521E5AB09D0016BE11 /* Main.storyboard */,
-				C2684F611E8C90070030B06D /* SignUpWithEmailViewController.swift */,
-				C29801B81E8AA2B900230B17 /* InitialLoginViewController.swift */,
+				C2684F611E8C90070030B06D /* TPSignUpWithEmailViewController.swift */,
+				C29801B81E8AA2B900230B17 /* TPInitialLoginViewController.swift */,
 			);
 			name = SupportingFiles;
 			sourceTree = "<group>";
@@ -881,7 +881,7 @@
 				711BC4661E65222D00B077EC /* TPProducts.swift in Sources */,
 				C2BD597E1E6251A7007C1571 /* GFGeoHash.m in Sources */,
 				71E687861E5AB1E60016BE11 /* TPHelpers.swift in Sources */,
-				C29801B91E8AA2B900230B17 /* InitialLoginViewController.swift in Sources */,
+				C29801B91E8AA2B900230B17 /* TPInitialLoginViewController.swift in Sources */,
 				C2D85BCC1E612AD9000BABF8 /* TPLocationDelegate.swift in Sources */,
 				711BC4451E5D0E0300B077EC /* TPPeopleCollectionViewCell.swift in Sources */,
 				71BF54781E6BE54A00E3FA3E /* TPEndSceneMiddleView.swift in Sources */,
@@ -922,7 +922,7 @@
 				C2BD59831E6380BF007C1571 /* TPLocationViewController.swift in Sources */,
 				C2BD59801E6251A7007C1571 /* GFQuery.m in Sources */,
 				71E687921E5AB3900016BE11 /* TPPeopleView.swift in Sources */,
-				C2684F621E8C90070030B06D /* SignUpWithEmailViewController.swift in Sources */,
+				C2684F621E8C90070030B06D /* TPSignUpWithEmailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

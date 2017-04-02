@@ -14,13 +14,13 @@ import FBSDKLoginKit
 import FBSDKCoreKit
 import Firebase
 
-class InitialLoginViewController: UIViewController, GIDSignInUIDelegate {
+class TPInitialLoginViewController: UIViewController, GIDSignInUIDelegate {
 
     @IBOutlet var trumpTitleConstraint : NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        // We need to change the multiplier here for the 3:2 ratio screen:
         if UIScreen.main.bounds.height == 480 { trumpTitleConstraint.setMultiplier(multiplier: 0.6) }
         // Set the signIn uiDelegate so we can talk back to our AppDelegate:
         GIDSignIn.sharedInstance().uiDelegate = self
