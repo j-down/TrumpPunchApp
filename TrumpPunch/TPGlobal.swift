@@ -135,8 +135,9 @@ let xmodeAPIKey = "s3a9tsN2vJ9J0zvjxSYD4655qQeTaIzC6Zc7ZxYD"
 // XModeAPI Notification Keys:
 let sdkLocationKey = "XModeCurrentLocationKey"
 
-// Database Reference:
+// Database References:
 let dbRef = FIRDatabase.database().reference(withPath: "users_location")
+let geoFire = GeoFire(firebaseRef: FIRDatabase.database().reference(withPath: "users_location"))
 
 // CCX Logging:
 extension NSObject {

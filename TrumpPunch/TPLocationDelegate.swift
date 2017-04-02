@@ -26,9 +26,6 @@ final class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
     
     var updatingLocation = false
     
-    // Create the dbReference pointing to the users locations:
-    let geoFire = GeoFire(firebaseRef: FIRDatabase.database().reference(withPath: "users_location"))
-    
     private override init() {
         super.init()
         
@@ -47,7 +44,7 @@ final class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
             if let user = FIRAuth.auth()?.currentUser {
                 // Okay - they must be signed in anonomously already, lets save their currentLocation:
                 // Create set the location using the user uid:
-                if self.updatingLocation == false {
+                if !self.updatingLocation {
                     // Make sure the currentLocation is not nil - here we will check & make sure the users location has changed more then 50 meters:
                     if let lastLocation = self.currentLocation {
                         // If the distance is greater than or equal to 50 meters, then we will update the location:
@@ -55,7 +52,7 @@ final class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
                             // Set the updatingLcation to true so we dont keep hitting this:
                             self.updatingLocation = true
                             // Okay lets save over the last one:
-                            self.geoFire?.setLocation(newLocation.location, forKey: user.uid) {
+                            geoFire?.setLocation(newLocation.location, forKey: user.uid) {
                                 error in
                                 // Update the boolean now that we are done with our asych:
                                 self.updatingLocation = false
@@ -75,7 +72,7 @@ final class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
                         // Set the updatingLcation to true so we dont keep hitting this:
                         self.updatingLocation = true
                         // Okay lets save over the last one:
-                        self.geoFire?.setLocation(newLocation.location, forKey: user.uid) {
+                        geoFire?.setLocation(newLocation.location, forKey: user.uid) {
                             error in
                             // Update the boolean now that we are done with our asych:
                             self.updatingLocation = false
@@ -92,30 +89,31 @@ final class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
                     }
                 }
                 
-            } else {
-                // Ugh oh - they dont have an account right now - we will just have to create another one:
-                if self.updatingLocation == false {
-                    self.updatingLocation = true
-                    FIRAuth.auth()?.signInAnonymously() {
-                        //  Okay lets set their location:
-                        user, error in
-                        self.updatingLocation = false
-                        // Check if the user is nil:
-                        if let thisUser = user {
-                            // User is not nil, lets set the location:
-                            self.geoFire?.setLocation(newLocation.location, forKey: thisUser.uid) {
-                                error in
-                                print("Saved NEW location for NEW user!")
-                                // Update the currentLocation for the next notification call from the SDK:
-                                self.currentLocation = newLocation.location
-                            }
-                        } else {
-                            // User is nil:
-                            self.ccxLog(logMessage: "check for user being nil -- well its nil...")
-                        }
-                    }
-                }
             }
+//            else {
+                // Ugh oh - they dont have an account right now - we will just have to create another one:
+//                if self.updatingLocation == false {
+//                    self.updatingLocation = true
+//                    FIRAuth.auth()?.signInAnonymously() {
+                        //  Okay lets set their location:
+//                        user, error in
+//                        self.updatingLocation = false
+                        // Check if the user is nil:
+//                        if let thisUser = user {
+                            // User is not nil, lets set the location:
+//                            self.geoFire?.setLocation(newLocation.location, forKey: thisUser.uid) {
+//                                error in
+//                                print("Saved NEW location for NEW user!")
+                                // Update the currentLocation for the next notification call from the SDK:
+//                                self.currentLocation = newLocation.location
+//                            }
+//                        } else {
+                            // User is nil:
+//                            self.ccxLog(logMessage: "check for user being nil -- well its nil...")
+//                        }
+//                    }
+//                }
+//            }
             
         } else {
             // newLocation object is nil here:

@@ -19,7 +19,7 @@ class TPLocationViewController: UIViewController, MKMapViewDelegate, HeatmapDele
     
     var updatedLocations = false
     
-    var topThreeUserData = NSArray()
+    var topThreeUserData = [NSDictionary]()
     
     var dtm = DTMHeatmap()
     
@@ -27,11 +27,15 @@ class TPLocationViewController: UIViewController, MKMapViewDelegate, HeatmapDele
         super.viewDidLoad()
         // Set the HeatMapDelegate: (This will update the other users locations:
         TPLocationDelegate.shared.delegate = self
+        // Lets have some fun transitioning to this page:
         self.modalTransitionStyle = .flipHorizontal
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.getTopThreeLeaderboardObjects()
+        self.getTopThreeLeaderboardObjects {
+            arrayReturn in
+            self.topThreeUserData = arrayReturn
+        }
     }
     
     @IBAction func popBackToMain(sender: UIBarButtonItem) {
@@ -55,7 +59,7 @@ class TPLocationViewController: UIViewController, MKMapViewDelegate, HeatmapDele
             
             TPLocationDelegate.shared.getUserLocationData(withLocation: userLocation.location)
             // Set this boolean so we dont update mutiple times:
-            updatedLocations = true
+            self.updatedLocations = true
         }
     }
     
@@ -74,7 +78,7 @@ class TPLocationViewController: UIViewController, MKMapViewDelegate, HeatmapDele
 
     //MARK:  UITableViewDataSource Functions:
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return self.topThreeUserData.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -85,6 +89,14 @@ class TPLocationViewController: UIViewController, MKMapViewDelegate, HeatmapDele
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "lbCellIdentifier") as? TopThreeLeaderboardCell {
             // Set the name, place & picture:
+            let dic = self.topThreeUserData[indexPath.row]
+            let punches = dic.value(forKey: "punches") as? Int
+            cell.placeLabel.text = "\(indexPath.row)"
+            if let fullName = dic.value(forKey: "fullName") as? String {
+                cell.nameLabel.text = fullName + ": \(punches)"
+            } else if let username = dic.value(forKey: "username") as? String {
+                cell.nameLabel.text = username + ": \(punches)"
+            }
             return cell
         } else {
             return UITableViewCell()
@@ -92,10 +104,27 @@ class TPLocationViewController: UIViewController, MKMapViewDelegate, HeatmapDele
     }
 }
 extension TPLocationViewController {
-    func getTopThreeLeaderboardObjects() {
-        dbRef.queryOrdered(byChild: "punches").queryLimited(toFirst: 3).observeSingleEvent(of: .value, with:  { (snapshot) in
-            let data = snapshot.value as? NSDictionary
-            print(data)
+    // This is the very top no matter your location for punching trump!
+    func getTopThreeLeaderboardObjects(block: @escaping (_ arrayReturn : [NSDictionary]) -> Void) {
+        var arrayReturn = [NSDictionary]()
+        arrayReturn.removeAll()
+        dbRef.queryOrdered(byChild: "punches").observe(.value, with: { (snapshot) in
+            let data = snapshot.value as! NSDictionary
+            for dataSet in data {
+                if let dic = dataSet.value as? NSDictionary {
+                    if dic.value(forKey: "fullName") != nil && dic.value(forKey: "punches") != nil {
+                        arrayReturn.append(dic)
+                    } else if dic.value(forKey: "username") != nil && dic.value(forKey: "punches") != nil {
+                        arrayReturn.append(dic)
+                    }
+                }
+                // We only need the top three:
+                if arrayReturn.count == 3 {
+                    print("Top Three Leaderboard: ", arrayReturn)
+                    block(arrayReturn)
+                    return
+                }
+            }
         })
     }
 }
