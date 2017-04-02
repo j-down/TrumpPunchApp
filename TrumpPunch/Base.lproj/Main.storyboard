@@ -290,12 +290,24 @@
                                     <constraint firstAttribute="height" constant="54" id="VYQ-Ql-zca"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TZh-Hx-pHy">
+                                <rect key="frame" x="16" y="28" width="68" height="35"/>
+                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="20"/>
+                                <state key="normal" title="Logout">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="logoutButtonPressed" destination="LA5-N9-XvY" eventType="touchUpInside" id="f4j-E7-N8J"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="0Op-nL-L2H" firstAttribute="top" secondItem="sP9-Dn-ELr" secondAttribute="bottom" id="4yT-Ml-Le0"/>
                             <constraint firstAttribute="leadingMargin" secondItem="sP9-Dn-ELr" secondAttribute="leading" id="Dxy-YT-lwH"/>
+                            <constraint firstItem="TZh-Hx-pHy" firstAttribute="top" secondItem="bux-JG-tc1" secondAttribute="bottom" constant="8" id="UNi-7H-XQc"/>
                             <constraint firstAttribute="trailingMargin" secondItem="sP9-Dn-ELr" secondAttribute="trailing" id="ic9-I9-ZJQ"/>
+                            <constraint firstItem="sP9-Dn-ELr" firstAttribute="leading" secondItem="TZh-Hx-pHy" secondAttribute="leading" id="rB4-S8-4f6"/>
                             <constraint firstItem="sP9-Dn-ELr" firstAttribute="centerX" secondItem="kwF-Yi-aoB" secondAttribute="centerX" id="ttI-KR-N1c"/>
                         </constraints>
                     </view>

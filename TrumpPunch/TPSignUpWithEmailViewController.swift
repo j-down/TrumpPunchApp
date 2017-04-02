@@ -218,7 +218,7 @@ class TPSignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
             passwordConfirmField.becomeFirstResponder()
             return false
         case 3:
-            if !passwordConfirmField.isTextEmpty {
+            if !passwordConfirmField.isTextEmpty && !usernameField.showingError && !emailField.showingError && !passwordConfirmField.showingError {
                 passwordConfirmField.resignFirstResponder()
                 self.checkFieldsAndAttemptSignUp {
                     success, error, errorString in
@@ -231,9 +231,11 @@ class TPSignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
                     } else if let erString = errorString {
                         self.showErrorString(errorString: erString)
                     }
+                
                 }
                 return true
             } else {
+                self.showErrorString(errorString: "Please check the required fields before finalizing your sign-up!")
                 return false
             }
             
@@ -398,7 +400,7 @@ fileprivate extension CCXSignUpTextField {
     func checkEmailAvailability(completion: @escaping (_ available : Bool) -> Void) {
         if self.isTextEmpty { self.errorString = "Please enter an email!"; completion(false); return }
         if !self.isEmailValid { self.errorString = "Invalid email address format!"; completion(false); return }
-        dbRef.queryOrdered(byChild: "email").queryEqual(toValue: self.text!).observeSingleEvent(of: .value, with: { (snapshot) in
+        usersRef.queryOrdered(byChild: "email").queryEqual(toValue: self.text!).observeSingleEvent(of: .value, with: { (snapshot) in
             if !snapshot.exists() {
                 self.clearErrors()
                 completion(true)

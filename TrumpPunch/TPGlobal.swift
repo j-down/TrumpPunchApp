@@ -137,6 +137,7 @@ let sdkLocationKey = "XModeCurrentLocationKey"
 
 // Database References:
 let dbRef = FIRDatabase.database().reference(withPath: "users_location")
+let usersRef = FIRDatabase.database().reference(withPath: "users")
 let geoFire = GeoFire(firebaseRef: FIRDatabase.database().reference(withPath: "users_location"))
 
 // CCX Logging:

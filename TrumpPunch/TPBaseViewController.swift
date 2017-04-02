@@ -175,7 +175,28 @@ class TPBaseViewController: UIViewController {
     override var prefersStatusBarHidden: Bool {
         return true
     }
-
+    
+    @IBAction func logoutButtonPressed() {
+        self.confirmLogout()
+    }
+    
+    func confirmLogout () {
+        let alert = UIAlertController(title: "You are about to Logout.", message: "Are you sure you would like to log out?", preferredStyle: .alert)
+        let yes = UIAlertAction(title: "Yes", style: .default) { (action) in
+            
+            do {
+                try FIRAuth.auth()?.signOut()
+                AppDelegate.shared.goToSignIn()
+            } catch {
+                print("ERROR LOGGING OUT!: ", error)
+            }
+        }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(cancel)
+        alert.addAction(yes)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
  }
 
 //MARK: DataModel
