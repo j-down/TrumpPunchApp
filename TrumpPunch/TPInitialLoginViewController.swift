@@ -56,47 +56,44 @@ class TPInitialLoginViewController: UIViewController, GIDSignInUIDelegate {
     }
     
     @IBAction func twitterSignInPressed(sender: UIButton) {
-        Twitter.sharedInstance().logIn { session, error in
+        Twitter.sharedInstance().logIn { session, er in
             if (session != nil) {
                 // Get the credentials & then sign in:
                 let credential = FIRTwitterAuthProvider.credential(withToken: session!.authToken, secret: session!.authTokenSecret)
                 self.signInWithoAuthCredentials(credential: credential, twitter: session)
                 
-            } else {
-                print("TWITTER LOGIN ERROR: \(error?.localizedDescription)");
+            } else if let error = er {
+                print("TWITTER LOGIN ERROR: \(error.localizedDescription)");
             }
         }
     }
     
     func signInWithoAuthCredentials(credential: FIRAuthCredential, twitter: TWTRSession?=nil, facebook: FBSDKLoginManagerLoginResult?=nil) {
+        // Lets first check if the users have set this stuff so we dont do it over again:
+        
+        // We should also sync NSUserDefaults here since it was probably cleared and we extended the FIRAuth current user to use this:
+
+        // Okay they haven't yet. Lets go and get their name & photoURL:
+        var name = ""
+        var photoURL = ""
         if twitter != nil {
             // Twitter:
-            let userID = twitter!.userID
-            let client = TWTRAPIClient(userID: userID)
-            let url = "https://api.twitter.com/1.1/users/show.json"
-            let params = ["user_id": userID]
-            var clientError : NSError?
-            
-//            let request = Twitter.sharedInstance().URLRequestWithMethod("GET", URL: url, parameters: nil, error: &clientError)
-            let request = Twitter.sharedInstance().
-            client.sendTwitterRequest(request) { (response, data, connectionError) -> Void in
-                if let someData = data {
-                    do {
-                        let results = try NSJSONSerialization.JSONObjectWithData(someData, options: .AllowFragments) as!NSDictionary
-                            print(results)
-                            
-                    } catch {
-                    }
+            TWTRAPIClient().loadUser(withID:  twitter!.userID) {
+                user, error in
+                if error != nil {
+                    print(error!)
                 }
+                if user != nil {
+                    name = user!.name
+                    photoURL = user!.profileImageMiniURL
+                }
+
             }
             
         } else if facebook != nil {
-            // Lets first check if the users has set this stuff so we dont do it over again:
-            
-            // We should also sync NSUserDefaults here since it was probably cleared and we extended the FIRAuth current user to use this:
             
             // Facebook:
-            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, first_name, last_name, email"]).start(completionHandler: { (connection, result, error) -> Void in
+            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "name, picture"]).start(completionHandler: { (connection, result, error) -> Void in
                 if (error == nil) {
                     let fbDetails = result as! NSDictionary
                     print(fbDetails)
