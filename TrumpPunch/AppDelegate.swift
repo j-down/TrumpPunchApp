@@ -371,7 +371,9 @@ extension FIRUser {
                     self.emailAddress = self.email
                 }
                 if snapshot.hasChild("trumpPunches") {
-                    self.trumpPunches = snapshot.value(forKey: "trumpPunches") as? String
+                    if let punches = snapshot.value(forKey: "trumpPunches") as? Int {
+                        self.trumpPunches = punches
+                    }
                 }
             } else {
                 // This user hasnt set anything yet:
