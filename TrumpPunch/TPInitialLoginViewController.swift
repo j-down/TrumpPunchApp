@@ -69,14 +69,34 @@ class TPInitialLoginViewController: UIViewController, GIDSignInUIDelegate {
     }
     
     func signInWithoAuthCredentials(credential: FIRAuthCredential, twitter: TWTRSession?=nil, facebook: FBSDKLoginManagerLoginResult?=nil) {
-        if facebook == nil {
+        if twitter != nil {
             // Twitter:
+            let userID = twitter!.userID
+            let client = TWTRAPIClient(userID: userID)
+            let url = "https://api.twitter.com/1.1/users/show.json"
+            let params = ["user_id": userID]
+            var clientError : NSError?
             
-        } else {
+//            let request = Twitter.sharedInstance().URLRequestWithMethod("GET", URL: url, parameters: nil, error: &clientError)
+            let request = Twitter.sharedInstance().
+            client.sendTwitterRequest(request) { (response, data, connectionError) -> Void in
+                if let someData = data {
+                    do {
+                        let results = try NSJSONSerialization.JSONObjectWithData(someData, options: .AllowFragments) as!NSDictionary
+                            print(results)
+                            
+                    } catch {
+                    }
+                }
+            }
+            
+        } else if facebook != nil {
             // Lets first check if the users has set this stuff so we dont do it over again:
             
+            // We should also sync NSUserDefaults here since it was probably cleared and we extended the FIRAuth current user to use this:
+            
             // Facebook:
-            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email"]).start(completionHandler: { (connection, result, error) -> Void in
+            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, first_name, last_name, email"]).start(completionHandler: { (connection, result, error) -> Void in
                 if (error == nil) {
                     let fbDetails = result as! NSDictionary
                     print(fbDetails)
