@@ -19,6 +19,7 @@ target 'TrumpPunch' do
         pod 'FacebookLogin'
         pod 'FacebookCore'
         pod 'TwitterKit'
+        pod 'Kingfisher'
 end
 
 target 'TrumpPunchTests' do

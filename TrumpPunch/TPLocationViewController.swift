@@ -8,6 +8,7 @@
 
 import UIKit
 import DTMHeatmap
+import Kingfisher
 
 class TPLocationViewController: UIViewController, MKMapViewDelegate, HeatmapDelegate, UITableViewDelegate, UITableViewDataSource {
     
@@ -96,6 +97,12 @@ class TPLocationViewController: UIViewController, MKMapViewDelegate, HeatmapDele
                 cell.nameLabel.text = fullName + ": \(punches)"
             } else if let username = dic.value(forKey: "username") as? String {
                 cell.nameLabel.text = username + ": \(punches)"
+            }
+            if let pictureURL = dic.value(forKey: "pictureURL") as? String {
+                // Set the imageURL:
+                cell.imgView.kf.setImage(with: URL(string: pictureURL))
+            } else {
+                cell.imgView.image = UIImage(named: "AppLogo")!
             }
             return cell
         } else {

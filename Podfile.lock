@@ -107,6 +107,7 @@ PODS:
   - GTMSessionFetcher/Core (1.1.9)
   - GTMSessionFetcher/Full (1.1.9):
     - GTMSessionFetcher/Core (= 1.1.9)
+  - Kingfisher (3.6.0)
   - Protobuf (3.2.0)
   - TwitterCore (2.8.0):
     - Fabric
@@ -128,6 +129,7 @@ DEPENDENCIES:
   - Flurry-iOS-SDK/FlurryAds
   - Flurry-iOS-SDK/FlurrySDK
   - Google/SignIn
+  - Kingfisher
   - TwitterKit
   - XModeAPI
 
@@ -155,11 +157,12 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMOAuth2: 7fc9c10f5c745f4d9850419ea88889fe3baa6b7d
   GTMSessionFetcher: 5c046c76a1f859bc9c187e918f18e4fc7bb57b5e
+  Kingfisher: 300035f9a40634dc9b452d946c9f22250688fecd
   Protobuf: 745f59e122e5de98d4d7ef291e264a0eef80f58e
   TwitterCore: e959987be23c767004d29eb7fab8d85d8585a2e5
   TwitterKit: 3b6044a7320340326a4098f3e37aa1dbaeb94942
   XModeAPI: 2e750cce1792833bfce12cc6bc6c87849b60f1b7
 
-PODFILE CHECKSUM: 653ae4a166b2c1d786f2e58a08e24e99f1e1d358
+PODFILE CHECKSUM: 81d4e91254da88c00acdb42acdc27c2cb21facf1
 
 COCOAPODS: 1.1.1
