@@ -189,8 +189,8 @@ extension FIRUser {
         }
     }
     
-    func incrementTrumpPunches() {
-        trumpPunches += 1
+    func incrementTrumpPunches(by: Int?=1) {
+        trumpPunches += by!
     }
     
     func saveTrumpPunches () {

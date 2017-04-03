@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import SpriteKit
+import Firebase
 
 class TPEndScene: TPGlobalScene {
     
@@ -105,6 +106,13 @@ extension TPBaseViewController {
         endSceneTopView.quoteLabel.text = Person.quote()
         endSceneMiddleView.scoreLabel.text = "\(Score)"
         endSceneMiddleView.bestLabel.text = "\(Defaults.integer(forKey: DefaultType.highScore))"
+        
+        if let user = FIRAuth.auth()?.currentUser {
+            if Score > 0 {
+                user.incrementTrumpPunches(by: Score)
+                user.saveTrumpPunches()
+            }
+        }
     }
     
     func removeEndScene() {
