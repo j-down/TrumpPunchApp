@@ -20,9 +20,11 @@ class TopThreeLeaderboardCell: UITableViewCell {
         // Initialization code
         
         // Lets make the circleView into a circle:
-        circleView.layer.cornerRadius = circleView.frame.height/4
+        circleView.layer.cornerRadius = circleView.frame.height/2
         circleView.layer.borderColor = UIColor.gray.cgColor
         circleView.layer.borderWidth = 1
+        
+        imgView.layer.cornerRadius = imgView.frame.height/4
         
     }
 

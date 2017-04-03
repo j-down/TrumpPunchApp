@@ -36,6 +36,7 @@ class TPLocationViewController: UIViewController, MKMapViewDelegate, HeatmapDele
         self.getTopThreeLeaderboardObjects {
             arrayReturn in
             self.topThreeUserData = arrayReturn
+            self.leaderboardTableView.reloadData()
         }
     }
     
@@ -91,8 +92,8 @@ class TPLocationViewController: UIViewController, MKMapViewDelegate, HeatmapDele
         if let cell = tableView.dequeueReusableCell(withIdentifier: "lbCellIdentifier") as? TopThreeLeaderboardCell {
             // Set the name, place & picture:
             let dic = self.topThreeUserData[indexPath.row]
-            let punches = dic.value(forKey: "trumpPunches") as? Int
-            cell.placeLabel.text = "\(indexPath.row)"
+            let punches = dic.value(forKey: "trumpPunches") as! Int
+            cell.placeLabel.text = "\(indexPath.row + 1)"
             if let fullName = dic.value(forKey: "fullName") as? String {
                 cell.nameLabel.text = fullName + ": \(punches)"
             } else if let username = dic.value(forKey: "username") as? String {
@@ -100,7 +101,9 @@ class TPLocationViewController: UIViewController, MKMapViewDelegate, HeatmapDele
             }
             if let pictureURL = dic.value(forKey: "pictureURL") as? String {
                 // Set the imageURL:
-                cell.imgView.kf.setImage(with: URL(string: pictureURL))
+                if let picURL = URL(string: pictureURL) {
+                    cell.imgView.kf.setImage(with: picURL)
+                }
             } else {
                 cell.imgView.image = UIImage(named: "AppLogo")!
             }
