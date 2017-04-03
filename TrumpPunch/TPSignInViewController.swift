@@ -159,7 +159,7 @@ class TPSignInViewController: UIViewController {
                 FIRAuth.auth()?.signIn(withEmail: email, password: password) {
                     usr, er in
                     if let error = er { self.showError(error: error) }
-                    if usr != nil { AppDelegate.shared.continueToMain() }
+                    if usr != nil { usr?.syncProfile();AppDelegate.shared.continueToMain() }
                 }
                 
             }

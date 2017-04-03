@@ -184,12 +184,8 @@ class TPBaseViewController: UIViewController {
         let alert = UIAlertController(title: "You are about to Logout.", message: "Are you sure you would like to log out?", preferredStyle: .alert)
         let yes = UIAlertAction(title: "Yes", style: .default) { (action) in
             
-            do {
-                try FIRAuth.auth()?.signOut()
-                AppDelegate.shared.goToSignIn()
-            } catch {
-                print("ERROR LOGGING OUT!: ", error)
-            }
+            FIRAuth.auth()?.currentUser?.logout()
+            
         }
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(cancel)

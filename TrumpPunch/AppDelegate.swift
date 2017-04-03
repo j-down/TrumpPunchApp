@@ -179,6 +179,68 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 }
 
 extension FIRUser {
+    /// The email address of the Firebase user.
+    var emailAddress : String? {
+        get {
+            return self.email
+        }
+        set {
+            if newValue == nil {return}
+            if newValue!.isEmpty {return}
+            self.wasEmailSet {
+                set in
+                if !set {
+                    dbRef.child(self.uid).setValue(["email":newValue!])
+                    if newValue == self.email {return} else {
+                        self.updateEmail(newValue!) { (error) in
+                            if error != nil {
+                                print(error!)
+                            } else {
+                                dbRef.child(self.uid).setValue(["email":newValue!])
+                            }
+                        }
+                    }
+                } else {
+                    if newValue == self.email {return} else {
+                        self.updateEmail(newValue!) { (error) in
+                            if error != nil {
+                                print(error!)
+                            } else {
+                                dbRef.child(self.uid).setValue(["email":newValue!])
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    ///  This function depicts whether or not the user had set their email in the users_locations table in Firebase.
+    func wasEmailSet(block: @escaping (_ set: Bool) -> Void) {
+        dbRef.child(self.uid).child("email").observe(.value, with: { (snapshot) in
+            if snapshot.exists() {
+                block(true)
+            } else {
+                block(false)
+            }
+        })
+    }
+    ///  This returns the saved pictureURL of the user from NSUserDefaults.
+    var pictureURL : String? {
+        get {
+            return Defaults.string(forKey: "pictureURL")
+        }
+        set {
+            // If the newvalue is nil, lets return:
+            if newValue == nil {return}
+            if newValue == pictureURL {return}
+            if newValue!.isEmpty {return}
+            dbRef.child(self.uid).setValue(["pictureURL" : newValue!]) { (error, reference) in
+                if error != nil { self.ccxLog(error: error) }
+                else { print("Yay - we set the pictureURL"); Defaults.set(newValue!, forKey: "pictureURL") }
+            }
+        }
+    }
+    ///  This returns the saved full name of the user from NSUserDefaults.
     var fullName : String? {
         get {
             return Defaults.string(forKey: "fullName")
@@ -186,7 +248,9 @@ extension FIRUser {
         set {
             // If the newvalue is nil, lets return:
             if newValue == nil {return}
-            dbRef.child(self.uid).setValue(["fullName" : newValue!,"email" : self.email ?? ""]) { (error, reference) in
+            if newValue == fullName {return}
+            if newValue!.isEmpty {return}
+            dbRef.child(self.uid).setValue(["fullName" : newValue!]) { (error, reference) in
                 if error != nil { self.ccxLog(error: error) }
                 else { print("Yay - we set the fullName"); Defaults.set(newValue!, forKey: "fullName") }
             }
@@ -199,10 +263,70 @@ extension FIRUser {
         set {
             // If the newvalue is nil, lets return:
             if newValue == nil {return}
-            dbRef.child(self.uid).setValue(["username" : newValue!, "email" : self.email ?? ""]) { (error, ref) in
+            if newValue == username {return}
+            if newValue!.isEmpty {return}
+            dbRef.child(self.uid).setValue(["username" : newValue!]) { (error, ref) in
                 if error != nil { self.ccxLog(error: error) }
                 else { print("Yay - we set the username"); Defaults.set(newValue!, forKey: "username") }
             }
         }
+    }
+    
+    /**
+     This clears all the user profile data that we save in **NSUserDefaults**.  This is used for when we **logout** the user.
+    */
+    func clearCachedData() {
+        Defaults.removeObject(forKey: "fullName")
+        Defaults.removeObject(forKey: "username")
+        Defaults.removeObject(forKey: "pictureURL")
+    }
+    /**
+     This **clears all** the user profile data that we save in **NSUserDefaults**.  This is a **wrapper** function around the FIRAuth signOut method.
+     */
+    func logout () {
+        do {
+            try FIRAuth.auth()?.signOut()
+            self.clearCachedData()
+            AppDelegate.shared.goToSignIn()
+        } catch  {
+            print(error)
+        }
+    }
+    
+    /**
+     This will sych the users profile from the backend & save everything we need on the frontend.  If the data doesn't exist for the user, then we know its a new user and then we will set everything we need on the backend which will in return save it on the frontend for our use.
+     
+     ## Important Notes ##
+     1. If the user is logging back in we check & sych data back on the frontend.
+     2. If it is a new user we sych back on the backend & save on the frontend.
+     3. Email & Username users will only be setting their username & email for now until we give them a way to enter in more information.
+     
+     */
+    func syncProfile() {
+        dbRef.child(self.uid).observeSingleEvent(of: .value, with: { (snapshot) in
+            if snapshot.exists() {
+                if snapshot.hasChild("fullName") {
+                    self.fullName = snapshot.value(forKey: "fullName") as? String
+                } else {
+                    self.fullName = self.displayName
+                }
+                if snapshot.hasChild("username") {
+                    self.username = snapshot.value(forKey: "username") as? String
+                }
+                if snapshot.hasChild("pictureURL") {
+                    self.pictureURL = snapshot.value(forKey: "pictureURL") as? String
+                } else {
+                    self.pictureURL = self.photoURL?.absoluteString
+                }
+                if !snapshot.hasChild("email") {
+                    self.emailAddress = self.email
+                }
+            } else {
+                // This user hasnt set anything yet:
+                self.fullName = self.displayName
+                self.pictureURL = self.photoURL?.absoluteString
+                self.emailAddress = self.email
+            }
+        })
     }
 }

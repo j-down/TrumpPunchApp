@@ -235,7 +235,7 @@ class TPSignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
                     user, error in
                     if error != nil { self.ccxLog(error: error); completion(false, error, nil) }
                     // Lets set the username to the currentUser:
-                    if user != nil { user?.username = username; completion(true, nil, nil) }
+                    if user != nil { user?.username = username; user?.emailAddress = email; completion(true, nil, nil); }
                 }
             } else {
                 if passwordField.showingError { passwordField.clearErrors() }
