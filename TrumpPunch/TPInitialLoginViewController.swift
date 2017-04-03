@@ -77,9 +77,10 @@ class TPInitialLoginViewController: UIViewController, GIDSignInUIDelegate {
             user, error in
             
             if user != nil  {
-                
-            } else {
-                
+                user?.syncProfile()
+                AppDelegate.shared.continueToMain()
+            } else if error != nil {
+                print(error!)
             }
             
         }
