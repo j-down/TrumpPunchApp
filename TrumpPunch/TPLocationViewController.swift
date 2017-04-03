@@ -91,7 +91,7 @@ class TPLocationViewController: UIViewController, MKMapViewDelegate, HeatmapDele
         if let cell = tableView.dequeueReusableCell(withIdentifier: "lbCellIdentifier") as? TopThreeLeaderboardCell {
             // Set the name, place & picture:
             let dic = self.topThreeUserData[indexPath.row]
-            let punches = dic.value(forKey: "punches") as? Int
+            let punches = dic.value(forKey: "trumpPunches") as? Int
             cell.placeLabel.text = "\(indexPath.row)"
             if let fullName = dic.value(forKey: "fullName") as? String {
                 cell.nameLabel.text = fullName + ": \(punches)"
@@ -115,13 +115,13 @@ extension TPLocationViewController {
     func getTopThreeLeaderboardObjects(block: @escaping (_ arrayReturn : [NSDictionary]) -> Void) {
         var arrayReturn = [NSDictionary]()
         arrayReturn.removeAll()
-        dbRef.queryOrdered(byChild: "punches").observe(.value, with: { (snapshot) in
+        dbRef.queryOrdered(byChild: "trumpPunches").observe(.value, with: { (snapshot) in
             let data = snapshot.value as! NSDictionary
             for dataSet in data {
                 if let dic = dataSet.value as? NSDictionary {
-                    if dic.value(forKey: "fullName") != nil && dic.value(forKey: "punches") != nil {
+                    if dic.value(forKey: "fullName") != nil && dic.value(forKey: "trumpPunches") != nil {
                         arrayReturn.append(dic)
-                    } else if dic.value(forKey: "username") != nil && dic.value(forKey: "punches") != nil {
+                    } else if dic.value(forKey: "username") != nil && dic.value(forKey: "trumpPunches") != nil {
                         arrayReturn.append(dic)
                     }
                 }

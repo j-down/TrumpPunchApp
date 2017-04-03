@@ -40,18 +40,20 @@ class TPInitialLoginViewController: UIViewController, GIDSignInUIDelegate {
     
     @IBAction func facebookSignInPressed(sender: UIButton) {
         FBSDKLoginManager().logIn(withReadPermissions: ["public_profile"], from: self) { (result, error) in
-            // User cancelled facebook:
-            if let _ = result?.isCancelled { print("User cancelled facebook login."); return }
-            
-            if error == nil, let token = result?.token.tokenString  {
-                // Okay here we should try logging them in:
-                let credential = FIRFacebookAuthProvider.credential(withAccessToken: token)
-                self.signInWithoAuthCredentials(credential: credential, facebook: result)
-                
-            } else {
-                print(error ?? "NIL ERROR -- NO ACTION")
+            // User cancelled facebook:            
+            if error == nil {
+                if let token = result?.token {
+                    // Okay here we should try logging them in:
+                    if !token.tokenString.isEmpty {
+                        let credential = FIRFacebookAuthProvider.credential(withAccessToken: token.tokenString)
+                        self.signInWithoAuthCredentials(credential: credential, facebook: result)
+                    } 
+                    
+                } else {
+                    if let _ = result?.isCancelled { print("User cancelled facebook login."); return }
+                    print(error ?? "NIL ERROR -- NO ACTION")
+                }
             }
-            
         }
     }
     

@@ -15,6 +15,7 @@ import Fabric
 import TwitterKit
 import GoogleSignIn
 import Google
+import FBSDKLoginKit
 import FBSDKCoreKit
 
 @UIApplicationMain
@@ -50,8 +51,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         // First, lets check and see if we have an anonomous user.  We will still make them log in:
         if let user = FIRAuth.auth()?.currentUser {
             if user.isAnonymous {
-                // They are an anonymous user still.. We should act like they are not logged in now:
-                self.goToSignIn()
+                // They are an anonymous user still.. We need to log them out:  This will take them back to the login page too:
+                user.logout()
+                
             } else {
                 // Okay we should be good to go to pop them into the main view:
                 self.continueToMain()
@@ -108,7 +110,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             FIRAuth.auth()?.signIn(with: credential, completion: { (fireBaseUser, error) in
                 
                 if error != nil && fireBaseUser == nil { self.ccxLog(error: error!) ; return }
-                if fireBaseUser != nil { fireBaseUser?.fullName = user.profile.name; self.continueToMain() }
+                if fireBaseUser != nil { fireBaseUser?.syncProfile(); self.continueToMain() }
                 
                 // Here we should take them over to the mainVC:
                 
@@ -137,8 +139,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
     func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
         // If they disconnect, we should sign them out to clear the sign in sharedInstance and bring them back to the initialViewController in the main storyboard:
-        GIDSignIn.sharedInstance().signOut()
-        self.goToSignIn()
+        FIRAuth.auth()?.currentUser?.logout()
     }
     // Newer iOS Versions:
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
@@ -180,6 +181,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
 extension FIRUser {
     /// The email address of the Firebase user.
+    var trumpPunches : Int {
+        get {
+            if let punches = Defaults.object(forKey: "trumpPunches") as? Int {
+                return punches
+            } else {
+                return 0
+            }
+        }
+        set {
+            Defaults.set(newValue, forKey: "trumpPunches")
+        }
+    }
+    
+    func incrementTrumpPunches() {
+        trumpPunches += 1
+    }
+    
+    func saveTrumpPunches () {
+        if trumpPunches > 0 {
+            dbRef.child(self.uid).setValue(["trumpPunches":trumpPunches])
+        }
+    }
+    
     var emailAddress : String? {
         get {
             return self.email
@@ -278,12 +302,38 @@ extension FIRUser {
         Defaults.removeObject(forKey: "fullName")
         Defaults.removeObject(forKey: "username")
         Defaults.removeObject(forKey: "pictureURL")
+        Defaults.removeObject(forKey: "trumpPunches")
     }
     /**
-     This **clears all** the user profile data that we save in **NSUserDefaults**.  This is a **wrapper** function around the FIRAuth signOut method.
+     This **clears all** the user profile data that we save in **NSUserDefaults**.  This is a **wrapper** function around the FIRAuth signOut method.  This also takes the user to the **initial sign in page**.
      */
     func logout () {
         do {
+            for auth in self.providerData {
+                switch auth.providerID {
+                case "Google":
+                    let username = auth.uid
+                    print(username)
+                    GIDSignIn.sharedInstance().signOut()
+                    
+                case "Twitter":
+ //                   if let session = Twitter.sharedInstance().sessionStore.session() {
+                    let username = auth.uid
+                    print(username)
+                    _ = TWTRSessionStore.logOutUserID(Twitter.sharedInstance().sessionStore)
+ //                       Twitter.sharedInstance().sessionStore.logOutUserID(session.userID)
+ //                   }
+                case "Facebook":
+                    
+                    let username = auth.uid
+                    print(username)
+                    let loginManager = FBSDKLoginManager()
+                    loginManager.logOut()
+                    
+                default:
+                    break
+                }
+            }
             try FIRAuth.auth()?.signOut()
             self.clearCachedData()
             AppDelegate.shared.goToSignIn()
@@ -319,6 +369,9 @@ extension FIRUser {
                 }
                 if !snapshot.hasChild("email") {
                     self.emailAddress = self.email
+                }
+                if snapshot.hasChild("trumpPunches") {
+                    self.trumpPunches = snapshot.value(forKey: "trumpPunches") as? String
                 }
             } else {
                 // This user hasnt set anything yet:
