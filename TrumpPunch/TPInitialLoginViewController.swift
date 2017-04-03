@@ -77,7 +77,7 @@ class TPInitialLoginViewController: UIViewController, GIDSignInUIDelegate {
             
             if user != nil  {
                 // Yay we signed in... lets take them to the main page:
-                user?.syncProfile()
+                user?.syncProfile(twitter: twitter)
                 AppDelegate.shared.continueToMain()
             } else if error != nil {
                 print(error!)

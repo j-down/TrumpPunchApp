@@ -62,8 +62,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
-        print(FIRAuth.auth()?.currentUser?.fullName)
-        
         return true
     }
 
@@ -106,7 +104,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             FIRAuth.auth()?.signIn(with: credential, completion: { (fireBaseUser, error) in
                 
                 if error != nil && fireBaseUser == nil { self.ccxLog(error: error!) ; return }
-                if fireBaseUser != nil { fireBaseUser?.syncProfile(); self.continueToMain() }
+                
+                if fireBaseUser != nil { fireBaseUser?.syncProfile();self.continueToMain() }
                 
                 // Here we should take them over to the mainVC:
                 
@@ -176,7 +175,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 }
 
 extension FIRUser {
-    /// The email address of the Firebase user.
+    
     var trumpPunches : Int {
         get {
             if let punches = Defaults.object(forKey: "trumpPunches") as? Int {
@@ -187,6 +186,16 @@ extension FIRUser {
         }
         set {
             Defaults.set(newValue, forKey: "trumpPunches")
+        }
+    }
+    
+    func incrementTrumpPunches() {
+        trumpPunches += 1
+    }
+    
+    func saveTrumpPunches () {
+        if trumpPunches > 0 {
+            dbRef.child("\(self.uid)/trumpPunches").setValue(trumpPunches)
         }
     }
     
@@ -211,16 +220,7 @@ extension FIRUser {
         }
     }
     
-    func incrementTrumpPunches() {
-        trumpPunches += 1
-    }
-    
-    func saveTrumpPunches () {
-        if trumpPunches > 0 {
-            dbRef.child("\(self.uid)/trumpPunches").setValue(trumpPunches)
-        }
-    }
-    
+    /// The email address of the Firebase user.
     var emailAddress : String? {
         get {
             return self.email
@@ -276,7 +276,7 @@ extension FIRUser {
             if newValue!.isEmpty {return}
             dbRef.child("\(self.uid)/pictureURL").setValue(newValue!) { (error, reference) in
                 if error != nil { self.ccxLog(error: error) }
-                else { print("Yay - we set the pictureURL"); Defaults.set(newValue!, forKey: "pictureURL") }
+                else { print("Updated pictureURL on FIRBase"); Defaults.set(newValue!, forKey: "pictureURL") }
             }
         }
     }
@@ -292,7 +292,7 @@ extension FIRUser {
             if newValue!.isEmpty {return}
             dbRef.child("\(self.uid)/fullName").setValue(newValue!) { (error, reference) in
                 if error != nil { self.ccxLog(error: error) }
-                else { print("Yay - we set the fullName"); Defaults.set(newValue!, forKey: "fullName") }
+                else { print("Updated fullname on FIRBase"); Defaults.set(newValue!, forKey: "fullName") }
             }
         }
     }
@@ -307,7 +307,7 @@ extension FIRUser {
             if newValue!.isEmpty {return}
             dbRef.child("\(self.uid)/username").setValue(newValue!) { (error, ref) in
                 if error != nil { self.ccxLog(error: error) }
-                else { print("Yay - we set the username"); Defaults.set(newValue!, forKey: "username") }
+                else { print("Updated username on FIRBase"); Defaults.set(newValue!, forKey: "username") }
             }
         }
     }
@@ -328,25 +328,15 @@ extension FIRUser {
         do {
             for auth in self.providerData {
                 switch auth.providerID {
-                case "Google":
-                    let username = auth.uid
-                    print(username)
+                case "google.com":
                     GIDSignIn.sharedInstance().signOut()
-                    
-                case "Twitter":
- //                   if let session = Twitter.sharedInstance().sessionStore.session() {
-                    let username = auth.uid
-                    print(username)
-                    _ = TWTRSessionStore.logOutUserID(Twitter.sharedInstance().sessionStore)
- //                       Twitter.sharedInstance().sessionStore.logOutUserID(session.userID)
- //                   }
-                case "Facebook":
-                    
-                    let username = auth.uid
-                    print(username)
+                case "twitter.com":
+                    if let session = Twitter.sharedInstance().sessionStore.session() {
+                        Twitter.sharedInstance().sessionStore.logOutUserID(session.userID)
+                    }
+                case "facebook.com":
                     let loginManager = FBSDKLoginManager()
                     loginManager.logOut()
-                    
                 default:
                     break
                 }
@@ -372,19 +362,19 @@ extension FIRUser {
         dbRef.child(self.uid).observeSingleEvent(of: .value, with: { (snapshot) in
             if snapshot.exists() {
                 if snapshot.hasChild("fullName") {
-                    self.fullName = snapshot.value(forKey: "fullName") as? String
+                    self.fullName = snapshot.childSnapshot(forPath: "fullName").value as? String
                 } else {
                     self.fullName = self.displayName
                 }
                 if snapshot.hasChild("username") {
-                    self.username = snapshot.value(forKey: "username") as? String
+                    self.username = snapshot.childSnapshot(forPath: "username").value as? String
                 } else {
                     if let username = twitter?.userName {
                         self.username = username
                     }
                 }
                 if snapshot.hasChild("pictureURL") {
-                    self.pictureURL = snapshot.value(forKey: "pictureURL") as? String
+                    self.pictureURL = snapshot.childSnapshot(forPath: "pictureURL").value as? String
                 } else {
                     self.pictureURL = self.photoURL?.absoluteString
                 }
@@ -392,9 +382,12 @@ extension FIRUser {
                     self.emailAddress = self.email
                 }
                 if snapshot.hasChild("trumpPunches") {
-                    if let punches = snapshot.value(forKey: "trumpPunches") as? Int {
+                    if let punches = snapshot.childSnapshot(forPath: "trumpPunches").value as? Int {
                         self.trumpPunches = punches
                     }
+                    // This is to update the backend.. This is a weird state - shouldnt happen:
+                } else if self.trumpPunches > 0 {
+                    self.saveTrumpPunches()
                 }
             } else {
                 // This user hasnt set anything yet:
