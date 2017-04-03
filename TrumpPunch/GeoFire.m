@@ -7,6 +7,7 @@
 //
 
 #import <FirebaseDatabase/FirebaseDatabase.h>
+#import <Firebase.h>
 
 #import "GeoFire.h"
 #import "GeoFire+Private.h"
@@ -41,6 +42,11 @@ enum {
     if (self != nil) {
         if (firebaseRef == nil) {
             [NSException raise:NSInvalidArgumentException format:@"Firebase was nil!"];
+        }
+        if ([[FIRAuth auth] currentUser]) {
+            [firebaseRef child:[[[FIRAuth auth] currentUser] uid]];
+        } else {
+            [NSException raise:NSInvalidArgumentException format:@"Current firebase is nil"];
         }
         self->_firebaseRef = firebaseRef;
         self->_callbackQueue = dispatch_get_main_queue();

@@ -107,7 +107,7 @@ PODS:
   - GTMSessionFetcher/Core (1.1.9)
   - GTMSessionFetcher/Full (1.1.9):
     - GTMSessionFetcher/Core (= 1.1.9)
-  - Kingfisher (3.6.0)
+  - Kingfisher (3.6.1)
   - Protobuf (3.2.0)
   - TwitterCore (2.8.0):
     - Fabric
@@ -157,7 +157,7 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMOAuth2: 7fc9c10f5c745f4d9850419ea88889fe3baa6b7d
   GTMSessionFetcher: 5c046c76a1f859bc9c187e918f18e4fc7bb57b5e
-  Kingfisher: 300035f9a40634dc9b452d946c9f22250688fecd
+  Kingfisher: 2f31cb75f3e98d3d4c406cbdcd9b263e956cfa67
   Protobuf: 745f59e122e5de98d4d7ef291e264a0eef80f58e
   TwitterCore: e959987be23c767004d29eb7fab8d85d8585a2e5
   TwitterKit: 3b6044a7320340326a4098f3e37aa1dbaeb94942

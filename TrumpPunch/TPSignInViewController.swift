@@ -88,7 +88,7 @@ class TPSignInViewController: UIViewController {
     }
     
     // MARK: IBAction Functions
-    @IBAction func closeSignUpView () {
+    @IBAction func closeSignInView () {
         // Dismiss this view:
         self.dismiss(animated: true)
     }
@@ -116,13 +116,17 @@ class TPSignInViewController: UIViewController {
     
     @IBAction func forgotPasswordPressed () {
         if emailField.isTextEmpty {
+            if passwordField.showingError { passwordField.clearErrors() }
             emailField.errorString = "Enter your email here to send password reset link!"
         } else if emailField.showingError && emailField.isEmailValid {
+            if passwordField.showingError { passwordField.clearErrors() }
             emailField.clearErrors()
             self.confirmPasswordReset()
         } else if !emailField.showingError && !emailField.isEmailValid {
+            if passwordField.showingError { passwordField.clearErrors() }
             emailField.errorString = "Invalid email address format!"
         } else {
+            if passwordField.showingError { passwordField.clearErrors() }
             self.confirmPasswordReset()
         }
     }
