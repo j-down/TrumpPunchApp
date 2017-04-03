@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2726AB011E6DE4C700E5E5B4 /* TPGamePerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E687881E5AB2170016BE11 /* TPGamePerson.swift */; };
+		27FA89B21E91D0B200720D62 /* TPSignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FA89B11E91D0B200720D62 /* TPSignInViewController.swift */; };
 		711BC4411E5D0B3600B077EC /* TPPeopleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 711BC4401E5D0B3600B077EC /* TPPeopleView.xib */; };
 		711BC4431E5D0DEC00B077EC /* TPPeopleCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 711BC4421E5D0DEC00B077EC /* TPPeopleCollectionViewCell.xib */; };
 		711BC4451E5D0E0300B077EC /* TPPeopleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711BC4441E5D0E0300B077EC /* TPPeopleCollectionViewCell.swift */; };
@@ -110,6 +111,7 @@
 
 /* Begin PBXFileReference section */
 		264150ADF2380572762BB9EE /* Pods-TrumpPunch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrumpPunch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrumpPunch/Pods-TrumpPunch.debug.xcconfig"; sourceTree = "<group>"; };
+		27FA89B11E91D0B200720D62 /* TPSignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TPSignInViewController.swift; sourceTree = "<group>"; };
 		4EE6F14A8B7720A942C1BDA8 /* Pods-TrumpPunchUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrumpPunchUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrumpPunchUITests/Pods-TrumpPunchUITests.release.xcconfig"; sourceTree = "<group>"; };
 		5852A1EC77905AFB7E71EA7A /* Pods-TrumpPunch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrumpPunch.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrumpPunch/Pods-TrumpPunch.release.xcconfig"; sourceTree = "<group>"; };
 		711BC4401E5D0B3600B077EC /* TPPeopleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TPPeopleView.xib; sourceTree = "<group>"; };
@@ -443,6 +445,7 @@
 				C2684F611E8C90070030B06D /* TPSignUpWithEmailViewController.swift */,
 				C29801B81E8AA2B900230B17 /* TPInitialLoginViewController.swift */,
 				C2D6E6631E9164B40030FCDA /* TopThreeLeaderboardCell.swift */,
+				27FA89B11E91D0B200720D62 /* TPSignInViewController.swift */,
 				71E687901E5AB35B0016BE11 /* Features */,
 			);
 			name = App;
@@ -898,6 +901,7 @@
 				71E6879B1E5AB42E0016BE11 /* TPEndSceneBottomView.swift in Sources */,
 				71E687AB1E5AB4F00016BE11 /* TPPeoplePopupView.swift in Sources */,
 				71BF54A71E6C0A7700E3FA3E /* JDArrows.swift in Sources */,
+				27FA89B21E91D0B200720D62 /* TPSignInViewController.swift in Sources */,
 				71BF548E1E6BF2A200E3FA3E /* TPGameItem.swift in Sources */,
 				71E687B41E5AB7970016BE11 /* TPHomeSceneBottomView.swift in Sources */,
 				711BC4601E64D7D600B077EC /* TPStoreCollectionViewCell.swift in Sources */,

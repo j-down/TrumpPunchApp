@@ -108,6 +108,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             FIRAuth.auth()?.signIn(with: credential, completion: { (fireBaseUser, error) in
                 
                 if error != nil && fireBaseUser == nil { self.ccxLog(error: error!) ; return }
+                if fireBaseUser != nil { fireBaseUser?.fullName = user.profile.name; self.continueToMain() }
                 
                 // Here we should take them over to the mainVC:
                 

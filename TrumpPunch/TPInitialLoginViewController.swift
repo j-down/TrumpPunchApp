@@ -46,7 +46,7 @@ class TPInitialLoginViewController: UIViewController, GIDSignInUIDelegate {
             if error == nil, let token = result?.token.tokenString  {
                 // Okay here we should try logging them in:
                 let credential = FIRFacebookAuthProvider.credential(withAccessToken: token)
-                self.signInWithoAuthCredentials(credential: credential)
+                self.signInWithoAuthCredentials(credential: credential, facebook: result)
                 
             } else {
                 print(error ?? "NIL ERROR -- NO ACTION")
@@ -60,7 +60,7 @@ class TPInitialLoginViewController: UIViewController, GIDSignInUIDelegate {
             if (session != nil) {
                 // Get the credentials & then sign in:
                 let credential = FIRTwitterAuthProvider.credential(withToken: session!.authToken, secret: session!.authTokenSecret)
-                self.signInWithoAuthCredentials(credential: credential)
+                self.signInWithoAuthCredentials(credential: credential, twitter: session)
                 
             } else {
                 print("TWITTER LOGIN ERROR: \(error?.localizedDescription)");
@@ -68,10 +68,32 @@ class TPInitialLoginViewController: UIViewController, GIDSignInUIDelegate {
         }
     }
     
-    func signInWithoAuthCredentials(credential: FIRAuthCredential) {
+    func signInWithoAuthCredentials(credential: FIRAuthCredential, twitter: TWTRSession?=nil, facebook: FBSDKLoginManagerLoginResult?=nil) {
+        if facebook == nil {
+            // Twitter:
+            
+        } else {
+            // Facebook:
+            let params : [AnyHashable : Any] = ["fields":"email,name"]
+            let request = FBSDKGraphRequest(graphPath: "me", parameters: params, tokenString: facebook!.token.tokenString, httpMethod: "")
+   //         FBSDKGraphRequest(graphPath: "", parameters: [:], tokenString: "", version: "", httpMethod: "")
+          //  let request = FBSDKGraphRequest()
+            
+            request.start {
+                response, result, error in
+                switch result {
+                case .success(let value):
+                    print(value.dictionaryValue)
+                case .failed(let error):
+                    print(error)
+                }
+            }
+        }
+        
         FIRAuth.auth()?.signIn(with: credential, completion: { (user, error) in
             if error == nil {
                 // Yay we signed in... lets take them to the main page:
+                
                 AppDelegate.shared.continueToMain()
             } else {
                 print(error ?? "NIL ERROR")

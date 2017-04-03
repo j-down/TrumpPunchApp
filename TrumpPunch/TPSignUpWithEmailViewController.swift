@@ -22,9 +22,6 @@ class TPSignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
     
     var currentResponder : CCXSignUpTextField?
     
-    var usernameAvailable = false
-    var checkingUsernameAvailability = false
-    var checkingEmailAvailability = false
     var scrollBack = false
     
     //MARK: Override Functions:
@@ -116,21 +113,12 @@ class TPSignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
                 if txtField.showingError {
                     switch txtField.tag {
                     case 0:
-                        self.checkingUsernameAvailability = true
                         txtField.checkUsernameAvailability {
                             available in
-                            // Set the checking status back to false (we will check this when we check the fields to sign up:
-                            self.checkingUsernameAvailability = false
-                            // Set this check to what was given back through the block:
-                            self.usernameAvailable = available
                         }
                     case 1:
-                        self.checkingEmailAvailability = true
                         txtField.checkEmailAvailability {
                             available in
-                            // Set the checking status back to false (we will check this when we check the fields to sign up:
-                            self.checkingEmailAvailability = false
-                            // Set this check to what was given back through the block:
                         }
                     case 2:
                         if !txtField.isTextEmpty && txtField.showingError {
@@ -156,19 +144,12 @@ class TPSignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
                 } else {
                     switch txtField.tag {
                     case 0:
-                        self.checkingUsernameAvailability = true
                         txtField.checkUsernameAvailability {
                             available in
-                            // Set the checking status back to false (we will check this when we check the fields to sign up:
-                            self.checkingUsernameAvailability = false
-                            // Set this check to what was given back through the block:
-                            self.usernameAvailable = available
                         }
                     case 1:
-                        self.checkingEmailAvailability = true
                         txtField.checkEmailAvailability {
                             success in
-                            self.checkingEmailAvailability = false
                         }
                     case 2:
                         if !txtField.isTextEmpty && passwordConfirmField.text == txtField.text {
@@ -246,7 +227,7 @@ class TPSignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
     }
 
     func checkFieldsAndAttemptSignUp (completion: @escaping (_ success: Bool, _ error: Error?, _ errorString : String?) -> Void) {
-        if let pass = passwordField.text, let passConf = passwordConfirmField.text, let email = emailField.text, let username = usernameField.text, usernameAvailable {
+        if let pass = passwordField.text, let passConf = passwordConfirmField.text, let email = emailField.text, let username = usernameField.text, usernameField.usernameAvailable, emailField.emailAvailable {
             
             if pass == passConf {
                 // Okay lets try and sign this guy up!
@@ -263,7 +244,7 @@ class TPSignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
             }
             
         } else {
-            if !usernameAvailable {
+            if !usernameField.usernameAvailable {
                 completion(false, nil, "Username is not available.")
             }
             
@@ -273,6 +254,47 @@ class TPSignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
 
 // Custom TextField with Logic for entered fields:
 class CCXSignUpTextField: UITextField {
+    
+    private var _checkingEmail = false
+    var checkingEmail : Bool {
+        get {
+            return self._checkingEmail
+        }
+        set {
+            self._checkingEmail = newValue
+        }
+    }
+    
+    private var _emailAvailable = false
+    var emailAvailable : Bool {
+        get {
+            return self._emailAvailable
+        }
+        set {
+            self._emailAvailable = newValue
+        }
+    }
+    
+    private var _usernameAvailable = false
+    var usernameAvailable : Bool {
+        get {
+            return self._usernameAvailable
+        }
+        set {
+            self._usernameAvailable = newValue
+        }
+    }
+    
+    private var _checkingUsername = false
+    var checkingUsername : Bool {
+        get {
+            return self._checkingUsername
+        }
+        set {
+            self._checkingUsername = newValue
+        }
+    }
+    
     private var _showingSuccess = false
     var showingSuccess : Bool {
         get {
@@ -348,7 +370,6 @@ class CCXSignUpTextField: UITextField {
     }
 }
 
-//MARK: CCX Extensions:
 fileprivate extension TPSignUpWithEmailViewController {
     func showError(error: Error) {
         let alertController = UIAlertController(title: "Error signing up!", message: error.localizedDescription, preferredStyle: .alert)
@@ -365,7 +386,7 @@ fileprivate extension TPSignUpWithEmailViewController {
     }
 }
 
-fileprivate extension CCXSignUpTextField {
+extension CCXSignUpTextField {
     
     var isEmailValid : Bool {
         if self.isTextEmpty { return false }
@@ -385,12 +406,17 @@ fileprivate extension CCXSignUpTextField {
     }
     
     func checkUsernameAvailability(completion: @escaping (_ available : Bool) -> Void) {
-        if self.isTextEmpty { self.errorString = "Please enter a username!"; completion(false); return }
+        self.checkingUsername = true
+        if self.isTextEmpty { self.usernameAvailable=false;self.checkingUsername = false; self.errorString = "Please enter a username!"; completion(false); return }
         dbRef.queryOrdered(byChild: "username").queryEqual(toValue: self.text!).observeSingleEvent(of: .value, with: { (snapshot) in
             if !snapshot.exists() {
+                self.checkingUsername = false
+                self.usernameAvailable = true
                 self.successString = "Username is available!"
                 completion(true)
             } else {
+                self.checkingUsername = false
+                self.usernameAvailable = false
                 self.errorString = "Username is already in use! Please try another."
                 completion(false)
             }
@@ -398,14 +424,15 @@ fileprivate extension CCXSignUpTextField {
     }
     
     func checkEmailAvailability(completion: @escaping (_ available : Bool) -> Void) {
-        if self.isTextEmpty { self.errorString = "Please enter an email!"; completion(false); return }
-        if !self.isEmailValid { self.errorString = "Invalid email address format!"; completion(false); return }
+        self.checkingEmail = true
+        if self.isTextEmpty {self.emailAvailable=false;self.errorString="Please enter an email!";self.checkingEmail=false;completion(false);return}
+        if !self.isEmailValid {self.emailAvailable=false;self.errorString="Invalid email address format!";completion(false);self.checkingEmail = false;return}
         dbRef.queryOrdered(byChild: "email").queryEqual(toValue: self.text!).observeSingleEvent(of: .value, with: { (snapshot) in
             if !snapshot.exists() {
-                self.clearErrors()
+                self.checkingEmail = false;self.emailAvailable = true;self.clearErrors()
                 completion(true)
             } else {
-                self.errorString = "Email address is already in use! Please try another."
+                self.checkingEmail = false;self.emailAvailable = false;self.errorString = "Email address is already in use! Please try another."
                 completion(false)
             }
         })
