@@ -41,13 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         GIDSignIn.sharedInstance().delegate = self
         // Set the clientID:
         GIDSignIn.sharedInstance().clientID = FIRApp.defaultApp()?.options.clientID
-        
-//        do {
-//            try FIRAuth.auth()?.signOut()
-//        } catch {
-//            print(error)
-//        }
-        
+            
         // First, lets check and see if we have an anonomous user.  We will still make them log in:
         if let user = FIRAuth.auth()?.currentUser {
             if user.isAnonymous {
