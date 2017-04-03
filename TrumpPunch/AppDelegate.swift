@@ -190,8 +190,7 @@ extension FIRUser {
             self.wasEmailSet {
                 set in
                 if !set {
-                    dbRef.child(self.uid).setValue(["email":newValue!])
-                    if newValue == self.email {return} else {
+                    if newValue == self.email { dbRef.child(self.uid).setValue(["email":newValue!]) ; return } else {
                         self.updateEmail(newValue!) { (error) in
                             if error != nil {
                                 print(error!)

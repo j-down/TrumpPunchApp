@@ -97,6 +97,36 @@ class TPSignInViewController: UIViewController {
         if currentResponder != nil { currentResponder!.resignFirstResponder() } else { return }
     }
     
+    func confirmPasswordReset () {
+        // Lets send here too:
+        let alertController = UIAlertController(title: "Send Password Reset?", message: "Would you like to reset your password for \(emailField.text!)?", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+            FIRAuth.auth()?.sendPasswordReset(withEmail: self.emailField.text!) {
+                error in
+                if error != nil {
+                    self.showError(title: "Password Reset Error!", error: error!)
+                }
+            }
+        })
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cancel)
+        alertController.addAction(action)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    @IBAction func forgotPasswordPressed () {
+        if emailField.isTextEmpty {
+            emailField.errorString = "Enter your email here to send password reset link!"
+        } else if emailField.showingError && emailField.isEmailValid {
+            emailField.clearErrors()
+            self.confirmPasswordReset()
+        } else if !emailField.showingError && !emailField.isEmailValid {
+            emailField.errorString = "Invalid email address format!"
+        } else {
+            self.confirmPasswordReset()
+        }
+    }
+    
     //MARK: UITextField Delegate Functions:
     func textFieldDidBeginEditing(_ textField: UITextField) {
         currentResponder = textField as? CCXSignUpTextField
@@ -172,17 +202,31 @@ class TPSignInViewController: UIViewController {
 }
 
 fileprivate extension TPSignInViewController {
-    func showError(error: Error) {
-        let alertController = UIAlertController(title: "Error signing in!", message: error.localizedDescription, preferredStyle: .alert)
-        let okayAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-        alertController.addAction(okayAction)
-        self.present(alertController, animated: true, completion: nil)
+    func showError(title: String?=nil, error: Error) {
+        if title == nil {
+            let alertController = UIAlertController(title: "Error signing in!", message: error.localizedDescription, preferredStyle: .alert)
+            let okayAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            alertController.addAction(okayAction)
+            self.present(alertController, animated: true, completion: nil)
+        } else {
+            let alertController = UIAlertController(title: title!, message: error.localizedDescription, preferredStyle: .alert)
+            let okayAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            alertController.addAction(okayAction)
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
     
-    func showErrorString(errorString : String) {
-        let alertController = UIAlertController(title: "Error signing in!", message: errorString, preferredStyle: .alert)
-        let okayAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-        alertController.addAction(okayAction)
-        self.present(alertController, animated: true, completion: nil)
+    func showErrorString(title: String?=nil, errorString : String) {
+        if title == nil {
+            let alertController = UIAlertController(title: "Error signing in!", message: errorString, preferredStyle: .alert)
+            let okayAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            alertController.addAction(okayAction)
+            self.present(alertController, animated: true, completion: nil)
+        } else {
+            let alertController = UIAlertController(title: title!, message: errorString, preferredStyle: .alert)
+            let okayAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            alertController.addAction(okayAction)
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
 }
