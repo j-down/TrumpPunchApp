@@ -72,54 +72,17 @@ class TPInitialLoginViewController: UIViewController, GIDSignInUIDelegate {
     
     func signInWithoAuthCredentials(credential: FIRAuthCredential, twitter: TWTRSession?=nil, facebook: FBSDKLoginManagerLoginResult?=nil) {
         // Lets first check if the users have set this stuff so we dont do it over again:
-                
         FIRAuth.auth()?.signIn(with: credential) {
             user, error in
             
             if user != nil  {
+                // Yay we signed in... lets take them to the main page:
                 user?.syncProfile()
                 AppDelegate.shared.continueToMain()
             } else if error != nil {
                 print(error!)
             }
-            
         }
-//        (user, error) in
-//            if error == nil {
-//                user?.syncProfile()
-//                if user!.fullName == nil {
-//                    // Okay they haven't yet. Lets go and get their name & photoURL:
-//                    var name = ""
-//                    var photoURL = ""
-//                    if twitter != nil {
-//                        // Twitter:
-//                        TWTRAPIClient().loadUser(withID:  twitter!.userID) {
-//                            user, error in
-//                            if error != nil {
-//                                print(error!)
-//                            }
-//                            if user != nil {
-//                                name = user!.name
-//                                photoURL = user!.profileImageMiniURL
-//                            }
-//                            
-//                        }
-//                        
-//                    } else if facebook != nil {
-//                        
-//                        // Facebook:
-//                        FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "name, picture"]).start(completionHandler: { (connection, result, error) -> Void in
-//                            if (error == nil) {
-//                                let fbDetails = result as! NSDictionary
-//                                print(fbDetails)
-//                            }else{
-//                                print(error?.localizedDescription ?? "Not found")
-//                            }
-//                        })
-//                    }
-//                }
-                // Yay we signed in... lets take them to the main page:
-        
     }
 }
 

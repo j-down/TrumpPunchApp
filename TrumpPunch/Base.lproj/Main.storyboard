@@ -356,12 +356,12 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BXP-Jb-xUs">
-                                <rect key="frame" x="20" y="617" width="127" height="30"/>
+                                <rect key="frame" x="20" y="617" width="126" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Rxe-rF-mU8"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
-                                <state key="normal" title="Sign-Up via Email">
+                                <state key="normal" title="Sign-up via Email">
                                     <color key="titleColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>

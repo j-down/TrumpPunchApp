@@ -190,6 +190,27 @@ extension FIRUser {
         }
     }
     
+    var location : CLLocation? {
+        get {
+            if let dic = Defaults.object(forKey: "location") as? NSDictionary {
+                if let lat = dic.value(forKey: "lat") as? CLLocationDegrees, let lon = dic.value(forKey: "lon") as? CLLocationDegrees {
+                    let location = CLLocation(latitude: lat , longitude: lon)
+                    return location
+                } else {
+                    return nil
+                }
+            } else {
+                return nil
+            }
+        }
+        set {
+            if newValue == nil {return}
+            let data = ["lat":location!.coordinate.latitude, "lon" : location!.coordinate.longitude]
+            Defaults.set(data, forKey: "firebaseLocation")
+            geoFire?.setLocation(newValue, forKey: self.uid)
+        }
+    }
+    
     func incrementTrumpPunches() {
         trumpPunches += 1
     }
@@ -210,7 +231,7 @@ extension FIRUser {
             self.wasEmailSet {
                 set in
                 if !set {
-                    if newValue == self.email { dbRef.child(self.uid).setValue(["email":newValue!]) ; return } else {
+                    if newValue == self.email { dbRef.child("\(self.uid)/email").setValue(newValue!) ; return } else {
                         self.updateEmail(newValue!) { (error) in
                             if error != nil {
                                 print(error!)
@@ -347,7 +368,7 @@ extension FIRUser {
      3. Email & Username users will only be setting their username & email for now until we give them a way to enter in more information.
      
      */
-    func syncProfile() {
+    func syncProfile(twitter: TWTRSession?=nil) {
         dbRef.child(self.uid).observeSingleEvent(of: .value, with: { (snapshot) in
             if snapshot.exists() {
                 if snapshot.hasChild("fullName") {
@@ -357,6 +378,10 @@ extension FIRUser {
                 }
                 if snapshot.hasChild("username") {
                     self.username = snapshot.value(forKey: "username") as? String
+                } else {
+                    if let username = twitter?.userName {
+                        self.username = username
+                    }
                 }
                 if snapshot.hasChild("pictureURL") {
                     self.pictureURL = snapshot.value(forKey: "pictureURL") as? String
@@ -376,6 +401,9 @@ extension FIRUser {
                 self.fullName = self.displayName
                 self.pictureURL = self.photoURL?.absoluteString
                 self.emailAddress = self.email
+                if let username = twitter?.userName {
+                    self.username = username
+                }
             }
         })
     }
