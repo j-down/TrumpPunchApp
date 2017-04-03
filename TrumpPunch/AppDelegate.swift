@@ -51,9 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             } else {
                 // Okay we should be good to go to pop them into the main view:
                 self.continueToMain()
-                
-                // Start the XModeAPI:
-                TPLocationDelegate.shared.startXModeAPI()
+        
             }
         } else {
             // auth or current user is nil: Lets bring them to the initial setup page:
@@ -129,6 +127,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         if let initialVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TPBaseViewController") as? TPBaseViewController {
             self.window?.rootViewController = initialVC
             self.window?.makeKeyAndVisible()
+            // Start the XModeAPI:
+            TPLocationDelegate.shared.startXModeAPI()
         }
     }
     
@@ -320,6 +320,7 @@ extension FIRUser {
         Defaults.removeObject(forKey: "username")
         Defaults.removeObject(forKey: "pictureURL")
         Defaults.removeObject(forKey: "trumpPunches")
+        Defaults.removeObject(forKey: "location")
     }
     /**
      This **clears all** the user profile data that we save in **NSUserDefaults**.  This is a **wrapper** function around the FIRAuth signOut method.  This also takes the user to the **initial sign in page**.
