@@ -62,6 +62,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
+        print(FIRAuth.auth()?.currentUser?.fullName)
+        
         return true
     }
 
@@ -194,7 +196,7 @@ extension FIRUser {
     
     func saveTrumpPunches () {
         if trumpPunches > 0 {
-            dbRef.child(self.uid).setValue(["trumpPunches":trumpPunches])
+            dbRef.child("\(self.uid)/trumpPunches").setValue(trumpPunches)
         }
     }
     
@@ -213,7 +215,7 @@ extension FIRUser {
                             if error != nil {
                                 print(error!)
                             } else {
-                                dbRef.child(self.uid).setValue(["email":newValue!])
+                                dbRef.child("\(self.uid)/email").setValue(newValue!)
                             }
                         }
                     }
@@ -223,7 +225,7 @@ extension FIRUser {
                             if error != nil {
                                 print(error!)
                             } else {
-                                dbRef.child(self.uid).setValue(["email":newValue!])
+                                dbRef.child("\(self.uid)/email").setValue(newValue!)
                             }
                         }
                     }
@@ -251,7 +253,7 @@ extension FIRUser {
             if newValue == nil {return}
             if newValue == pictureURL {return}
             if newValue!.isEmpty {return}
-            dbRef.child(self.uid).setValue(["pictureURL" : newValue!]) { (error, reference) in
+            dbRef.child("\(self.uid)/pictureURL").setValue(newValue!) { (error, reference) in
                 if error != nil { self.ccxLog(error: error) }
                 else { print("Yay - we set the pictureURL"); Defaults.set(newValue!, forKey: "pictureURL") }
             }
@@ -267,7 +269,7 @@ extension FIRUser {
             if newValue == nil {return}
             if newValue == fullName {return}
             if newValue!.isEmpty {return}
-            dbRef.child(self.uid).setValue(["fullName" : newValue!]) { (error, reference) in
+            dbRef.child("\(self.uid)/fullName").setValue(newValue!) { (error, reference) in
                 if error != nil { self.ccxLog(error: error) }
                 else { print("Yay - we set the fullName"); Defaults.set(newValue!, forKey: "fullName") }
             }
@@ -282,7 +284,7 @@ extension FIRUser {
             if newValue == nil {return}
             if newValue == username {return}
             if newValue!.isEmpty {return}
-            dbRef.child(self.uid).setValue(["username" : newValue!]) { (error, ref) in
+            dbRef.child("\(self.uid)/username").setValue(newValue!) { (error, ref) in
                 if error != nil { self.ccxLog(error: error) }
                 else { print("Yay - we set the username"); Defaults.set(newValue!, forKey: "username") }
             }
