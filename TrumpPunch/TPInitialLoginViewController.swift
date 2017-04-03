@@ -73,21 +73,17 @@ class TPInitialLoginViewController: UIViewController, GIDSignInUIDelegate {
             // Twitter:
             
         } else {
-            // Facebook:
-            let params : [AnyHashable : Any] = ["fields":"email,name"]
-            let request = FBSDKGraphRequest(graphPath: "me", parameters: params, tokenString: facebook!.token.tokenString, httpMethod: "")
-   //         FBSDKGraphRequest(graphPath: "", parameters: [:], tokenString: "", version: "", httpMethod: "")
-          //  let request = FBSDKGraphRequest()
+            // Lets first check if the users has set this stuff so we dont do it over again:
             
-            request.start {
-                response, result, error in
-                switch result {
-                case .success(let value):
-                    print(value.dictionaryValue)
-                case .failed(let error):
-                    print(error)
+            // Facebook:
+            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email"]).start(completionHandler: { (connection, result, error) -> Void in
+                if (error == nil) {
+                    let fbDetails = result as! NSDictionary
+                    print(fbDetails)
+                }else{
+                    print(error?.localizedDescription ?? "Not found")
                 }
-            }
+            })
         }
         
         FIRAuth.auth()?.signIn(with: credential, completion: { (user, error) in
