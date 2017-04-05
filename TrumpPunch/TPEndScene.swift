@@ -274,8 +274,11 @@ extension TPBaseViewController {
             UIView.animate(withDuration: 0.1, delay: 0, animations: {
                 
                 self.endSceneBottomView.homeButton.transform = CGAffineTransform.identity
+                self.logoutButtonView.alpha = 1
+                
             }, completion: { finished in
                 
+                self.logoutButton.isUserInteractionEnabled = true
                 BaseViewController.shopCoinBack.isHidden = true
                 ThisGlobalScene.playSound(named: Sounds.button)
                 ThisGlobalScene.presentHomeScene()

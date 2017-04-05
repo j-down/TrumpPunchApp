@@ -125,7 +125,7 @@ extension TPBaseViewController {
             UIView.animate(withDuration: 0.1, delay: 0, animations: {
                 
                 self.homeSceneBottomView.playButton.transform = CGAffineTransform.identity
-                self.logoutButton.alpha = 0
+                self.logoutButtonView.alpha = 0
                 
             }, completion: { finished in
                 

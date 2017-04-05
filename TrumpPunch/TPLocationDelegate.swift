@@ -42,7 +42,7 @@ final class TPLocationDelegate: NSObject, CLLocationManagerDelegate {
             if let user = FIRAuth.auth()?.currentUser {
                 // Okay - they must be signed in anonomously already, lets save their currentLocation:
                 // Create set the location using the user uid:
-                if !user.isUpdatingLocation {
+                if !user.isUpdatingLocation && user.isSignedUp {
                     // Make sure the currentLocation is not nil - here we will check & make sure the users location has changed more then 50 meters:
                     if let lastLocation = user.location {
                         // If the distance is greater than or equal to 25 meters, then we will update the location:

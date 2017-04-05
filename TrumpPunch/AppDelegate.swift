@@ -176,8 +176,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
 extension FIRUser {
     
+    /// Once the user is signed up, then we know if we can send the location update to Firebase:
+    var isSignedUp : Bool {
+        get {
+            if let result = Defaults.object(forKey: "isSignedUp") as? Bool {
+                return result
+            } else {
+                return false
+            }
+        }
+        set {
+            Defaults.set(newValue, forKey: "isSignedUp")
+        }
+    }
     
-    
+    /// The number of punches the user has punched Donald Trump.
     var trumpPunches : Int {
         get {
             if let punches = Defaults.object(forKey: "trumpPunches") as? Int {
@@ -340,6 +353,7 @@ extension FIRUser {
         Defaults.removeObject(forKey: "trumpPunches")
         Defaults.removeObject(forKey: "firebaseLocation")
         Defaults.removeObject(forKey: "isUpdatingLocation")
+        Defaults.removeObject(forKey: "isSignedUp")
     }
     /**
      This **clears all** the user profile data that we save in **NSUserDefaults**.  This is a **wrapper** function around the FIRAuth signOut method.  This also takes the user to the **initial sign in page**.
@@ -378,7 +392,7 @@ extension FIRUser {
      3. Email & Username users will only be setting their username & email for now until we give them a way to enter in more information.
      
      */
-    func syncProfile(twitter: TWTRSession?=nil) {
+    func syncProfile(twitter: TWTRSession?=nil, facebook: FBSDKLoginManagerLoginResult?=nil) {
         dbRef.child(self.uid).observeSingleEvent(of: .value, with: { (snapshot) in
             if snapshot.exists() {
                 if snapshot.hasChild("fullName") {
@@ -417,6 +431,45 @@ extension FIRUser {
                 if let username = twitter?.userName {
                     self.username = username
                 }
+                self.isSignedUp = true
+                // Lets work on getting the email for Twitter & Facebook users (I think if we are able to get it Google would be able to...(so i commented it out)):
+//                if facebook != nil {
+//                    FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "email"]).start(completionHandler: { (connection, result, error) -> Void in
+//                        if (error == nil) {
+//                            if let dictionary = result as? NSDictionary {
+//                                if let email = dictionary.value(forKey: "email") as? String {
+//                                    self.emailAddress = email
+//                                }
+//                            }
+//
+//                        }
+//                    })
+//                } else if twitter != nil {
+                    
+//                    let client = TWTRAPIClient.withCurrentUser()
+//                    let request = client.urlRequest(withMethod: "GET",
+//                                                    url: "https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true",
+//                                                    parameters: ["include_email": "true", "skip_status": "true"],
+//                                                    error: nil)
+//                    client.sendTwitterRequest(request) { response, data, connectionError in
+//                        if (connectionError == nil) {
+                            
+//                            do{
+//                                let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! [String:Any]
+//                                if let emaill = json["email"] as? String {
+//                                    self.emailAddress = emaill
+//                                }
+                                
+//                            } catch {
+                                
+//                            }
+                            
+//                        }
+//                        else {
+//                            print("Error: \(connectionError)")
+//                        }
+//                    }
+//                }
             }
         })
     }

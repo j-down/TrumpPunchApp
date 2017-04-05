@@ -435,7 +435,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ac1-Pc-scI">
-                                <rect key="frame" x="-4" y="0.0" width="110" height="110"/>
+                                <rect key="frame" x="0.0" y="0.0" width="110" height="110"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TZh-Hx-pHy">
                                         <rect key="frame" x="20" y="22" width="70" height="70"/>
@@ -475,9 +475,9 @@
                             <constraint firstItem="0Op-nL-L2H" firstAttribute="top" secondItem="sP9-Dn-ELr" secondAttribute="bottom" id="4yT-Ml-Le0"/>
                             <constraint firstItem="ac1-Pc-scI" firstAttribute="top" secondItem="kwF-Yi-aoB" secondAttribute="topMargin" id="5Nf-Ml-Zio"/>
                             <constraint firstAttribute="leadingMargin" secondItem="sP9-Dn-ELr" secondAttribute="leading" id="Dxy-YT-lwH"/>
-                            <constraint firstItem="ac1-Pc-scI" firstAttribute="leading" secondItem="kwF-Yi-aoB" secondAttribute="leadingMargin" constant="-20" id="bwE-Ma-g5B"/>
                             <constraint firstAttribute="trailingMargin" secondItem="sP9-Dn-ELr" secondAttribute="trailing" id="ic9-I9-ZJQ"/>
                             <constraint firstItem="sP9-Dn-ELr" firstAttribute="centerX" secondItem="kwF-Yi-aoB" secondAttribute="centerX" id="ttI-KR-N1c"/>
+                            <constraint firstItem="ac1-Pc-scI" firstAttribute="leading" secondItem="kwF-Yi-aoB" secondAttribute="leading" id="vr4-Mt-8VC"/>
                         </constraints>
                     </view>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
