@@ -301,10 +301,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Lu-8y-f7Q">
-                                <rect key="frame" x="45" y="319.5" width="285" height="269.5"/>
+                                <rect key="frame" x="44" y="319.5" width="287" height="269.5"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OOI-nS-Mbd">
-                                        <rect key="frame" x="20" y="20" width="119.5" height="120"/>
+                                        <rect key="frame" x="20" y="20" width="120.5" height="120"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="OOI-nS-Mbd" secondAttribute="height" multiplier="1:1" id="1Qg-2Z-06z"/>
                                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="144" id="AoO-1G-W05"/>
@@ -316,14 +316,14 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZqF-ZX-yEN">
-                                        <rect key="frame" x="147.5" y="20" width="119.5" height="120"/>
+                                        <rect key="frame" x="148.5" y="20" width="120.5" height="120"/>
                                         <state key="normal" image="twitter"/>
                                         <connections>
                                             <action selector="twitterSignInPressedWithSender:" destination="LSy-ig-E7J" eventType="touchUpInside" id="fGp-aZ-vVy"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pBh-N9-32z">
-                                        <rect key="frame" x="83.5" y="147" width="119" height="120"/>
+                                        <rect key="frame" x="84" y="147" width="120.5" height="120"/>
                                         <state key="normal" image="google plus"/>
                                         <connections>
                                             <action selector="googleSignInPressedWithSender:" destination="LSy-ig-E7J" eventType="touchUpInside" id="imM-LM-kE5"/>
@@ -434,43 +434,58 @@
                                     <constraint firstAttribute="height" constant="54" id="VYQ-Ql-zca"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TZh-Hx-pHy">
-                                <rect key="frame" x="16" y="40" width="70" height="70"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ac1-Pc-scI">
+                                <rect key="frame" x="-4" y="0.0" width="110" height="110"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TZh-Hx-pHy">
+                                        <rect key="frame" x="20" y="22" width="70" height="70"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="70" id="CvN-V2-IY6"/>
+                                            <constraint firstAttribute="height" constant="70" id="ehG-8T-chw"/>
+                                        </constraints>
+                                        <state key="normal" image="BlueButton">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="logoutButtonPressed" destination="LA5-N9-XvY" eventType="touchUpInside" id="f4j-E7-N8J"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Logout" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dve-b4-ZYo">
+                                        <rect key="frame" x="20" y="18" width="70" height="74"/>
+                                        <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="70" id="CvN-V2-IY6"/>
-                                    <constraint firstAttribute="height" constant="70" id="ehG-8T-chw"/>
+                                    <constraint firstItem="Dve-b4-ZYo" firstAttribute="centerY" secondItem="ac1-Pc-scI" secondAttribute="centerY" id="1OX-JY-Dm3"/>
+                                    <constraint firstItem="Dve-b4-ZYo" firstAttribute="trailing" secondItem="TZh-Hx-pHy" secondAttribute="trailing" id="LAG-Cu-FIb"/>
+                                    <constraint firstItem="Dve-b4-ZYo" firstAttribute="top" secondItem="ac1-Pc-scI" secondAttribute="top" constant="18" id="ajd-DZ-HWr"/>
+                                    <constraint firstItem="Dve-b4-ZYo" firstAttribute="bottom" secondItem="TZh-Hx-pHy" secondAttribute="bottom" id="dH7-HC-Xb7"/>
+                                    <constraint firstItem="Dve-b4-ZYo" firstAttribute="leading" secondItem="ac1-Pc-scI" secondAttribute="leading" constant="20" id="m7U-b2-Oku"/>
+                                    <constraint firstItem="Dve-b4-ZYo" firstAttribute="centerX" secondItem="ac1-Pc-scI" secondAttribute="centerX" id="npb-80-cNE"/>
+                                    <constraint firstItem="Dve-b4-ZYo" firstAttribute="leading" secondItem="TZh-Hx-pHy" secondAttribute="leading" id="qS3-uK-Ctr"/>
+                                    <constraint firstItem="Dve-b4-ZYo" firstAttribute="top" secondItem="TZh-Hx-pHy" secondAttribute="top" constant="-4" id="rYH-Ec-7gV"/>
                                 </constraints>
-                                <state key="normal" image="BlueButton">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="logoutButtonPressed" destination="LA5-N9-XvY" eventType="touchUpInside" id="f4j-E7-N8J"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Logout" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dve-b4-ZYo">
-                                <rect key="frame" x="16" y="36" width="70" height="74"/>
-                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="0Op-nL-L2H" firstAttribute="top" secondItem="sP9-Dn-ELr" secondAttribute="bottom" id="4yT-Ml-Le0"/>
+                            <constraint firstItem="ac1-Pc-scI" firstAttribute="top" secondItem="kwF-Yi-aoB" secondAttribute="topMargin" id="5Nf-Ml-Zio"/>
                             <constraint firstAttribute="leadingMargin" secondItem="sP9-Dn-ELr" secondAttribute="leading" id="Dxy-YT-lwH"/>
-                            <constraint firstItem="Dve-b4-ZYo" firstAttribute="trailing" secondItem="TZh-Hx-pHy" secondAttribute="trailing" id="M6Z-Dk-qta"/>
-                            <constraint firstItem="Dve-b4-ZYo" firstAttribute="top" secondItem="TZh-Hx-pHy" secondAttribute="top" constant="-4" id="Q7B-nO-oGW"/>
-                            <constraint firstItem="Dve-b4-ZYo" firstAttribute="bottom" secondItem="TZh-Hx-pHy" secondAttribute="bottom" id="TGI-v9-gu2"/>
-                            <constraint firstItem="TZh-Hx-pHy" firstAttribute="top" secondItem="bux-JG-tc1" secondAttribute="bottom" constant="20" id="UNi-7H-XQc"/>
+                            <constraint firstItem="ac1-Pc-scI" firstAttribute="leading" secondItem="kwF-Yi-aoB" secondAttribute="leadingMargin" constant="-20" id="bwE-Ma-g5B"/>
                             <constraint firstAttribute="trailingMargin" secondItem="sP9-Dn-ELr" secondAttribute="trailing" id="ic9-I9-ZJQ"/>
-                            <constraint firstItem="Dve-b4-ZYo" firstAttribute="leading" secondItem="TZh-Hx-pHy" secondAttribute="leading" id="qAT-cw-SLb"/>
-                            <constraint firstItem="sP9-Dn-ELr" firstAttribute="leading" secondItem="TZh-Hx-pHy" secondAttribute="leading" id="rB4-S8-4f6"/>
                             <constraint firstItem="sP9-Dn-ELr" firstAttribute="centerX" secondItem="kwF-Yi-aoB" secondAttribute="centerX" id="ttI-KR-N1c"/>
                         </constraints>
                     </view>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
                         <outlet property="bannerView" destination="sP9-Dn-ELr" id="WH8-mz-6p1"/>
+                        <outlet property="logoutButton" destination="TZh-Hx-pHy" id="gMj-F3-wGV"/>
+                        <outlet property="logoutButtonView" destination="ac1-Pc-scI" id="hsy-il-3eh"/>
+                        <outlet property="logoutLabel" destination="Dve-b4-ZYo" id="7KD-ps-Wye"/>
                         <segue destination="gCq-v2-eaW" kind="show" identifier="showLocationPage" id="Ik4-wi-qNx"/>
                     </connections>
                 </viewController>

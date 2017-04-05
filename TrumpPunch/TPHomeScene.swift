@@ -108,7 +108,6 @@ extension TPBaseViewController {
         
         UIView.animate(withDuration: 0.2, delay: 0.5, animations: {
         
-            
             self.homeSceneLogoView.alpha = 1
         })
     }
@@ -116,6 +115,7 @@ extension TPBaseViewController {
     func removeHomeSceneButtonView() {
         
         homeSceneBottomView.removeFromSuperview()
+        
     }
     
     func playButtonPressed(gesture: UITapGestureRecognizer) {
@@ -125,8 +125,11 @@ extension TPBaseViewController {
             UIView.animate(withDuration: 0.1, delay: 0, animations: {
                 
                 self.homeSceneBottomView.playButton.transform = CGAffineTransform.identity
+                self.logoutButton.alpha = 0
+                
             }, completion: { finished in
                 
+                self.logoutButton.isUserInteractionEnabled = false
                 ThisGlobalScene.playSound(named: Sounds.button)
                 ThisGlobalScene.presentGameScene()
             })

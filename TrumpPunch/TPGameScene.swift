@@ -2114,7 +2114,7 @@ class TPGameScene: TPGlobalScene {
                         leftBoom.run(leftTomato(), completion: {
                             
                             let byeL = self.childNode(withName: swag)
-                            byeL!.removeFromParent()
+                            byeL?.removeFromParent()
                         })
                         
                         self.leftBoom = JDArrows(sizeOf: CGSize(width: 60, height: 60))

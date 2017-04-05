@@ -16,6 +16,10 @@ import GoogleMobileAds
 
 class TPBaseViewController: UIViewController {
 
+    @IBOutlet var logoutButtonView : UIView!
+    @IBOutlet var logoutButton : UIButton!
+    @IBOutlet var logoutLabel : UILabel!
+    
     //HomeScene
     var homeSceneBottomView: TPHomeSceneBottomView!
     var homeSceneLogoView: UIImageView!
