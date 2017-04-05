@@ -435,7 +435,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TZh-Hx-pHy">
-                                <rect key="frame" x="16" y="20" width="70" height="70"/>
+                                <rect key="frame" x="16" y="40" width="70" height="70"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="70" id="CvN-V2-IY6"/>
                                     <constraint firstAttribute="height" constant="70" id="ehG-8T-chw"/>
@@ -448,7 +448,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Logout" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dve-b4-ZYo">
-                                <rect key="frame" x="16" y="16" width="70" height="74"/>
+                                <rect key="frame" x="16" y="36" width="70" height="74"/>
                                 <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -461,7 +461,7 @@
                             <constraint firstItem="Dve-b4-ZYo" firstAttribute="trailing" secondItem="TZh-Hx-pHy" secondAttribute="trailing" id="M6Z-Dk-qta"/>
                             <constraint firstItem="Dve-b4-ZYo" firstAttribute="top" secondItem="TZh-Hx-pHy" secondAttribute="top" constant="-4" id="Q7B-nO-oGW"/>
                             <constraint firstItem="Dve-b4-ZYo" firstAttribute="bottom" secondItem="TZh-Hx-pHy" secondAttribute="bottom" id="TGI-v9-gu2"/>
-                            <constraint firstItem="TZh-Hx-pHy" firstAttribute="top" secondItem="bux-JG-tc1" secondAttribute="bottom" id="UNi-7H-XQc"/>
+                            <constraint firstItem="TZh-Hx-pHy" firstAttribute="top" secondItem="bux-JG-tc1" secondAttribute="bottom" constant="20" id="UNi-7H-XQc"/>
                             <constraint firstAttribute="trailingMargin" secondItem="sP9-Dn-ELr" secondAttribute="trailing" id="ic9-I9-ZJQ"/>
                             <constraint firstItem="Dve-b4-ZYo" firstAttribute="leading" secondItem="TZh-Hx-pHy" secondAttribute="leading" id="qAT-cw-SLb"/>
                             <constraint firstItem="sP9-Dn-ELr" firstAttribute="leading" secondItem="TZh-Hx-pHy" secondAttribute="leading" id="rB4-S8-4f6"/>
