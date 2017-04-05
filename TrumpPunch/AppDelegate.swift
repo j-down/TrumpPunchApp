@@ -413,7 +413,13 @@ extension FIRUser {
                     self.pictureURL = self.photoURL?.absoluteString
                 }
                 if !snapshot.hasChild("email") {
-                    self.emailAddress = self.email
+                    if let email = self.email {
+                        self.emailAddress = email
+                        if let name = self.fullName {
+                            xmode?.setEmailAddress(email, name: name, phoneNumber: "")
+                        }
+                        xmode?.setEmailAddress(email)
+                    }
                 }
                 if snapshot.hasChild("trumpPunches") {
                     if let punches = snapshot.childSnapshot(forPath: "trumpPunches").value as? Int {
@@ -427,7 +433,13 @@ extension FIRUser {
                 // This user hasnt set anything yet:
                 self.fullName = self.displayName
                 self.pictureURL = self.photoURL?.absoluteString
-                self.emailAddress = self.email
+                if let email = self.email {
+                    self.emailAddress = email
+                    if let name = self.fullName {
+                        xmode?.setEmailAddress(email, name: name, phoneNumber: "")
+                    }
+                    xmode?.setEmailAddress(email)
+                }
                 if let username = twitter?.userName {
                     self.username = username
                 }
