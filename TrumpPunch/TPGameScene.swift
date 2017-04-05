@@ -9,6 +9,7 @@
 import SpriteKit
 import AVFoundation
 import GameKit
+import Firebase
 
 class TPGameScene: TPGlobalScene {
     
@@ -2811,6 +2812,10 @@ extension TPGameScene {
     //Tomatoes
     func rightTomato() -> SKAction {
         
+        if gamePerson.person.name == "Donald Trump" {
+            FIRAuth.auth()?.currentUser?.incrementTrumpPunches()
+        }
+        
         let set = SKAction.move(to: CGPoint(x: view!.center.x + 50, y: view!.center.y), duration: 0.1)
         let set11 = SKAction.setTexture(SKTexture(imageNamed: "Tomatoes_Right"))
         let set2 = SKAction.fadeAlpha(to: 0, duration: 0.1)
@@ -2821,6 +2826,10 @@ extension TPGameScene {
     }
     
     func leftTomato() -> SKAction {
+        
+        if gamePerson.person.name == "Donald Trump" {
+            FIRAuth.auth()?.currentUser?.incrementTrumpPunches()
+        }
         
         let set = SKAction.move(to: CGPoint(x: view!.center.x - 50, y: view!.center.y),  duration: 0.1)
         let set11 = SKAction.setTexture(SKTexture(imageNamed: "Tomatoes_Left"))

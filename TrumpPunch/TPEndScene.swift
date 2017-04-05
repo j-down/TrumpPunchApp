@@ -108,8 +108,7 @@ extension TPBaseViewController {
         endSceneMiddleView.bestLabel.text = "\(Defaults.integer(forKey: DefaultType.highScore))"
         
         if let user = FIRAuth.auth()?.currentUser {
-            if Score > 0 {
-                user.incrementTrumpPunches(by: Score)
+            if user.incrementedTrumpPunches > 0 {
                 user.saveTrumpPunches()
             }
         }

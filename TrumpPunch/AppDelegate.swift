@@ -60,6 +60,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
+        Defaults.removeObject(forKey: "trumpPunches")
+        Defaults.removeObject(forKey: "incTrumpPunches")
+        
         return true
     }
 
@@ -204,13 +207,32 @@ extension FIRUser {
         }
     }
     
+    var incrementedTrumpPunches : Int {
+        get {
+            if let punches = Defaults.object(forKey: "incTrumpPunches") as? Int {
+                return punches
+            } else {
+                return 0
+            }
+        }
+        set {
+            Defaults.set(newValue, forKey: "incTrumpPunches")
+        }
+    }
+    
     func incrementTrumpPunches(by: Int?=1) {
-        trumpPunches += by!
+        incrementedTrumpPunches += by!
     }
     
     func saveTrumpPunches () {
-        if trumpPunches > 0 {
-            dbRef.child("\(self.uid)/trumpPunches").setValue(trumpPunches)
+        if incrementedTrumpPunches > 0 {
+            let totalPunches = trumpPunches + incrementedTrumpPunches
+            dbRef.child("\(self.uid)/trumpPunches").setValue(totalPunches, withCompletionBlock: { (error, ref) in
+                if error == nil {
+                    self.trumpPunches += self.incrementedTrumpPunches
+                    self.incrementedTrumpPunches = 0
+                }
+            })
         }
     }
     
@@ -350,6 +372,7 @@ extension FIRUser {
         Defaults.removeObject(forKey: "fullName")
         Defaults.removeObject(forKey: "username")
         Defaults.removeObject(forKey: "pictureURL")
+        Defaults.removeObject(forKey: "incTrumpPunches")
         Defaults.removeObject(forKey: "trumpPunches")
         Defaults.removeObject(forKey: "firebaseLocation")
         Defaults.removeObject(forKey: "isUpdatingLocation")
