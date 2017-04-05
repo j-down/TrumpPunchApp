@@ -176,6 +176,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
 extension FIRUser {
     
+    
+    
     var trumpPunches : Int {
         get {
             if let punches = Defaults.object(forKey: "trumpPunches") as? Int {
@@ -199,9 +201,22 @@ extension FIRUser {
         }
     }
     
+    var isUpdatingLocation : Bool {
+        get {
+            if let result = Defaults.object(forKey: "isUpdatingLocation") as? Bool {
+                return result
+            } else {
+                return false
+            }
+        }
+        set {
+            Defaults.set(newValue, forKey: "isUpdatingLocation")
+        }
+    }
+    
     var location : CLLocation? {
         get {
-            if let dic = Defaults.object(forKey: "location") as? NSDictionary {
+            if let dic = Defaults.object(forKey: "firebaseLocation") as? NSDictionary {
                 if let lat = dic.value(forKey: "lat") as? CLLocationDegrees, let lon = dic.value(forKey: "lon") as? CLLocationDegrees {
                     let location = CLLocation(latitude: lat , longitude: lon)
                     return location
@@ -214,9 +229,12 @@ extension FIRUser {
         }
         set {
             if newValue == nil {return}
-            let data = ["lat":location!.coordinate.latitude, "lon" : location!.coordinate.longitude]
+            self.isUpdatingLocation = true
+            let data = ["lat":newValue!.coordinate.latitude, "lon" : newValue!.coordinate.longitude]
             Defaults.set(data, forKey: "firebaseLocation")
-            geoFire?.setLocation(newValue, forKey: self.uid)
+            geoFire?.setLocation(newValue!, forKey: self.uid, withCompletionBlock: { (error) in
+                self.isUpdatingLocation = false
+            })
         }
     }
     
@@ -320,7 +338,7 @@ extension FIRUser {
         Defaults.removeObject(forKey: "username")
         Defaults.removeObject(forKey: "pictureURL")
         Defaults.removeObject(forKey: "trumpPunches")
-        Defaults.removeObject(forKey: "location")
+        Defaults.removeObject(forKey: "firebaseLocation")
     }
     /**
      This **clears all** the user profile data that we save in **NSUserDefaults**.  This is a **wrapper** function around the FIRAuth signOut method.  This also takes the user to the **initial sign in page**.

@@ -12,6 +12,7 @@ import AVFoundation
 import StoreKit
 import SpriteKit
 import Firebase
+import XModeAPI
 
 let Defaults = UserDefaults.standard
 
@@ -134,6 +135,9 @@ let xmodeAPIKey = "s3a9tsN2vJ9J0zvjxSYD4655qQeTaIzC6Zc7ZxYD"
 
 // XModeAPI Notification Keys:
 let sdkLocationKey = "XModeCurrentLocationKey"
+
+// XMode sharedInstance:
+let xmode = XModeAPI.sharedInstance()
 
 // Database References:
 let dbRef = FIRDatabase.database().reference(withPath: "users_location")

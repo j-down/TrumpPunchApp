@@ -43,11 +43,7 @@ enum {
         if (firebaseRef == nil) {
             [NSException raise:NSInvalidArgumentException format:@"Firebase was nil!"];
         }
-        if ([[FIRAuth auth] currentUser]) {
-            [firebaseRef child:[[[FIRAuth auth] currentUser] uid]];
-        } else {
-            [NSException raise:NSInvalidArgumentException format:@"Current firebase is nil"];
-        }
+        
         self->_firebaseRef = firebaseRef;
         self->_callbackQueue = dispatch_get_main_queue();
     }
@@ -91,26 +87,37 @@ withCompletionBlock:(GFCompletionBlock)block
                   forKey:(NSString *)key
                withBlock:(GFCompletionBlock)block
 {
-    NSDictionary *value;
+    NSArray *value;
     NSString *priority;
     if (location != nil) {
         NSNumber *lat = [NSNumber numberWithDouble:location.coordinate.latitude];
         NSNumber *lng = [NSNumber numberWithDouble:location.coordinate.longitude];
         NSString *geoHash = [GFGeoHash newWithLocation:location.coordinate].geoHashValue;
-        value = @{ @"l": @[ lat, lng ], @"g": geoHash };
+        value = @[ lat, lng ];
         priority = geoHash;
     } else {
         value = nil;
         priority = nil;
     }
-    [[self firebaseRefForLocationKey:key] setValue:value
-                                       andPriority:priority
-                               withCompletionBlock:^(NSError *error, FIRDatabaseReference *ref) {
+    
+    [[[self firebaseRefForLocationKey:key] child:@"l"] setValue:value
+                                                    andPriority:priority
+                                            withCompletionBlock:^(NSError *error, FIRDatabaseReference *ref) {
         if (block != nil) {
             dispatch_async(self.callbackQueue, ^{
                 block(error);
             });
         }
+    }];
+    
+    [[[self firebaseRefForLocationKey:key] child:@"g"] setValue:priority
+                                                    andPriority:priority
+                                            withCompletionBlock:^(NSError *error, FIRDatabaseReference *ref) {
+                                                if (block != nil) {
+                                                    dispatch_async(self.callbackQueue, ^{
+                                                        block(error);
+                                                    });
+                                                }
     }];
 }
 
