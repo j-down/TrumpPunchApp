@@ -339,6 +339,7 @@ extension FIRUser {
         Defaults.removeObject(forKey: "pictureURL")
         Defaults.removeObject(forKey: "trumpPunches")
         Defaults.removeObject(forKey: "firebaseLocation")
+        Defaults.removeObject(forKey: "isUpdatingLocation")
     }
     /**
      This **clears all** the user profile data that we save in **NSUserDefaults**.  This is a **wrapper** function around the FIRAuth signOut method.  This also takes the user to the **initial sign in page**.
