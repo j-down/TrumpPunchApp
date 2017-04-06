@@ -34,9 +34,13 @@ class TPLocationViewController: UIViewController, MKMapViewDelegate, HeatmapDele
     
     override func viewWillAppear(_ animated: Bool) {
         self.getTopThreeLeaderboardObjects {
-            arrayReturn in
-            self.topThreeUserData = arrayReturn
-            self.leaderboardTableView.reloadData()
+            returnData in
+            if let array = returnData as? Array<(Any,Any)> {
+                self.topThreeUserData = array as! [NSDictionary]
+                self.leaderboardTableView.reloadData()
+            }
+            
+            
         }
     }
     
@@ -115,26 +119,29 @@ class TPLocationViewController: UIViewController, MKMapViewDelegate, HeatmapDele
 }
 extension TPLocationViewController {
     // This is the very top no matter your location for punching trump!
-    func getTopThreeLeaderboardObjects(block: @escaping (_ arrayReturn : [NSDictionary]) -> Void) {
-        var arrayReturn = [NSDictionary]()
-        arrayReturn.removeAll()
-        dbRef.queryOrdered(byChild: "trumpPunches").observe(.value, with: { (snapshot) in
-            let data = snapshot.value as! NSDictionary
-            for dataSet in data {
-                if let dic = dataSet.value as? NSDictionary {
-                    if dic.value(forKey: "fullName") != nil && dic.value(forKey: "trumpPunches") != nil {
-                        arrayReturn.append(dic)
-                    } else if dic.value(forKey: "username") != nil && dic.value(forKey: "trumpPunches") != nil {
-                        arrayReturn.append(dic)
-                    }
-                }
-                // We only need the top three:
-                if arrayReturn.count == 3 {
-                    print("Top Three Leaderboard: ", arrayReturn)
-                    block(arrayReturn)
-                    return
-                }
+    func getTopThreeLeaderboardObjects(block: @escaping (_ arrayReturn : [NSDictionary]?) -> Void) {
+        dbRef.queryOrdered(byChild: "trumpPunches").queryLimited(toLast: 3).observe(.value, with: { (snap) in
+            let di = snap.value as? NSDictionary
+            // Bring this into an array:
+//            let arrayOfDics = Array(di!)
+            
+            let filteredArray = di?.sorted(by: { (dic1, dic2) -> Bool in
+                let dicOne = dic1.value as! NSDictionary
+                let dicTwo = dic2.value as! NSDictionary
+                return dicOne.value(forKey: "trumpPunches") as! Int > dicTwo.value(forKey: "trumpPunches") as! Int
+            })
+            
+            if let f = filteredArray as? NSArray {
+                
             }
+            
+            if f != nil {
+  //              filt
+            } else {
+                block(nil)
+            }
+            
+            
         })
     }
 }

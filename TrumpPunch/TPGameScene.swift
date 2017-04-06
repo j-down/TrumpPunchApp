@@ -2771,6 +2771,11 @@ extension TPGameScene {
     //Item Animations
     //Gloves
     func rightPunch() -> SKAction {
+        
+        if gamePerson.person.name == "Donald Trump" {
+            FIRAuth.auth()?.currentUser?.incrementTrumpPunches()
+        }
+        
         let set = SKAction.moveTo(x: view!.center.x + 50, duration: 0.1)
         let set2 = SKAction.moveTo(x: view!.center.x + view!.frame.width, duration: 0.1)
         
@@ -2781,6 +2786,11 @@ extension TPGameScene {
     }
     
     func leftPunch() -> SKAction {
+        
+        if gamePerson.person.name == "Donald Trump" {
+            FIRAuth.auth()?.currentUser?.incrementTrumpPunches()
+        }
+        
         let set = SKAction.moveTo(x: view!.center.x - 50, duration: 0.1)
         let set2 = SKAction.moveTo(x: view!.center.x - view!.frame.width, duration: 0.1)
         
@@ -2793,6 +2803,10 @@ extension TPGameScene {
     //Nukes
     func rightNuke() -> SKAction {
         
+        if gamePerson.person.name == "Donald Trump" {
+            FIRAuth.auth()?.currentUser?.incrementTrumpPunches()
+        }
+        
         let set = SKAction.move(to: CGPoint(x: view!.center.x + 50, y: view!.center.y), duration: 0.2)
         return SKAction.repeat(set, count: 1)
     }
@@ -2804,6 +2818,10 @@ extension TPGameScene {
     }
     
     func leftNuke() -> SKAction {
+        
+        if gamePerson.person.name == "Donald Trump" {
+            FIRAuth.auth()?.currentUser?.incrementTrumpPunches()
+        }
         
         let set = SKAction.move(to: CGPoint(x: view!.center.x - 50, y: view!.center.y), duration: 0.2)
         return SKAction.repeat(set, count: 1)
@@ -2841,6 +2859,11 @@ extension TPGameScene {
     
     //Swatter
     func rightFly() -> SKAction {
+        
+        if gamePerson.person.name == "Donald Trump" {
+            FIRAuth.auth()?.currentUser?.incrementTrumpPunches()
+        }
+        
         let set = SKAction.rotate(byAngle: CGFloat(M_PI / 4), duration: 0.1)
         let set2 = SKAction.rotate(byAngle: -CGFloat(M_PI / 4), duration: 0.1)
         
@@ -2851,6 +2874,11 @@ extension TPGameScene {
     }
     
     func leftFly() -> SKAction {
+        
+        if gamePerson.person.name == "Donald Trump" {
+            FIRAuth.auth()?.currentUser?.incrementTrumpPunches()
+        }
+        
         let set = SKAction.rotate(byAngle: -CGFloat(M_PI / 4), duration: 0.1)
         let set2 = SKAction.rotate(byAngle: CGFloat(M_PI / 4), duration: 0.1)
         
@@ -2862,6 +2890,11 @@ extension TPGameScene {
     
     //Fish
     func rightFish() -> SKAction {
+        
+        if gamePerson.person.name == "Donald Trump" {
+            FIRAuth.auth()?.currentUser?.incrementTrumpPunches()
+        }
+        
         let set = SKAction.rotate(byAngle: CGFloat(M_PI / 4), duration: 0.1)
         let set2 = SKAction.rotate(byAngle: -CGFloat(M_PI / 4), duration: 0.1)
         
@@ -2872,6 +2905,11 @@ extension TPGameScene {
     }
     
     func leftFish() -> SKAction {
+        
+        if gamePerson.person.name == "Donald Trump" {
+            FIRAuth.auth()?.currentUser?.incrementTrumpPunches()
+        }
+        
         let set = SKAction.rotate(byAngle: -CGFloat(M_PI / 4), duration: 0.1)
         let set2 = SKAction.rotate(byAngle: CGFloat(M_PI / 4), duration: 0.1)
         

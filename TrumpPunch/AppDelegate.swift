@@ -60,9 +60,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
-        Defaults.removeObject(forKey: "trumpPunches")
-        Defaults.removeObject(forKey: "incTrumpPunches")
-        
         return true
     }
 

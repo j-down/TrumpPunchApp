@@ -24,6 +24,7 @@ class TopThreeLeaderboardCell: UITableViewCell {
         circleView.layer.borderColor = UIColor.gray.cgColor
         circleView.layer.borderWidth = 1
         
+        imgView.layer.masksToBounds = true
         imgView.layer.cornerRadius = imgView.frame.height/4
         
     }
