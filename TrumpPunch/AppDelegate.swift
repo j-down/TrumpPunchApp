@@ -324,9 +324,21 @@ extension FIRUser {
             if newValue == nil {return}
             if newValue == pictureURL {return}
             if newValue!.isEmpty {return}
-            dbRef.child("\(self.uid)/pictureURL").setValue(newValue!) { (error, reference) in
-                if error != nil { self.ccxLog(error: error) }
-                else { print("Updated pictureURL on FIRBase"); Defaults.set(newValue!, forKey: "pictureURL") }
+            if !newValue!.contains("https") && newValue!.contains("http") {
+                var newString = newValue!
+                let ind = newString.index(newString.startIndex, offsetBy: 4)
+                newString.insert("s", at: ind)
+                
+                dbRef.child("\(self.uid)/pictureURL").setValue(newString) { (error, reference) in
+                    if error != nil { self.ccxLog(error: error) }
+                    else { print("Updated pictureURL on FIRBase"); Defaults.set(newString, forKey: "pictureURL") }
+                }
+                
+            } else {
+                dbRef.child("\(self.uid)/pictureURL").setValue(newValue!) { (error, reference) in
+                    if error != nil { self.ccxLog(error: error) }
+                    else { print("Updated pictureURL on FIRBase"); Defaults.set(newValue!, forKey: "pictureURL") }
+                }
             }
         }
     }

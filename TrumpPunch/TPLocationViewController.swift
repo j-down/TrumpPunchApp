@@ -96,7 +96,7 @@ class TPLocationViewController: UIViewController, MKMapViewDelegate, HeatmapDele
             // Set the name, place & picture:
             let tmp = self.topThreeUserData[indexPath.row] as (String,AnyObject)
             let dic = tmp.1
-            let punches = dic["trumpPunches"] as! Int
+            let punches = dic["trumpPunches"] as? Int ?? 0
             cell.placeLabel.text = "\(indexPath.row + 1)"
             if let fullName = dic["fullName"] as? String {
                 cell.nameLabel.text = fullName + ": \(punches)"
@@ -132,7 +132,19 @@ extension TPLocationViewController {
                 // We have to define our comparator here:
                 let dicOne = dic1.value as! [String:AnyObject]
                 let dicTwo = dic2.value as! [String:AnyObject]
-                return dicOne["trumpPunches"] as! Int > dicTwo["trumpPunches"] as! Int
+                if let punch = dicOne["trumpPunches"] as? Int {
+                    if let punch2 = dicTwo["trumpPunches"] as? Int {
+                        return punch > punch2
+                    } else {
+                        return punch > 0
+                    }
+                } else {
+                    if let punch2 = dicTwo["trumpPunches"] as? Int {
+                        return punch2 < 0
+                    } else {
+                        return false
+                    }
+                }
             })
             
             // Return the array in the block: This may or may not be nil:
