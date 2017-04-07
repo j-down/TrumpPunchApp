@@ -40,8 +40,6 @@ class TPLocationViewController: UIViewController, MKMapViewDelegate, HeatmapDele
                 self.topThreeUserData = array
                 self.leaderboardTableView.reloadData()
             }
-            
-            
         }
     }
     
@@ -128,22 +126,16 @@ extension TPLocationViewController {
             
 //            let di = snap.value as? NSDictionary
             let di = snap.value as? [String:AnyObject]
-            // Bring this into an array:
-//            let arrayOfDics = Array(di!)
             
+            // Good ole' google doesn't order the query return for us.... So lets just do it!!! ->
             let filteredArray = di?.sorted(by: { (dic1, dic2) -> Bool in
-//                let dicOne = dic1.value as! NSDictionary
-//                let dicTwo = dic2.value as! NSDictionary
+                // We have to define our comparator here:
                 let dicOne = dic1.value as! [String:AnyObject]
                 let dicTwo = dic2.value as! [String:AnyObject]
                 return dicOne["trumpPunches"] as! Int > dicTwo["trumpPunches"] as! Int
-  //              return dicOne.value(forKey: "trumpPunches") as! Int > dicTwo.value(forKey: "trumpPunches") as! Int
             })
             
-            print(String(describing: type(of: filteredArray)))
-            
-            print(filteredArray!)
-            
+            // Return the array in the block: This may or may not be nil:
             block(filteredArray)
             
         })
