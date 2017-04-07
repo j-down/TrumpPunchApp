@@ -425,7 +425,7 @@ extension FIRUser {
      3. Email & Username users will only be setting their username & email for now until we give them a way to enter in more information.
      
      */
-    func syncProfile(twitter: TWTRSession?=nil, facebook: FBSDKLoginManagerLoginResult?=nil) {
+    func syncProfile(twitter: TWTRSession?=nil, facebook: FBSDKLoginManagerLoginResult?=nil, userName: String?=nil) {
         dbRef.child(self.uid).observeSingleEvent(of: .value, with: { (snapshot) in
             if snapshot.exists() {
                 if snapshot.hasChild("fullName") {
@@ -473,9 +473,14 @@ extension FIRUser {
                     }
                     xmode?.setEmailAddress(email)
                 }
-                if let username = twitter?.userName {
-                    self.username = username
+                if let usrnme = twitter?.userName {
+                    self.username = usrnme
                 }
+                
+                if let uN = userName {
+                    self.username = uN
+                }
+                
                 self.isSignedUp = true
             }
         })

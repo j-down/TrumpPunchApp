@@ -239,7 +239,7 @@ class TPSignUpWithEmailViewController: UIViewController, UITextFieldDelegate {
                         if error == nil {
                             // Email verification was sent!
                         }
-                    }) ;user?.username = username; user?.emailAddress = email; completion(true, nil, nil); }
+                    }) ;user?.syncProfile(userName: username); completion(true, nil, nil); }
                 }
             } else {
                 if passwordField.showingError { passwordField.clearErrors() }
