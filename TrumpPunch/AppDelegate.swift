@@ -427,6 +427,7 @@ extension FIRUser {
      */
     func syncProfile(twitter: TWTRSession?=nil, facebook: FBSDKLoginManagerLoginResult?=nil, userName: String?=nil) {
         dbRef.child(self.uid).observeSingleEvent(of: .value, with: { (snapshot) in
+            self.isSignedUp = true
             if snapshot.exists() {
                 if snapshot.hasChild("fullName") {
                     self.fullName = snapshot.childSnapshot(forPath: "fullName").value as? String
@@ -480,8 +481,6 @@ extension FIRUser {
                 if let uN = userName {
                     self.username = uN
                 }
-                
-                self.isSignedUp = true
             }
         })
     }
