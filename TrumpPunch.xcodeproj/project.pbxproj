@@ -1082,6 +1082,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 264150ADF2380572762BB9EE /* Pods-TrumpPunch.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = U743V4PW2V;
@@ -1101,6 +1102,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5852A1EC77905AFB7E71EA7A /* Pods-TrumpPunch.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = U743V4PW2V;
