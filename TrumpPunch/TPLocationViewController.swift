@@ -20,7 +20,8 @@ class TPLocationViewController: UIViewController, MKMapViewDelegate, HeatmapDele
     
     var updatedLocations = false
     
-    var topThreeUserData = [NSDictionary]()
+//    var topThreeUserData = [NSDictionary]()
+    var topThreeUserData = Array<(String,AnyObject)>()
     
     var dtm = DTMHeatmap()
     
@@ -35,8 +36,8 @@ class TPLocationViewController: UIViewController, MKMapViewDelegate, HeatmapDele
     override func viewWillAppear(_ animated: Bool) {
         self.getTopThreeLeaderboardObjects {
             returnData in
-            if let array = returnData as? Array<(Any,Any)> {
-                self.topThreeUserData = array as! [NSDictionary]
+            if let array = returnData {
+                self.topThreeUserData = array
                 self.leaderboardTableView.reloadData()
             }
             
@@ -95,21 +96,24 @@ class TPLocationViewController: UIViewController, MKMapViewDelegate, HeatmapDele
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "lbCellIdentifier") as? TopThreeLeaderboardCell {
             // Set the name, place & picture:
-            let dic = self.topThreeUserData[indexPath.row]
-            let punches = dic.value(forKey: "trumpPunches") as! Int
+            let tmp = self.topThreeUserData[indexPath.row] as (String,AnyObject)
+            let dic = tmp.1
+            let punches = dic["trumpPunches"] as! Int
             cell.placeLabel.text = "\(indexPath.row + 1)"
-            if let fullName = dic.value(forKey: "fullName") as? String {
+            if let fullName = dic["fullName"] as? String {
                 cell.nameLabel.text = fullName + ": \(punches)"
-            } else if let username = dic.value(forKey: "username") as? String {
+            } else if let username = dic["username"] as? String {
                 cell.nameLabel.text = username + ": \(punches)"
+            } else {
+                cell.nameLabel.text = "Anonymous: \(punches)"
             }
-            if let pictureURL = dic.value(forKey: "pictureURL") as? String {
+            if let pictureURL = dic["pictureURL"] as? String {
                 // Set the imageURL:
                 if let picURL = URL(string: pictureURL) {
                     cell.imgView.kf.setImage(with: picURL)
                 }
             } else {
-                cell.imgView.image = UIImage(named: "AppLogo")!
+                cell.imgView.image = UIImage(named: "Spaceship")!
             }
             return cell
         } else {
@@ -119,28 +123,28 @@ class TPLocationViewController: UIViewController, MKMapViewDelegate, HeatmapDele
 }
 extension TPLocationViewController {
     // This is the very top no matter your location for punching trump!
-    func getTopThreeLeaderboardObjects(block: @escaping (_ arrayReturn : [NSDictionary]?) -> Void) {
+    func getTopThreeLeaderboardObjects(block: @escaping (_ arrayReturn : [(key: String, value: AnyObject)]?) -> Void) {
         dbRef.queryOrdered(byChild: "trumpPunches").queryLimited(toLast: 3).observe(.value, with: { (snap) in
-            let di = snap.value as? NSDictionary
+            
+//            let di = snap.value as? NSDictionary
+            let di = snap.value as? [String:AnyObject]
             // Bring this into an array:
 //            let arrayOfDics = Array(di!)
             
             let filteredArray = di?.sorted(by: { (dic1, dic2) -> Bool in
-                let dicOne = dic1.value as! NSDictionary
-                let dicTwo = dic2.value as! NSDictionary
-                return dicOne.value(forKey: "trumpPunches") as! Int > dicTwo.value(forKey: "trumpPunches") as! Int
+//                let dicOne = dic1.value as! NSDictionary
+//                let dicTwo = dic2.value as! NSDictionary
+                let dicOne = dic1.value as! [String:AnyObject]
+                let dicTwo = dic2.value as! [String:AnyObject]
+                return dicOne["trumpPunches"] as! Int > dicTwo["trumpPunches"] as! Int
+  //              return dicOne.value(forKey: "trumpPunches") as! Int > dicTwo.value(forKey: "trumpPunches") as! Int
             })
             
-            if let f = filteredArray as? NSArray {
-                
-            }
+            print(String(describing: type(of: filteredArray)))
             
-            if f != nil {
-  //              filt
-            } else {
-                block(nil)
-            }
+            print(filteredArray!)
             
+            block(filteredArray)
             
         })
     }
