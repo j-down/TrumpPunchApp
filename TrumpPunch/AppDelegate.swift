@@ -306,7 +306,7 @@ extension FIRUser {
     }
     ///  This function depicts whether or not the user had set their email in the users_locations table in Firebase.
     func wasEmailSet(block: @escaping (_ set: Bool) -> Void) {
-        dbRef.child(self.uid).child("email").observe(.value, with: { (snapshot) in
+        dbRef.child(self.uid).child("email").observeSingleEvent(of: .value, with: { (snapshot) in
             if snapshot.exists() {
                 block(true)
             } else {
