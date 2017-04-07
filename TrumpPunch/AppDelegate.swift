@@ -203,7 +203,7 @@ extension FIRUser {
             Defaults.set(newValue, forKey: "trumpPunches")
         }
     }
-    
+    /// The number of punches the user has incremented during a game, punching Donald Trump.
     var incrementedTrumpPunches : Int {
         get {
             if let punches = Defaults.object(forKey: "incTrumpPunches") as? Int {
@@ -216,11 +216,11 @@ extension FIRUser {
             Defaults.set(newValue, forKey: "incTrumpPunches")
         }
     }
-    
+    /// The function that increments 'incrementedTrumpPunches' by either 1 or a specified value.
     func incrementTrumpPunches(by: Int?=1) {
         incrementedTrumpPunches += by!
     }
-    
+    /// This function saves the value of trumpPunches to the Firebase backend.
     func saveTrumpPunches () {
         if incrementedTrumpPunches > 0 {
             let totalPunches = trumpPunches + incrementedTrumpPunches
@@ -232,7 +232,7 @@ extension FIRUser {
             })
         }
     }
-    
+    ///  This returns the saved boolean for if the user is upating location from NSUserDefaults.
     var isUpdatingLocation : Bool {
         get {
             if let result = Defaults.object(forKey: "isUpdatingLocation") as? Bool {
@@ -245,7 +245,7 @@ extension FIRUser {
             Defaults.set(newValue, forKey: "isUpdatingLocation")
         }
     }
-    
+    ///  This returns the saved location of the user from NSUserDefaults.
     var location : CLLocation? {
         get {
             if let dic = Defaults.object(forKey: "firebaseLocation") as? NSDictionary {
@@ -358,6 +358,7 @@ extension FIRUser {
             }
         }
     }
+    ///  This returns the saved username of the user from NSUserDefaults.
     var username : String? {
         get {
             return Defaults.string(forKey: "username")
@@ -476,44 +477,6 @@ extension FIRUser {
                     self.username = username
                 }
                 self.isSignedUp = true
-                // Lets work on getting the email for Twitter & Facebook users (I think if we are able to get it Google would be able to...(so i commented it out)):
-//                if facebook != nil {
-//                    FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "email"]).start(completionHandler: { (connection, result, error) -> Void in
-//                        if (error == nil) {
-//                            if let dictionary = result as? NSDictionary {
-//                                if let email = dictionary.value(forKey: "email") as? String {
-//                                    self.emailAddress = email
-//                                }
-//                            }
-//
-//                        }
-//                    })
-//                } else if twitter != nil {
-                    
-//                    let client = TWTRAPIClient.withCurrentUser()
-//                    let request = client.urlRequest(withMethod: "GET",
-//                                                    url: "https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true",
-//                                                    parameters: ["include_email": "true", "skip_status": "true"],
-//                                                    error: nil)
-//                    client.sendTwitterRequest(request) { response, data, connectionError in
-//                        if (connectionError == nil) {
-                            
-//                            do{
-//                                let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! [String:Any]
-//                                if let emaill = json["email"] as? String {
-//                                    self.emailAddress = emaill
-//                                }
-                                
-//                            } catch {
-                                
-//                            }
-                            
-//                        }
-//                        else {
-//                            print("Error: \(connectionError)")
-//                        }
-//                    }
-//                }
             }
         })
     }
