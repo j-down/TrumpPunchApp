@@ -185,7 +185,7 @@ class TPBaseViewController: UIViewController {
     }
     
     func confirmLogout () {
-        let alert = UIAlertController(title: "You are about to Logout.", message: "Are you sure you would like to log out?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Are you sure you would like to logout?", message: nil, preferredStyle: .alert)
         let yes = UIAlertAction(title: "Yes", style: .default) { (action) in
             
             FIRAuth.auth()?.currentUser?.logout()
