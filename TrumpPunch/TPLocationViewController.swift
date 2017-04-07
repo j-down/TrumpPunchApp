@@ -111,7 +111,7 @@ class TPLocationViewController: UIViewController, MKMapViewDelegate, HeatmapDele
                     cell.imgView.kf.setImage(with: picURL)
                 }
             } else {
-                cell.imgView.image = UIImage(named: "Spaceship")!
+                cell.imgView.image = UIImage(named: "AppLogo")!
             }
             return cell
         } else {
