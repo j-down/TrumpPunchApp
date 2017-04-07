@@ -139,8 +139,8 @@ extension TPLocationViewController {
                         return punch > 0
                     }
                 } else {
-                    if let punch2 = dicTwo["trumpPunches"] as? Int {
-                        return punch2 < 0
+                    if dicTwo["trumpPunches"] as? Int != nil {
+                        return false
                     } else {
                         return false
                     }
