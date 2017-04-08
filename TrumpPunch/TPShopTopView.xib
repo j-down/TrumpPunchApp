@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view multipleTouchEnabled="YES" contentMode="scaleToFill" restorationIdentifier="TPShopTopView" id="iN0-l3-epB" customClass="TPShopTopView" customModule="TrumpPunch" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="108"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="rff-Ti-8fA">
+                    <rect key="frame" x="80" y="68" width="214" height="29"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="214" id="joi-Uk-KDS"/>
+                        <constraint firstAttribute="height" constant="28" id="zp1-jd-t2M"/>
+                    </constraints>
+                    <segments>
+                        <segment title="People"/>
+                        <segment title="Items"/>
+                        <segment title="Store"/>
+                    </segments>
+                    <color key="tintColor" red="0.0013271663337945938" green="0.3275567889213562" blue="0.57669931650161743" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </segmentedControl>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SHOP" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="upz-8O-jBz">
+                    <rect key="frame" x="153" y="27" width="69" height="28"/>
+                    <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="24"/>
+                    <color key="textColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Exit" translatesAutoresizingMaskIntoConstraints="NO" id="VRT-sr-PEF">
+                    <rect key="frame" x="305" y="20" width="54" height="54"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="54" id="KJu-51-9qw"/>
+                        <constraint firstAttribute="height" constant="54" id="YBP-Jd-f44"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="VRT-sr-PEF" firstAttribute="centerY" secondItem="upz-8O-jBz" secondAttribute="centerY" constant="6" id="8Ae-aX-Gn4"/>
+                <constraint firstItem="upz-8O-jBz" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="27" id="Aet-nG-2Gp"/>
+                <constraint firstItem="upz-8O-jBz" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="CwX-Qo-Kgf"/>
+                <constraint firstItem="rff-Ti-8fA" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="RnT-xi-3fO"/>
+                <constraint firstItem="rff-Ti-8fA" firstAttribute="top" secondItem="upz-8O-jBz" secondAttribute="bottom" constant="13" id="TJv-9m-cJA"/>
+                <constraint firstAttribute="trailing" secondItem="VRT-sr-PEF" secondAttribute="trailing" constant="16" id="a5j-MV-cML"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="exitButton" destination="VRT-sr-PEF" id="A1f-Uw-HRc"/>
+                <outlet property="segmentedControl" destination="rff-Ti-8fA" id="3Zg-H5-nnj"/>
+                <outlet property="shopLabel" destination="upz-8O-jBz" id="nA1-eV-h8j"/>
+            </connections>
+            <point key="canvasLocation" x="34.5" y="351"/>
+        </view>
+        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="tnK-yh-NCC">
+            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+        </imageView>
+    </objects>
+    <resources>
+        <image name="Exit" width="50" height="58"/>
+    </resources>
+</document>

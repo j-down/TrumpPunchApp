@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" restorationIdentifier="TPStoreView" id="iN0-l3-epB" customClass="TPStoreView" customModule="TrumpPunch" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="338"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="EQ8-Jn-lRc">
+                    <rect key="frame" x="8.5" y="40" width="303" height="258"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="303" id="SUQ-77-h8d"/>
+                    </constraints>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="gKg-D6-bcb">
+                        <size key="itemSize" width="50" height="50"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="EQ8-Jn-lRc" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="CYu-rk-oCJ"/>
+                <constraint firstItem="EQ8-Jn-lRc" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="ImG-5R-n8d"/>
+                <constraint firstItem="EQ8-Jn-lRc" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="40" id="UsH-Sx-N4Q"/>
+                <constraint firstAttribute="bottom" secondItem="EQ8-Jn-lRc" secondAttribute="bottom" constant="40" id="zDh-qB-bdv"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="collectionView" destination="EQ8-Jn-lRc" id="iPL-m8-iz8"/>
+            </connections>
+            <point key="canvasLocation" x="34" y="192"/>
+        </view>
+    </objects>
+</document>

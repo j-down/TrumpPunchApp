@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" restorationIdentifier="TPHomeSceneBottomView" id="iN0-l3-epB" customClass="TPHomeSceneBottomView" customModule="TrumpPunch" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="248" height="280"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="maY-Af-ncB">
+                    <rect key="frame" x="49" y="38" width="150" height="65"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="150" id="MSf-Pj-FIa"/>
+                        <constraint firstAttribute="height" constant="65" id="jXq-yV-62a"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="17"/>
+                    <inset key="titleEdgeInsets" minX="9" minY="-5" maxX="0.0" maxY="0.0"/>
+                    <inset key="imageEdgeInsets" minX="-23" minY="-4" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" title="Play" image="PlayIcon" backgroundImage="RedButton"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BIH-ei-xzd">
+                    <rect key="frame" x="49" y="122" width="65" height="65"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="65" id="0a8-Kc-ofy"/>
+                        <constraint firstAttribute="height" constant="65" id="M7U-UG-Mrn"/>
+                    </constraints>
+                    <state key="normal" image="TrophyIcon" backgroundImage="BlueButton"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K0w-pR-AC1">
+                    <rect key="frame" x="134" y="122" width="65" height="65"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="65" id="B7V-li-e4D"/>
+                        <constraint firstAttribute="height" constant="65" id="fGv-JV-tI8"/>
+                    </constraints>
+                    <state key="normal" image="ShopIcon" backgroundImage="BlueButton"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qg7-x7-sp2">
+                    <rect key="frame" x="97" y="211" width="55" height="55"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="55" id="ObZ-4g-Asz"/>
+                        <constraint firstAttribute="height" constant="55" id="fK8-rq-Ztp"/>
+                    </constraints>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="-5" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" image="Sound" backgroundImage="GrayButton"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WvZ-1R-6aI">
+                    <rect key="frame" x="177" y="211" width="55" height="55"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="55" id="85O-A7-Dvc"/>
+                        <constraint firstAttribute="width" constant="55" id="OOz-px-BS6"/>
+                    </constraints>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="-5" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" image="Music" backgroundImage="GrayButton"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SgF-WY-8Ei">
+                    <rect key="frame" x="177" y="213.5" width="55" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="55" id="44v-Ev-UHy"/>
+                        <constraint firstAttribute="height" constant="50" id="8ZN-cc-Nbj"/>
+                    </constraints>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="-5" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" image="XSoundMusic"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ywj-u3-5QM">
+                    <rect key="frame" x="16" y="211" width="55" height="55"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="55" id="hFp-WE-5ca"/>
+                        <constraint firstAttribute="height" constant="55" id="wo4-CI-usH"/>
+                    </constraints>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="-5" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" image="Location" backgroundImage="GrayButton"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IV2-eb-730">
+                    <rect key="frame" x="97" y="213" width="55" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="55" id="ZbN-cd-hHR"/>
+                        <constraint firstAttribute="height" constant="50" id="u8e-Yq-GRz"/>
+                    </constraints>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="-5" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" image="XSoundMusic"/>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <accessibility key="accessibilityConfiguration" identifier="TPHomeSceneBottomView">
+                <bool key="isElement" value="YES"/>
+            </accessibility>
+            <constraints>
+                <constraint firstItem="SgF-WY-8Ei" firstAttribute="centerX" secondItem="WvZ-1R-6aI" secondAttribute="centerX" id="27J-sV-orm"/>
+                <constraint firstItem="BIH-ei-xzd" firstAttribute="top" secondItem="maY-Af-ncB" secondAttribute="bottom" constant="19" id="6BO-SE-dPo"/>
+                <constraint firstItem="SgF-WY-8Ei" firstAttribute="centerY" secondItem="WvZ-1R-6aI" secondAttribute="centerY" id="8u9-bv-D31"/>
+                <constraint firstItem="Ywj-u3-5QM" firstAttribute="top" secondItem="BIH-ei-xzd" secondAttribute="bottom" constant="24" id="CkT-c0-xcC"/>
+                <constraint firstItem="maY-Af-ncB" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="38" id="Nfd-Vf-k5v"/>
+                <constraint firstItem="IV2-eb-730" firstAttribute="centerY" secondItem="qg7-x7-sp2" secondAttribute="centerY" id="OEC-5U-QeF"/>
+                <constraint firstItem="IV2-eb-730" firstAttribute="centerX" secondItem="qg7-x7-sp2" secondAttribute="centerX" id="Qwj-XE-rMi"/>
+                <constraint firstItem="K0w-pR-AC1" firstAttribute="top" secondItem="maY-Af-ncB" secondAttribute="bottom" constant="19" id="W7B-HD-veO"/>
+                <constraint firstItem="K0w-pR-AC1" firstAttribute="trailing" secondItem="maY-Af-ncB" secondAttribute="trailing" id="X3e-nq-HMM"/>
+                <constraint firstItem="BIH-ei-xzd" firstAttribute="leading" secondItem="maY-Af-ncB" secondAttribute="leading" id="X75-do-s15"/>
+                <constraint firstItem="WvZ-1R-6aI" firstAttribute="top" secondItem="K0w-pR-AC1" secondAttribute="bottom" constant="24" id="Zf4-GR-lKs"/>
+                <constraint firstItem="WvZ-1R-6aI" firstAttribute="leading" secondItem="qg7-x7-sp2" secondAttribute="trailing" constant="25" id="hlX-dR-pvg"/>
+                <constraint firstItem="maY-Af-ncB" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="jR5-Pg-XHT"/>
+                <constraint firstItem="qg7-x7-sp2" firstAttribute="top" secondItem="K0w-pR-AC1" secondAttribute="bottom" constant="24" id="nh7-zE-wTW"/>
+                <constraint firstItem="qg7-x7-sp2" firstAttribute="leading" secondItem="Ywj-u3-5QM" secondAttribute="trailing" constant="26" id="uLZ-tL-hGd"/>
+                <constraint firstItem="qg7-x7-sp2" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="yAW-HK-szU"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="locationButton" destination="Ywj-u3-5QM" id="C6W-YJ-Jhc"/>
+                <outlet property="musicButton" destination="WvZ-1R-6aI" id="dwG-NW-x9Q"/>
+                <outlet property="musicOffView" destination="SgF-WY-8Ei" id="CXG-2J-LWf"/>
+                <outlet property="playButton" destination="maY-Af-ncB" id="LxF-5a-qjh"/>
+                <outlet property="shopButton" destination="K0w-pR-AC1" id="Eo7-a2-jLc"/>
+                <outlet property="soundButton" destination="qg7-x7-sp2" id="CYc-Qf-zIp"/>
+                <outlet property="soundOffView" destination="IV2-eb-730" id="moj-aa-B34"/>
+                <outlet property="trophyButton" destination="BIH-ei-xzd" id="Zhg-JA-kFd"/>
+            </connections>
+            <point key="canvasLocation" x="-29" y="269"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="BlueButton" width="114" height="114"/>
+        <image name="GrayButton" width="74" height="74"/>
+        <image name="Location" width="25" height="25"/>
+        <image name="Music" width="25" height="25"/>
+        <image name="PlayIcon" width="27" height="26"/>
+        <image name="RedButton" width="272" height="114"/>
+        <image name="ShopIcon" width="30" height="30"/>
+        <image name="Sound" width="25" height="25"/>
+        <image name="TrophyIcon" width="25" height="25"/>
+        <image name="XSoundMusic" width="74" height="71"/>
+    </resources>
+</document>
